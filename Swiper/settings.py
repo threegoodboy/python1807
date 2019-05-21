@@ -25,7 +25,7 @@ SECRET_KEY = 'za^tfq_5c(+++@srx1k@q7%uux$ry8&*3&td=5@(lh4(9=wz*s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -54,7 +54,7 @@ ROOT_URLCONF = 'Swiper.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'Swiper/../myapp/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -119,3 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,'static')
+]

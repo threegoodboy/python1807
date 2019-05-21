@@ -50,11 +50,11 @@
 </div>
 <div class="zxcf_menu_wper">
 	<div class="zxcf_menu px1000">
-		  <a href="index.html" class="zm_cura">首页</a>
-		  <a href="invest.html">我要投资</a>
-		  <a href="borrow.html">我要借款</a>
+		  <a href="{% url "myapp:index" %}" class="zm_cura">首页</a>
+		  <a href="{% url "myapp:invest" %}">我要投资</a>
+		  <a href="{% url "myapp:borrow" %}">我要借款</a>
 		  <a href="#">实时财务</a>
-		  <a href="noticelist.html">新手指引</a>
+		  <a href="{% url "myapp:noticelist" %}">新手指引</a>
 		  <a href="#" style="margin-right:0;">关于我们</a>
 	</div>
 </div>

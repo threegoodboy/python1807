@@ -62,4 +62,3 @@ class Pledge(models.Model):
     class Meta:
         db_table='pledge'
 
-print('')

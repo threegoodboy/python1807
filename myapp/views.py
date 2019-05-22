@@ -1,4 +1,9 @@
+from django.http import JsonResponse
 from django.shortcuts import render
+
+
+from myapp.models import Users, Investment
+from myapp.serializers import UserSerializer, InvestmentSerializer
 
 
 def user_index(request):
@@ -6,12 +11,21 @@ def user_index(request):
 
 
 def user_login(request):
-    # if request.method =="GET":
 
-     return render(request,"login.html")
+
+    if request.method=='GET':
+        return render(request,"login.html")
+    elif request.method=='POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+
 
 def user_register(request):
-    return render(request,"register.html")
+    if request.method=='GET':
+        return render(request,"register.html")
+    elif request.method=='POST':
+        pass
+
 
 def user_invest(request):
     return render(request,"invest.html")
@@ -24,3 +38,11 @@ def user_borrow(request):
 
 def user_noticelist(request):
     return render(request,"noticelist.html")
+
+
+
+
+
+
+
+

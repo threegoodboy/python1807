@@ -1,9 +1,12 @@
 from django.urls import path
 
+
 from myapp.views import *
 
 app_name='myapp'
+
 urlpatterns = [
+
     path('index/',user_index,name="index"),   #首页
     path('login/',user_login,name="login"),    #登录
     path('register/',user_register,name='register'),  #注册

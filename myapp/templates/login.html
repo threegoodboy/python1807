@@ -41,7 +41,7 @@
 		 <div class="zxcf_nav_r fr">
 		 		<img src="../../static/P2P/images/lg_pic01.png" alt="">
 		 	<span>
-		    <a href="#">返回首页</a></span>
+		    <a href="{% url "myapp:index" %}">返回首页</a></span>
 		 	
 		 </div>
 	</div>
@@ -59,16 +59,17 @@
 	  	   	     	      <span class="fl">登录</span>
 	  	   	     	      <em class="fr">没有帐号，<a href="#">立即注册</a></em>
 	  	   	     	   </h2>
-	  	   	     	   <form>
+	  	   	     	   <form action="{% url "myapp:login" %}" method="post">
+                           {% csrf_token %}
 	  	   	     	   	    <fieldset>
 	  	   	     	   	    	  <p class="mt20">
-	  	   	     	   	    	  	 <input type="text" placeholder="用户名/手机" class="lg_input01 lg_input">
+	  	   	     	   	    	  	 <input type="text" placeholder="用户名/手机" class="lg_input01 lg_input" name="username">
 	  	   	     	   	    	  </p>
                                   <p class="mt20">
-	  	   	     	   	    	  	 <input type="text" placeholder="密码" class="lg_input02 lg_input">
+	  	   	     	   	    	  	 <input type="text" placeholder="密码" class="lg_input02 lg_input" name="password">
 	  	   	     	   	    	  </p>
                                  <p class="clearfix lg_check"><span class="fl"><input type="checkbox">记住用户名</span><a href="#" class="fr">忘记密码？找回</a></p>
-                                 <p><a href="#" class="lg_btn">立即登陆</a></p>
+                                 <p><input type="submit" value="登陆" class="lg_btn"/></p>
 	  	   	     	   	    </fieldset>
 	  	   	     	   </form>
 	  	   	     </div>

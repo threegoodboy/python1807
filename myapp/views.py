@@ -6,7 +6,9 @@ def user_index(request):
 
 
 def user_login(request):
-    return render(request,"login.html")
+    # if request.method =="GET":
+
+     return render(request,"login.html")
 
 def user_register(request):
     return render(request,"register.html")

@@ -1,15 +1,7 @@
 from django.contrib.auth.hashers import make_password, check_password
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from rest_framework import viewsets
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
-from rest_framework.views import APIView
-
 from myapp.models import Users, Investment, Relation
-from myapp.serializers import UserSerializer, InvestmentSerializer
 from myapp.time_limit import tm_li
 
 

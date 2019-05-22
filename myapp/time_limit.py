@@ -1,6 +1,6 @@
 import datetime
 
-from zx_app.models import Investment
+from myapp.models import Investment
 
 
 def tm_li(id):

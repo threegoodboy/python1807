@@ -1,7 +1,12 @@
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
 from django.urls import reverse
+
+from myapp.cache import get_code
+
 from myapp.models import Users, Investment, Relation
+
+from myapp.myhelp.query_true import decide
 from myapp.time_limit import tm_li
 
 
@@ -75,25 +80,46 @@ def user_register(request):
         return render(request,'register.html')
     if request.method == 'POST':
         username = request.POST.get('username')
-        password = request.POST.get('password')
+        password = request.POST.get('password',None)
+        newpassword=request.POST.get('newpassword')
         phone = request.POST.get('phone')
-        invcode = request.POST.get('invcode')
-        invest_money = request.POST.get('invest_money')
-        loan_money = request.POST.get('loan_money')
+        code=request.POST.get('code')
+        print(code,'+++++++++++++++')
+        print(phone)
+        code2=get_code(str(phone))
+
+        print(code2,'++++++++++++++')
+
+
         try:
             Users.objects.get(username=username)
             request.session['error_message'] = '用户名已存在'
-            return render(request,'register.html')
+            msg={'usernameerror':'用户名已存在'}
+            return render(request, 'register.html', locals())
+
         except:
-            user = Users()
-            user.username = username
-            user.password = make_password(password)
-            user.phone = phone
-            user.invcode = invcode
-            user.invest_money = invest_money
-            user.loan_money = loan_money
-            user.save()
-            return redirect(reverse('myapp:login'))
+            try:
+                if code !=code2.decode():
+                        errorcode={'codeerror':'验证码不正确'}
+                        return render(request,'register.html',locals())
+                else:
+                    user = Users()
+                    user.username = username
+                    user.password = password
+                    user.phone = phone
+                    user.code = code
+                    user.save()
+                    return redirect(reverse('myapp:login'))
+            except:
+                errornone={'Noneerror':'验证码已过期'}
+                return render(request,'register.html',locals())
+
+
+
+
+
+
+
 def loginout(request):
     request.session.flush()
     return redirect(reverse('myapp:index'))

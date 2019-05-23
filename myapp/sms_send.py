@@ -3,9 +3,13 @@ from aliyunsdkcore.client import AcsClient
 from aliyunsdkcore.request import CommonRequest
 import random
 
+from myapp import cache
+
 
 def create_code(phone):
     code=''.join([str(random.randint(0,9)) for _ in range(4)])
+
+    cache.save_code(phone,code)
 
     #通过封装函数发送邀请码
     send_sms_code(phone,code)
@@ -34,3 +38,5 @@ def send_sms_code(phone, code):
     # python2:  print(response)
     print(str(response, encoding='utf-8'))
 
+if __name__ == '__main__':
+    create_code(18501495624)

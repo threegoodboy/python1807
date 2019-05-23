@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<title>注册</title>
 <link rel="stylesheet" type="text/css" href="../../static/P2P/css/style.css">
+<link rel="stylesheet" href="../../static/P2P/css/bootstrap-theme.min.css">
 <!-- <link rel="stylesheet/less" type="text/css" href="css/style.less" /> -->
 <script type="text/javascript" src="../../static/P2P/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../static/P2P/js/all.js"></script>
@@ -62,27 +63,36 @@
                         {% csrf_token %}
 	  	   	     	   	    <fieldset>
 	  	   	     	   	    	  <p class="mt20">
-	  	   	     	   	    	  	 <input type="text" placeholder="用户名/手机" name="username" class="lg_input01 lg_input">
+	  	   	     	   	    	  	 <input type="text" placeholder="用户名/手机" name="username" class="lg_input01 lg_input" value={{ username }}><span  style="color:red" id="user_span"></span><span style="color: red;">{{ msg }}</span>
 	  	   	     	   	    	  </p>
                                   <p class="mt20">
-	  	   	     	   	    	  	 <input type="text" placeholder="密码"  name='password' class="lg_input02 lg_input">
+	  	   	     	   	    	  	 <input type="text" placeholder="密码"  name='password' class="lg_input02 lg_input" value={{ password }}><span  style="color:red" id="password_span"></span>
 	  	   	     	   	    	  </p>
                                   <p class="mt20">
-	  	   	     	   	    	  	 <input type="text" placeholder="密码确认" name="newpassword" class="lg_input02 lg_input">
+	  	   	     	   	    	  	 <input type="text" placeholder="密码确认" name="newpassword" class="lg_input02 lg_input" value={{ newpassword }}><span  style="color:red" id="newpassword_span"></span><span  style="color:red" id="good_span"></span>
 	  	   	     	   	    	  </p>
+                                  <p>{{ error }}</p>
                                   <p class="mt20">
-	  	   	     	   	    	  	 <input type="text" placeholder="手机号" name="phone" id="myphone" class="lg_input03 lg_input">
+	  	   	     	   	    	  	 <input type="text" placeholder="手机号" name="phone" id="myphone" class="lg_input03 lg_input" value={{ phone }}><span  style="color:red" id="phone_span"></span>
 	  	   	     	   	    	  </p>
                                   <p class="mt20 yanzheng">
-	  	   	     	   	    	  	 <input type="text" placeholder="验证码" name="yanzheng" class="lg_input04 lg_input">
-                                      <button onclick="getcode(this)">发送验证码</button>
+	  	   	     	   	    	  	 <input type="text" placeholder="验证码" name="code"  class="lg_input04 lg_input" value={{ code }}>
+                                      <button type='button' onclick="getcode(this)" >获取验证码</button>
+
 	  	   	     	   	    	  </p>
+                                  <span  style="color:red" id="phonecode_span"></span>
+                                  <span  style="color:red" id="code_span"></span>
+                                  <span style="color:red">{{ codemsg }}</span>
+                                  <span style="color:red">{{ errorcode }}</span>
+                                  <span style="color:red">{{ errornone }}</span>
                                    <p class="mt20">
 	  	   	     	   	    	  	 <input type="text" placeholder="邀请码" class="lg_input03 lg_input">
 	  	   	     	   	    	  </p>
-                                  <p class="pt10"><a href="#">使用条款</a>&nbsp;&nbsp;<a href="#">隐私条款</a></p>
-                                 <p class="mt20"><a href="#" class="lg_btn">完成注册</a></p>
+                                  <p class="pt10"><a href="#">使用条款</a>&nbsp;&nbsp;<a href="#">隐私条款</a>{{ allerrors }}</p>
+
+                                <p class="mt20"><input type="submit" class="lg_btn" onclick="return yanzheng()"></p>
 	  	   	     	   	    </fieldset>
+
 	  	   	     	   </form>
 		   	   </div>
 		   </div>
@@ -138,10 +148,115 @@
 </div>
 <!-- footer end -->
 <script>
-    function getcode(btn) {
-        phone=$('#myphone').val()
 
+    var delay = 60;
+    var interval_id = 0;
+
+    function getcode(btn) {
+        phonenum = $('#myphone').val()
+        url = '/newapp/mycode/?phonenum='+phonenum
+        $.getJSON(url, function (data) {
+                if (data.code == 200) {
+
+                    $(btn).addClass('disabled');
+                    interval_id = setInterval(function () {
+                        btn.innerHTML = delay + '秒'
+                        delay--
+                        if (delay == 0) {
+                            clearInterval(interval_id)
+                            $(btn).removeClass('disabled')
+                            delay = 60;
+                             btn.innerHTML = '获取验证码';
+                        }
+                    }, 1000)
+                }
+            })
+        }
+
+
+
+
+
+
+
+
+
+    function yanzheng() {
+        var flag = true;
+        var username = $('input[name="username"]').val();
+        var password = $('input[name="password"]').val();
+        var newpassword = $('input[name="newpassword"]').val();
+        var code = $('input[name="code"]').val();
+        var phone = $('input[name="phone"]').val();
+        if (username == '') {
+            var $span1 = $('#user_span');
+            $span1.html('用户名不能为空');
+            flag = false;
+        } else {
+            var $span1 = $('#user_span');
+            $span1.html('');
+            flag = true;
+        }
+        if (password == '') {
+            var $span2 = $('#password_span');
+            $span2.html('密码不能为空');
+            flag = false;
+        } else {
+            var $span2 = $('#password_span');
+            $span2.html('');
+            flag = true;
+        }
+        if (code == '') {
+            var $span4 = $('#code_span');
+            $span4.html('验证码不能为空');
+            flag = false;
+        } else {
+            var $span4 = $('#code_span');
+            $span4.html('');
+            flag = true;
+        }
+        if (newpassword == '') {
+            var $span3 = $('#newpassword_span');
+            $span3.html('重输入密码不能为空');
+            flag = false;
+        } else {
+            var $span3 = $('#newpassword_span');
+            $span3.html('');
+            flag = true;
+        }
+        if (password != newpassword) {
+            if(password=='' ){
+                var $span6 = $('#good_span');
+                $span6.html('');
+                flag = false;
+            }else if(newpassword==''){
+                var $span6 = $('#good_span');
+                $span6.html('');
+                flag = false;
+            }else{
+                var $span6 = $('#good_span');
+                $span6.html('两次密码不一致');
+                flag = false;
+            }
+
+        } else {
+            var $span6 = $('#good_span');
+            $span6.html('');
+            flag = true;
+        }
+        if (phone == '') {
+            var $span5 = $('#phone_span');
+            $span5.html('手机号不能为空');
+            flag = false;
+        } else {
+            var $span5 = $('#phone_span');
+            $span5.html('');
+            flag = true;
+        }
+        return flag
     }
+
+
 </script>
 </body>
 </html>

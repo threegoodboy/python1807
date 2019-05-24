@@ -4,13 +4,13 @@ from django.db import models
 
 class Users(models.Model):       #用户表
 
-    username = models.CharField(max_length=20)    #用户名
+    username = models.CharField(max_length=20,verbose_name='用户名')    #用户名
     password = models.CharField(max_length=30)    #用户密码
-    phone = models.IntegerField()                   #手机号
-    invcode = models.CharField(max_length=6)        #邀请码
+    invcode = models.CharField(max_length=4,)        #邀请码
+    phone = models.CharField(max_length=11)   #手机号
     invest_money = models.IntegerField(default=0)  #投资
     loan_money = models.IntegerField(default=0)     # 借款
-
+    code = models.CharField(max_length=4)      #验证码
     class Meta:
         db_table = 'users'
 

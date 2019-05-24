@@ -19,12 +19,13 @@ class Investment(models.Model):
     min_money = models.IntegerField()    #最少资金
     max_money = models.IntegerField()       #最大资金
     receive_money = models.IntegerField()   #投资资金
-    time_limit = models.CharField(max_length=10)    #期限
-    year_money = models.IntegerField()    #年收益
+    time_limit = models.DateTimeField(auto_now_add=True)    #期限
+    year_money = models.FloatField()    #年收益   ***********
     label = models.CharField(max_length=5)    # 标签名
     make_time = models.TimeField()    #项目开始时间
     project_money=models.IntegerField()  #项目总额
     security_system=models.CharField(max_length=30)  #保障机构
+    done=models.IntegerField()    #已完成
     # userid = models.IntegerField()
     user = models.ManyToManyField(Users,through='Relation')
     class Meta:

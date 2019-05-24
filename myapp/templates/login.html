@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<title>首页</title>
 <link rel="stylesheet" type="text/css" href="../../static/P2P/css/style.css">
+    <link rel="stylesheet" href="../../static/P2P/css/bootstrap-theme.min.css">
 <!-- <link rel="stylesheet/less" type="text/css" href="css/style.less" /> -->
 <script type="text/javascript" src="../../static/P2P/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../static/P2P/js/all.js"></script>
@@ -59,17 +60,25 @@
 	  	   	     	      <span class="fl">登录</span>
 	  	   	     	      <em class="fr">没有帐号，<a href="#">立即注册</a></em>
 	  	   	     	   </h2>
-	  	   	     	   <form action="{% url "myapp:login" %}" method="post">
+	  	   	     	   <form action="{% url "myapp:login"  %}" method="post">
                            {% csrf_token %}
 	  	   	     	   	    <fieldset>
 	  	   	     	   	    	  <p class="mt20">
-	  	   	     	   	    	  	 <input type="text" placeholder="用户名/手机" class="lg_input01 lg_input" name="username">
-	  	   	     	   	    	  </p>
+	  	   	     	   	    	  	 <input type="text" placeholder="用户名/手机" class="lg_input01 lg_input" id="user" name="username">
+	  	   	     	   	    	     <span style="color:red" id="user_span"></span>
+                                      <span style="color:red" id="user_span2">{{ user_error}}</span>
+
+
+                                  </p>
                                   <p class="mt20">
-	  	   	     	   	    	  	 <input type="text" placeholder="密码" class="lg_input02 lg_input" name="password">
-	  	   	     	   	    	  </p>
+	  	   	     	   	    	  	 <input type="text" placeholder="密码"  class="lg_input02 lg_input" id="password" name="password">
+	  	   	     	   	    	     <span style="color:red" id="pass_span"></span>
+                                      <span style="color:red" id="pass2_span"></span>
+                                     <span style="color:red" id="pass3_span">{{ error_message }}</span>
+
+                                  </p>
                                  <p class="clearfix lg_check"><span class="fl"><input type="checkbox">记住用户名</span><a href="#" class="fr">忘记密码？找回</a></p>
-                                 <p><input type="submit" value="登陆" class="lg_btn"/></p>
+                                 <p><input type="submit" value="登陆" onclick="return userlogin()" class="lg_btn"/></p>
 	  	   	     	   	    </fieldset>
 	  	   	     	   </form>
 	  	   	     </div>
@@ -125,5 +134,54 @@
 	</div>
 </div>
 <!-- footer end -->
+<script>
+
+    function userlogin(){
+       var username=$('#user').val();
+       var password=$('#password').val();
+       var flag=true;
+       if(username == ''){
+           var span1=$('#user_span');
+           span1.html('用户名不可为空');
+           var span5=$('#user_span2');
+           span5.html('')
+           flag=false;
+        }else{
+           var span1=$('#user_span');
+           span1.html('');
+
+           flag=true;
+       }
+       if(password==''){
+           var span2=$('#pass_span');
+           span2.html('密码不可为空');
+           var span6=$('#pass3_span');
+           span6.html('');
+           flag=false;
+
+       }else{
+           var span2=$('#pass_span');
+           span2.html('');
+           flag=true;
+       }
+       if(password.length<6){
+           if(password==''){
+               var span3=$('#pass2_span');
+               span3.html('');
+               flag=false;
+           }
+           else{
+               var span3=$('#pass2_span');
+               span3.html('密码不可少于6位');
+               var span6=$('#pass3_span');
+               span6.html('');
+               flag=false
+           }
+
+       }
+       return flag
+    }
+
+</script>
 </body>
 </html>

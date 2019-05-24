@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from myapp.cache import get_code
 
+
 from myapp.models import Users, Investment, Relation
 
 from myapp.myhelp.query_true import decide
@@ -52,10 +53,12 @@ def user_index(request):
 def user_login(request):
     if request.method == "GET":
         error_message = request.session.get('error_message')
+        user_error=request.session.get('user_error')
         data = {}
         if error_message:
             del request.session['error_message']
             data['error_message'] = error_message
+            data['user_error']=user_error
         return render(request,'login.html',data)
     elif request.method == "POST":
         username = request.POST.get('username')
@@ -71,7 +74,7 @@ def user_login(request):
                 request.session['error_message'] = "密码错误！"
                 return redirect(reverse('myapp:login'))
         else:
-            request.session['error_message'] = "该用户不存在！"
+            request.session['user_error'] = "该用户不存在！"
             return redirect(reverse('myapp:login'))
 
 
@@ -84,13 +87,7 @@ def user_register(request):
         newpassword=request.POST.get('newpassword')
         phone = request.POST.get('phone')
         code=request.POST.get('code')
-        print(code,'+++++++++++++++')
-        print(phone)
         code2=get_code(str(phone))
-
-        print(code2,'++++++++++++++')
-
-
         try:
             Users.objects.get(username=username)
             request.session['error_message'] = '用户名已存在'
@@ -103,13 +100,17 @@ def user_register(request):
                         errorcode={'codeerror':'验证码不正确'}
                         return render(request,'register.html',locals())
                 else:
-                    user = Users()
-                    user.username = username
-                    user.password = password
-                    user.phone = phone
-                    user.code = code
-                    user.save()
-                    return redirect(reverse('myapp:login'))
+
+                        user = Users()
+                        user.username = username
+                        user.password = password
+                        user.phone = phone
+                        user.code = code
+                        user.save()
+                        return redirect(reverse('myapp:login'))
+
+
+
             except:
                 errornone={'Noneerror':'验证码已过期'}
                 return render(request,'register.html',locals())

@@ -4,7 +4,7 @@ from myapp.myhelp.http import render_json
 from myapp import sms_send
 
 
-def get_onecode(request):
+def get_onecode(request):         #手机验证码
     if request.method == 'GET':
         # 获取查询参数 phonenum
         print(1111111111)

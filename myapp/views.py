@@ -17,7 +17,7 @@ def user_index(request):
             Investment.objects.get(id = invest.id).delete()
     inv_num = Users.objects.filter(invest_money__gt=0).count()
     loan_num = Users.objects.filter(loan_money__gt=0).count()
-    user_num = Users.objects.count()
+    user_num = Users.opybjects.count()
     mark_info1 = Investment.objects.get(id=1)
     mark_info2 = Investment.objects.get(id=2)
     all_make = Investment.objects.all()

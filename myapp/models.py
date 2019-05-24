@@ -5,7 +5,7 @@ from django.db import models
 class Users(models.Model):       #用户表
 
     username = models.CharField(max_length=20,verbose_name='用户名')    #用户名
-    password = models.CharField(max_length=30,verbose_name='用户密码')    #用户密码
+    password = models.CharField(max_length=100,verbose_name='用户密码')    #用户密码
     invcode = models.CharField(max_length=4,verbose_name='邀请码')        #邀请码
     phone = models.CharField(max_length=11,verbose_name='手机号')   #手机号
     invest_money = models.IntegerField(default=0,verbose_name='投资资金')  #投资

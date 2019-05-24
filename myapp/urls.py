@@ -15,4 +15,5 @@ urlpatterns = [
     path("noticelist/", user_noticelist, name='noticelist'),  # 新手指引
     path('invest/', user_invest, name='invest'),  # 我要投资
     path('mycode/', get_onecode, name='code'),
+    path('delses/',del_session,name='delses')
 ]

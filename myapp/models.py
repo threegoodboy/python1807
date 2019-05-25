@@ -8,11 +8,12 @@ class Users(models.Model):       #用户表
     password = models.CharField(max_length=100,verbose_name='用户密码')    #用户密码
     invcode = models.CharField(max_length=4,verbose_name='邀请码')        #邀请码
     phone = models.CharField(max_length=11,verbose_name='手机号')   #手机号
-    invest_money = models.IntegerField(default=0,verbose_name='投资资金')  #投资
+    invest_money = models.IntegerField(default=0,verbose_name='投资资金')  #用户资金
     level=models.CharField(max_length=10, default='低')    #安全等级
     loan_money = models.IntegerField(default=0,verbose_name='借款资金')     # 借款
-    code = models.CharField(max_length=4,verbose_name='验证码')
-    number=models.CharField(max_length=30,default=0)
+    code = models.CharField(max_length=4,verbose_name='验证码')    #验证码
+    number=models.CharField(max_length=30,default=0)    #用户积分
+    use_money=models.IntegerField(default=0)  #用户已投资资金
     #验证码
     class Meta:
         db_table = 'users'

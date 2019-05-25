@@ -351,7 +351,7 @@ $(function(){
 	  <p class="mb10">您好，<span class="memc_name fBold">{{ myname }}</span></p>
 
 	  <p class="mb10 memc_ts clearfix"><span>会员等级：</span><span class="memvip">
-	  <img src="../../static/grzl_files/vip2.png" height="22"></span><!--  <span class="ml10">
+	  <img src="{{ img }}" height="22"></span><!--  <span class="ml10">
 	 <a href="/member-safe.shtml#divtab-1" class="memc_vip">提升</a></span></p> -->
 	  </p><p><span>当前积分：</span><span class="orange ">{{ mynum }}</span></p>
 	</div>
@@ -461,7 +461,7 @@ $(function(){
 
 <div class="mem_box">
     <div class="clearfix membox1 mb10">
-      <a href=# class="mem_recharge fl">充值</a>
+      <a href="{% url 'myapp:cz' %}" class="mem_recharge fl">充值</a>
 	  <a href=# class="mem_cash fr">提现</a>
     </div>
 	<div class="box">

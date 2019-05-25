@@ -1,3 +1,5 @@
+import sys
+sys.path.append('.')
 import random
 from datetime import datetime
 
@@ -112,7 +114,7 @@ def user_register(request):
                         user.password = make_password(password)
                         user.phone = phone
                         user.code = code
-                        if  not password.isdigit():
+                        if not password.isdigit():
                             user.level='高'
                         else:
                             user.level='低'
@@ -137,14 +139,35 @@ def user_msg(request):
         if username== None:
             return redirect(reverse('myapp:login'))
         users=Users.objects.filter(username=username)
+
         for user in users:
             myname=user.username
             myid=user.id
             mylevel=user.level
             mytime=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             mynum=user.number
+
+            money=user.use_money
+            if money == 0:
+                img="../../static/grzl_files/vip1.png"
+            if money == 10000:
+                img="../../static/grzl_files/vip2.png"
+            if money == 20000:
+                img="../../static/grzl_files/vip3.png"
+            elif money ==30000:
+                url="../../static/grzl_files/vip3.png"
+
+
         return render(request,'grzl.html',locals())
 
+
+#充值页面
+def user_cz(request):
+    if request.method=='GET':
+        return render(request,'cz.html')
+
+
+#投资页面
 def user_invest(request):
     if request.method=='GET':
         dict={}
@@ -154,6 +177,9 @@ def user_invest(request):
             return render(request,"invest.html",dict)
         else:
             return render(request,"invest.html")
+
+
+#删除session信息
 def del_session(request):
     del request.session['username']
     return redirect(reverse('myapp:invest'))

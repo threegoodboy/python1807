@@ -1,3 +1,6 @@
+import random
+from datetime import datetime
+
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -109,7 +112,12 @@ def user_register(request):
                         user.password = make_password(password)
                         user.phone = phone
                         user.code = code
+                        if  not password.isdigit():
+                            user.level='高'
+                        else:
+                            user.level='低'
                         user.save()
+
                         return redirect(reverse('myapp:login'))
 
 
@@ -123,7 +131,19 @@ def user_register(request):
 
 
 
-
+def user_msg(request):
+    if request.method=='GET':
+        username=request.session.get('username',None)
+        if username== None:
+            return redirect(reverse('myapp:login'))
+        users=Users.objects.filter(username=username)
+        for user in users:
+            myname=user.username
+            myid=user.id
+            mylevel=user.level
+            mytime=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            mynum=user.number
+        return render(request,'grzl.html',locals())
 
 def user_invest(request):
     if request.method=='GET':

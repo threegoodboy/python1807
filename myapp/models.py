@@ -9,8 +9,11 @@ class Users(models.Model):       #用户表
     invcode = models.CharField(max_length=4,verbose_name='邀请码')        #邀请码
     phone = models.CharField(max_length=11,verbose_name='手机号')   #手机号
     invest_money = models.IntegerField(default=0,verbose_name='投资资金')  #投资
+    level=models.CharField(max_length=10, default='低')    #安全等级
     loan_money = models.IntegerField(default=0,verbose_name='借款资金')     # 借款
-    code = models.CharField(max_length=4,verbose_name='验证码')      #验证码
+    code = models.CharField(max_length=4,verbose_name='验证码')
+    number=models.CharField(max_length=30,default=0)
+    #验证码
     class Meta:
         db_table = 'users'
         verbose_name='用户模型'

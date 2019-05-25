@@ -1,3 +1,6 @@
+import random
+from datetime import datetime
+
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -6,6 +9,7 @@ from myapp.cache import get_code
 
 
 from myapp.models import Users, Investment, Relation
+from myapp.myhelp.http import render_json
 
 from myapp.myhelp.query_true import decide
 from myapp.time_limit import tm_li
@@ -18,7 +22,7 @@ def user_index(request):
             Investment.objects.get(id = invest.id).delete()
     inv_num = Users.objects.filter(invest_money__gt=0).count()
     loan_num = Users.objects.filter(loan_money__gt=0).count()
-    user_num = Users.opybjects.count()
+    user_num = Users.objects.count()
     mark_info1 = Investment.objects.get(id=1)
     mark_info2 = Investment.objects.get(id=2)
     all_make = Investment.objects.all()
@@ -58,18 +62,20 @@ def user_login(request):
         if error_message:
             del request.session['error_message']
             data['error_message'] = error_message
+        elif user_error:
+            del request.session['user_error']
             data['user_error']=user_error
         return render(request,'login.html',data)
     elif request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         users = Users.objects.filter(username=username)
         if users.exists():
             user = users.first()
             request.session['user_id'] = user.id
             if check_password(password,user.password):
-                return redirect(reverse('myapp:main'),username=username)
+                request.session['username']=user.username
+                return redirect(reverse('myapp:invest'))
             else:
                 request.session['error_message'] = "密码错误！"
                 return redirect(reverse('myapp:login'))
@@ -103,10 +109,15 @@ def user_register(request):
 
                         user = Users()
                         user.username = username
-                        user.password = password
+                        user.password = make_password(password)
                         user.phone = phone
                         user.code = code
+                        if  not password.isdigit():
+                            user.level='高'
+                        else:
+                            user.level='低'
                         user.save()
+
                         return redirect(reverse('myapp:login'))
 
 
@@ -120,13 +131,32 @@ def user_register(request):
 
 
 
-
-def loginout(request):
-    request.session.flush()
-    return redirect(reverse('myapp:index'))
+def user_msg(request):
+    if request.method=='GET':
+        username=request.session.get('username',None)
+        if username== None:
+            return redirect(reverse('myapp:login'))
+        users=Users.objects.filter(username=username)
+        for user in users:
+            myname=user.username
+            myid=user.id
+            mylevel=user.level
+            mytime=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            mynum=user.number
+        return render(request,'grzl.html',locals())
 
 def user_invest(request):
-    return render(request,"invest.html")
+    if request.method=='GET':
+        dict={}
+        username=request.session.get('username',None)
+        if username is not None:
+            dict['username']=username
+            return render(request,"invest.html",dict)
+        else:
+            return render(request,"invest.html")
+def del_session(request):
+    del request.session['username']
+    return redirect(reverse('myapp:invest'))
 
 def user_problem(request):
     return render(request,"problem.html")

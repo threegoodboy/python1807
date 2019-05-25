@@ -348,20 +348,20 @@ $(function(){
 	  </div>
 	</div>
 	<div class="fl memcc memc_c">
-	  <p class="mb10">您好，<span class="memc_name fBold">18501495…</span></p>
+	  <p class="mb10">您好，<span class="memc_name fBold">{{ myname }}</span></p>
 
 	  <p class="mb10 memc_ts clearfix"><span>会员等级：</span><span class="memvip">
 	  <img src="../../static/grzl_files/vip2.png" height="22"></span><!--  <span class="ml10">
 	 <a href="/member-safe.shtml#divtab-1" class="memc_vip">提升</a></span></p> -->
-	  </p><p><span>当前积分：</span><span class="orange ">1</span></p>
+	  </p><p><span>当前积分：</span><span class="orange ">{{ mynum }}</span></p>
 	</div>
 	<div class="fl memcc memc_c">
-	  <p class="mb10">ID：<span class="">267193</span></p>
-	  <p class="mb10 memc_ts clearfix"><span>安全等级：</span><span>中等</span><span class="ml10"><a href=# class="memc_safe">提升</a></span></p>
-	  <p>上次登录：<span class=" ">2019-05-24 20:13:33</span></p>
+	  <p class="mb10">ID：<span class="">{{ myid }}</span></p>
+	  <p class="mb10 memc_ts clearfix"><span>安全等级：</span><span>{{ mylevel }}</span><span class="ml10"><a href=# class="memc_safe">提升</a></span></p>
+	  <p>上次登录：<span class=" ">{{ mytime }}</span></p>
 	</div>
 	<div class="fl memcc memc_t" id="memcc">
-	  <a href="javascript:;" class="memc_t1  ">签到</a>
+	  <a href="#" class="memc_t1  " onclick="qiandao()">签到</a>
 	  <a href=# class="memc_t2">自动投标</a>
 	</div>
   </div>
@@ -1584,6 +1584,9 @@ var _hmt = _hmt || [];
 })();
 </script>
 <script>
+    function qiandao(){
+        alert('签到成功')
+    }
 
 $(function(){
   $('.lic01').click(function(){

@@ -83,7 +83,7 @@ DATABASES = {
         'HOST':'localhost',
         'PORT':3306,
         'USER':'root',
-        'PASSWORD':'123456',
+        'PASSWORD':'z979320182',
         'CHARSET':'utf-8'
     }
 }
@@ -139,5 +139,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE':5,
 
 }
+
+SESSION_COOKIE_AGE = 60*10 # 30分钟
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # 关闭浏览器，则COOKIE失效
 
 

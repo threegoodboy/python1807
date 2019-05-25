@@ -1,0 +1,132 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face{ font-family:myFirstFont; src:url('../images/16activites/financial/font.otf');/*,url('Sansation_Light.eot')*//* IE9 */}
+.fcPc1c1{ font-family:myFirstFont; }
+.borderTop{ border-top:1px solid #eee; } 
+.borderBtm{ border-bottom:1px solid #eee; } 
+.borderLft{ border-left:1px solid #eee; } 
+.borderRgt{ border-right:1px solid #eee; } 
+
+.colorf9852{ color:#ff9852; }
+
+.bankdpsc{ width:1000px; margin:20px auto 30px; background:#fff; border-radius:10px; }
+.bankdps_con{ padding:20px 40px 80px; }
+.bdps_ul{ padding:0 50px; background:url(../images/bankdps/bdps_line.png) no-repeat center; height:50px; }
+.bdps_ul li{ width:122px; margin:0 75px; float:left; text-align:center; height:50px; background:#fff; color:#b5b5b5; cursor:pointer; }
+#bdps_ul li h3{ font-size:28px; font-weight:bold; opacity:0.6; filter:alpha(opacity=40); }
+.bdps_ul li h3,.bdps_ul li p{ height:25px; line-height:25px; vertical-align:middle; font-size:17px; }
+#bankdps_con .bddps_on{ color:#febc3d; }
+.bankdps_form{ padding:35px 50px 0; }
+.bankdps_form dl{ height:36px; font-size:14px; line-height:36px; vertical-align:middle; margin-bottom:15px; }
+.bankdps_form dl dt{ width:220px; text-align:right; margin-right:10px; }
+.bankdps_form .bddps_ipt{ width:390px; padding:0 15px; height:35px; line-height:35px; vertical-align:middle; font-size:14px; background:#f5f5f5; color:#333; border-radius:5px; border:none; }
+#bdps_select{ width:390px; position:relative; z-index:1;}
+#bdps_select cite{ width:390px; padding:0 15px; height:35px; line-height:35px; vertical-align:middle; display:block; color:#333; cursor:pointer; font-style:normal; text-align:left; color:#999; background:#f5f5f5 url(../images/bankdps/sicon.png) no-repeat 390px center; }
+#bdps_select ul{ width:390px; background-color:#f5f5f5; position:absolute; z-index:2; display:none; padding:10px 15px; }
+#bdps_select ul li{ height:32px; line-height:32px;}
+#bdps_select ul li a{ display:block; height:32px; color:#999; text-decoration:none; }
+#bdps_select ul li a:hover{ color:#febc3d; } 
+.bdps_togo,.bindbankcard{ width:164px; margin:0 auto; display:block; height:33px; line-height:33px; vertical-align:middle; background:url(../images/bankdps/bdps_btn.png) no-repeat left top; text-align:center; font-size:16px; color:#fff; font-weight:bold; }
+.bdps_togo:hover{ color:#fff; }
+.bdps_rule{ text-align:center; margin-top:20px; font-size:14px; height:25px; line-height:25px; vertical-align:middle; padding-left:230px; }
+.bdps_rulefl{ width:25px; height:25px; margin-right:5px; cursor:pointer; background:url(../images/bankdps/ruleiconm.png) no-repeat center; }
+#bdps_rule .bdps_ruleicon{ background:url(../images/bankdps/ruleicon.png) no-repeat center; }
+.bdps_rule a{ color:#febc3d; }
+.sin-pos{ width:100%; height:100%; background:#000000; position:absolute; left:0; top:0; filter:alpha(opacity=80); opacity:0.8; z-index:999998; }
+.stc{ width:800px; height:651px; position:absolute; left:50%; margin-left:-400px; top:10px; z-index:999999; }
+#bankdps_form .mobile_code{ width:200px; }
+.to_mobilecode{ color:#febc3d; }
+.to_mobilecode:hover{ color:#ff7512; }
+.bdpssuccess_c{ text-align:center; font-size:14px; }
+.bdps_success{ font-size:20px; padding-left:200px; } 
+.bdps_btnc{ padding-left:210px; }
+.bdps_btnc a{ display:block; width:188px; height:33px; line-height:33px; vertical-align:middle; text-align:center; font-size:14px; color:#fff; border-radius:5px; float:left; }
+.bdps_recharge{ background:#ff9852; }
+.bdps_evaluate{ background:#14b2e2; }
+
+
+
+/*充值*/
+.bdps_boxc{ padding:20px 25px; }
+#bdps_box h4{ text-align:left; padding-left:35px; }
+.bdps_mcon{ padding:15px 30px; font-size:14px; line-height:35px; vertical-align:middle; }
+.bdps_minstr{ background:#fafafa; border:1px solid #eff3f7; padding:25px; }
+.bdps_txt h5{ font-weight:bold; }
+.bdps_mmcon{ width:480px; }
+.rfastfl{ width:30%; text-align:right; }
+.rfastfr{ width:69%; text-align:left; }
+.line167{ height:167px; line-height:167px; vertical-align:middle; }
+.bdpsbankbg{ width:232px; height:135px; padding:32px 23px 0; background:url(../images/bankdps/bankbg.png) no-repeat left top; }
+#bdps_banknum{ font-size:18px; color:#bfbfbf; height:35px; line-height:35px; vertical-align:middle; font-weight:bold; }
+.bdps_mcon input{ width:281px; padding:0 10px; height:31px; line-height:31px; vertical-align:middle; border:1px solid #eff3f7; background:#fafafa; color:#333; }
+
+
+/*首页开通提示条*/
+ .to_dbpsbank{ position:absolute; z-index:99999; top:0; left:0; width:100%; text-align:center; height:32px; line-height:32px; vertical-align:middle; font-size:14px; background:url(../images/bankdps/indexbg.png) repeat left top; }
+
+
+.bdps_rcon{ padding:15px 30px; }
+.bdps_acon,.bdps_bcon{ /*padding:15px 30px;*/ font-size:14px; }
+.bdps_acon .color3{ color:#333; }
+.bdps_acon ul li{ line-height:81px; vertical-align:middle; border-bottom:1px dashed #eaeaea; }
+.bdps_acon ul li .w150{ width:135px; height:81px; line-height:81px; vertical-align:middle; padding-left:15px; }
+.bdps_acon ul li .w365{ width:355px; height:81px; line-height:81px; vertical-align:middle; padding-left:10px; }
+.bdps_acon ul li .w110{ width:60px; height:81px; line-height:81px; vertical-align:middle; margin-left:30px; }
+.bdps_acon ul li .w90{ width:70px; height:81px; line-height:81px; vertical-align:middle; margin-left:20px; }
+.abdps_icon1{ padding-left:20px; background:url(../images/bankdps/bdps_icon1.png) no-repeat left center; color:#88be6b; }
+.abdps_icon1h{ padding-left:20px; background:url(../images/bankdps/bdps_icon2.png) no-repeat left center; color:#ffc000; }
+.abdps_icon2{ background:url(../images/bankdps/bdps_icon3.png) no-repeat 32px center; color:#88be6b; }
+.abdps_icon2:hover,.abdps_icon2h{ background:url(../images/bankdps/bdps_icon4.png) no-repeat 32px center; color:#ffc000; }
+.bdps_acont{ padding:0 20px; text-align:center; }
+.bdps_acontl{ text-align:left; font-size:14px; line-height:40px; vertical-align:middle; }
+.bdps_acontl h5{ font-size:18px; height:40px; line-height:40px; vertical-align:middle; }
+.acon_sm{ padding-left:24px; background:url(../images/bankdps/bdps_icon5.png) no-repeat left center; color:#ffc411; }
+.bdps_acontr{ width:255px; height:125px; border:1px solid #d5e0eb; box-shadow:3px 3px 3px #fafafa; border-radius:5px; padding:20px 21px; font-size:14px; line-height:25px; vertical-align:middle; }
+.bdps_acontr h5{ font-size:18px; color:#999; font-weight:bold; }
+.atr_txt{ text-align:left; font-size:12px; } 
+#formTb li{ height:36px; }
+.timeInput_Day{ height:35px; border-radius:5px; }
+.bdps_aconb h5{ height:60px; padding:0 20px; line-height:60px; vertical-align:middle; background:#fafafa; }
+.bdps_anav{ height:80px; line-height:80px; padding:0 20px; vertical-align:middle; }
+.banavc a{ display:block; float:left; margin:0 15px; padding:0 5px; height:28px; line-height:28px; vertical-align:middle; border-bottom:2px solid #fff; margin-top:22px; }
+.banavc a:hover,#banavc .ac_on{ color:#ffc411; border-bottom:2px solid #ffc411; }
+.timeInput_Day{ width:115px; text-align:left; background:#fff; font-size:12px; margin-right:4px; vertical-align:middle; background-repeat:no-repeat; background-position:right; border:1px solid #ccc; }
+.bdps_bcon .color88{ color:#88be6b; }
+.dpswcon{ padding:30px 25px; background:#fafafa; border:1px solid #eee; text-align:center; }
+.dpswcon a{ color:#ffc000; }
+.dpswcon a:hover{ color:#fd9f25; }
+.rclog_t{ font-size:14px; font-weight:bold; color:#a0a0a0; line-height:32px; vertical-align:middle; }
+.bdps_rcon p{ font-size:12px; color:#bfbfbf; line-height:32px; vertical-align:middle; }
+#bdpsoperaframe{ overflow:hidden; padding:25px 0px 0px; line-height:26px; margin-left:5px; margin-bottom:15px; }
+
+
+.bdps_Layer{ padding:30px 40px; font-size:14px; }
+.bdps_Layer ul li{ height:45px; line-height:45px; vertical-align:middle; margin:10px 0; }
+.bdps_Layer ul li span{ display:block; }
+.bdps_Layer ul li input{ width:200px; height:45px; background:#fafafa; border:none; border-radius:5px; padding:0 15px; }
+.bdps_Layer .bspan1{ width:100px; text-align:right; margin-right:20px; }
+.bdps_Layer .bspan2{ width:260px; }
+.bindbankBtn{ display:block; width:150px; margin:30px 0 20px 120px; height:45px; line-height:45px; vertical-align:middle; text-align:center; background:#fd9f25; color:#fff; font-size:14px; border-radius:5px; }
+.bindbankBtn:hover{ background:#ff7512; color:#fff; }
+.modifycon{ padding:15px 160px; background:#fafafa; line-height:55px; }
+.modifycon .bspan1{ width:120px; text-align:right; margin-right:20px; }
+.modifycon .bspan2{ width:260px; }
+#bdpssendCode{ display:block; width:120px; height:43px; background:#eee; margin-top:6px; line-height:45px; vertical-align:middle; text-align:center; color:#333; border-radius:5px; }
+.modifycon dl dt input{ width:200px; height:45px; background:#fff; border:none; border-radius:5px; padding:0 15px; }
+
+
+.tocashstyle span{ display:block; margin-right:20px; padding:0 30px 0 25px; cursor:pointer; background:url(../images/bankdps/cashstylew.png) no-repeat left center; }
+#tocashstyle .cash_on{ background:url(../images/bankdps/cashstyle.png) no-repeat left center; }
+
+
+
+
+
+
+
+
+
+
+
+

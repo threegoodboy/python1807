@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+.mr5{ margin-right: 5px; }.ml5{ margin-left: 5px; }.mt5{ margin-top: 5px; }.mb5{ margin-bottom: 5px;}
+.mr10{ margin-right: 10px; }.ml10{ margin-left: 10px; }.mt10{ margin-top: 10px; }.mb10{ margin-bottom: 10px;}
+.mr20{ margin-right: 20px; }.ml20{ margin-left: 20px; }.mt20{ margin-top: 20px; }.mb20{ margin-bottom: 20px;}
+.orange{ color: #ff7515;}
+
+.active_tj h3{ font-size: 16px; font-weight: normal; line-height: 32px; vertical-align: middle; font-weight: bold; }
+.active_c p{ line-height: 28px; vertical-align: middle; }
+.cBox{ width: 210px; padding-left: 21px; }
+.cBox p{ font-size: 12px; line-height: 16px; vertical-align: middle; }
+.cBox1{ background:url(../images/one.jpg) no-repeat left center; }
+.cBox2{ background:url(../images/two.jpg) no-repeat left center; }
+.cBox3{ background:url(../images/three.jpg) no-repeat left center; }
+.cBox4{ background:url(../images/for.jpg) no-repeat left center; }
+.mem_tj{ width:778px; height:281px; background:url(../images/001.png) no-repeat left top; }
+
+.divtitle, .top_account_bg p b{ width: 120px; }
+
+

@@ -1,0 +1,480 @@
+var YJ_MY_URL = YJ_MY_URL || '';
+var YJ_MY = YJ_MY || {};
+YJ_MY = {
+    get$: function() {
+        var a = [];
+        for (var b = 0; b < arguments.length; b++) {
+            var c = arguments[b];
+            if (typeof c == "string") {
+                c = document.getElementById(c)
+            }
+            a.push(c)
+        }
+        return c
+    },
+    getEvent: function(a) {
+        return a || window.event
+    },
+    preventDefault: function(a) {
+        if (a.preventDefault) {
+            a.preventDefault()
+        } else {
+            a.returnValue = false
+        }
+    },
+    loadImg: function(a) {
+        if (a.style.display == "block") {
+            var c = a.getElementsByTagName("img");
+            for (var b = 0; b < c.length; b++) {
+                var d = c[b].attributes.data_src;
+				if (d) c[b].src = d.value;
+            }
+        }
+    },
+    getToggle: function(i, a, f, h) {
+        var d = YJ_MY.get$(i),b = YJ_MY.get$(a),g = false,e = this;
+        e.loadImg(b);
+        d.onclick = function(k) {
+            var j = this.className;
+            var c = YJ_MY.getEvent(k);
+            if (b.style.display == "none") {
+                b.style.display = "block";
+                if (f) {
+                    this.className = f
+                }
+                e.loadImg(b)
+            } else {
+                b.style.display = "none";
+                if (h) {
+                    this.className = h
+                }
+            }
+            YJ_MY.preventDefault(c)
+        }
+    },
+    removeElement: function(b) {
+        var a = b.parentNode;
+        if (a) {
+            a.removeChild(b)
+        }
+    },
+    getDel: function(f) {
+        var e = this;
+        var c = YJ_MY.get$(f);
+        var d = c.getElementsByTagName("li");
+        var a = d.length;
+        for (var b = 0; b < a; b++) {
+            d[b].onmouseover = function(g) {
+                return function() {
+                    var h = this.getElementsByTagName("span")[0];
+                    h.style.visibility = "visible";
+                    h.onclick = function() {
+                        h.onclick = null;
+                        var i = this.parentNode;
+                        var j = this.attributes.sname.value;
+                        var t = this.attributes.stype.value;
+                        var k = this.attributes.sid.value;
+                        if (!confirm("确定要将 " + j + " 从左侧收藏移除吗？\n(您可以从游戏中心将游戏再次加回左侧菜单)")) {
+                            return false
+                        }
+                        YJ_MY.ajax(YJ_MY_URL+"/index.php?ct=ajax&ac=myapp&action=remove_myapp&appid=" + k + "&atype=" + t + "&" + (new Date).getTime());
+                        e.removeElement(i);
+						if (typeof YJ_MY_APP != 'undefined' && document.getElementById('app_btn_'+k)){
+							YJ_MY_APP.remove_tpl(document.getElementById('app_btn_'+k));
+						}
+                    }
+                }
+            } (b);
+            d[b].onmouseout = function(g) {
+                return function() {
+                    var h = this.getElementsByTagName("span")[0];
+                    h.style.visibility = "hidden"
+                }
+            } (b)
+        }
+    },
+    ajax: function(b, e) {
+        var a = "AJAXNODE",d;
+        var c = document.createElement("script");
+        if (e) {
+            c.charset = e
+        }
+        c.type = "text/javascript";
+        c.src = b;
+        c.id = a;
+        if (d = document.getElementById(a)) {
+            d.parentNode.replaceChild(c, d)
+        } else {
+            document.body.appendChild(c)
+        }
+    },
+    init: function() {
+        var a = this;
+//        a.getToggle("sp_pc", "mod_pclist");
+        a.getToggle("mod_web", "mod_sweb", "close open", "close");
+        a.getToggle("mod_xx", "mod_sxx", "close open", "close");
+        a.getToggle("mod_medal", "mod_smedal", "close open", "close");
+        a.getDel("mod_sweb");
+        a.getDel("mod_sxx");
+        a.getDel("mod_smedal")
+    }
+};
+var YJ_msgPop = (function() {
+    var URL_STATIC = "http://s4.img4399.com/1";
+	var REQUEST_URL = YJ_MY_URL + "/index.php?ct=ajax&ac=friend_request";
+    var GET_REQUEST_URL = REQUEST_URL + "&action=get&r=" + Math.random();
+    var SET_REQUEST_URL = REQUEST_URL + "&action=set&r=" + Math.random();
+	var CONST_HEIGHT="51";
+	
+	function get$() {
+        var _elementArray = [];
+        for (var i = 0; i < arguments.length; i++) {
+            var _ele = arguments[i];
+            if (typeof _ele == "string") {
+                _ele = document.getElementById(_ele);
+            }
+            _elementArray.push(_ele);
+        }
+        return _ele;
+    }
+    function supportFixed() {
+        if (!- [1, ] && !window.XMLHttpRequest) {
+            return true
+        }
+        return false
+    }
+    function getjson(url,callback) {
+		var head = document.getElementsByTagName("head")[0] || document.documentElement;
+		var script = document.createElement("script");
+		if (callback){
+			var jsonp = 'jsonp'+parseInt(Math.random()*1000);
+			url += '&jsoncallback=' + jsonp;
+			window[jsonp] = window[jsonp] || function(json){
+				callback(json);
+				window[jsonp] = undefined;
+				try{
+					delete window[jsonp]
+				}
+				catch(e){}
+			};
+		}
+		script.src = url;
+		script.onload = script.onreadystatechange = function(){
+			if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete"){
+				script.onload = script.onreadystatechange = null;
+				if (head && script.parentNode){
+					head.removeChild(script);
+				}
+			}
+		};
+		head.insertBefore(script, head.firstChild);
+    }
+    function msgTpl(json) {
+        var _litpl = "";
+        if (json) {
+            for (var i in json) {
+                _litpl += "<li><a href=" + json[i]["link"] + "><img src=" + URL_STATIC + "/images/icon/" + json[i]["icon"] + " /><strong>" + json[i]["count"] + "</strong>" + json[i]["text"] + "</a></li>"
+            }
+        }
+        if (_litpl != "") {
+            var _domTpl = document.createElement("div");
+            _domTpl.setAttribute("id", "mod_message");
+            _domTpl.className = "mod_message";
+            var _tpl = "<ul>";
+            _tpl += _litpl;
+            _tpl += "</ul>";
+            _tpl += '<a href="javascript:void(0)" class="mod_mclose" id="mod_mclose">取消所有提醒</a>';
+            _domTpl.innerHTML = _tpl;
+			document.body.insertBefore(_domTpl, document.body.childNodes[0]);
+			msgPop();
+        }
+    }
+    function msgPop() {
+        if (get$("mod_message") == null) {
+            return false;
+        }
+        var _obj = get$("mod_message");
+        var _scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+	   
+        if (supportFixed() == true) {
+            _obj.style.position = "absolute";
+        } else {
+            _obj.style.position = "fixed";
+        }
+		
+        if (_scrollTop >= CONST_HEIGHT) {
+            if (supportFixed() == true) {
+                _obj.style.top = (_scrollTop) + "px";
+            } else {
+                _obj.style.top = 0;
+            }
+        }
+		
+		if( _scrollTop < CONST_HEIGHT && _scrollTop >= 0 ){
+			if( supportFixed() ==false ){
+				_obj.style.position="absolute";
+			}
+			_obj.style.top = CONST_HEIGHT+"px";
+		}
+		
+        get$("mod_mclose").onclick = function() {
+            _obj.style.display = "none";
+            var url = REQUEST_URL + "&action=set&r=" + Math.random();
+            getjson(SET_REQUEST_URL);
+        }
+    }
+    function addEvent(oElement, type, fn) {
+        if (oElement.addEventListener) {
+            oElement.addEventListener(type, fn, false);
+        } else {
+            if (oElement.attachEvent) {
+                oElement.attachEvent("on" + type, fn);
+            } else {
+                oElement["on" + type] = fn
+            }
+        }
+    }
+    function init(flag) {
+		var _mod_mnew=get$("mod_mnew");
+		if(!_mod_mnew){
+			return false;
+		}
+		if(flag || typeof(friend_request_show) == "undefined"){
+			getjson(GET_REQUEST_URL,function(json){
+				if (json){
+					var _mod_mnew=get$("mod_mnew");
+					_mod_mnew.style.display="block";
+				}
+			});
+			
+		}else{
+			getjson(GET_REQUEST_URL,msgTpl);
+			addEvent(window, "scroll",function(){
+				setTimeout(msgPop,100)}
+			);
+		}
+    }
+    return {
+        msgPop: init
+    }
+})();
+/*
+ * to:文字滚动
+ * add by: f2er 11-07-28
+ * update by:11-08-16
+*/
+function txtScroll(ctg){
+	if(!(this instanceof txtScroll )){
+		return new txtScroll(ctg);	
+	}
+	//初始值
+	this._defaultOption={
+		_id : ctg.id,
+		_tag : ctg.tag,
+		_dir : ctg.dir || "up",
+		_speed :ctg.speed || 500,
+		_line : ctg.line || 1,
+		_step:ctg.step || 1	,
+		_delay:ctg.delay || 1000 
+	}
+	this.tempScroll=0;//滚动长度
+	this.timer=null;
+	this._t=null;
+	this._pause = 0;
+}
+
+txtScroll.prototype={
+	get$:function(obj){
+		return typeof obj=='object' ? obj : document.getElementById(obj)	
+	},
+	//清除空白节点
+	clearWhiteSpce:function(oEelement){
+		for(var i=0;i<oEelement.childNodes.length;i++){
+	  		var node=oEelement.childNodes[i];
+	  		if(node.nodeType==3 && !/\S/.test(node.nodeValue)){
+				node.parentNode.removeChild(node)
+			}
+	  }
+	},
+	doScroll:function(opt,obj,h){
+		var that=this;
+		clearTimeout(that._t);
+		that._t=setTimeout(function(){ that.scrollDir(opt,obj,h)},opt._delay)	
+	},
+	doStop:function(obj){
+		var that=this;
+		obj.onmouseover=function(){
+			clearTimeout(that._t);
+			that._pause = 1;	
+		}	
+	},
+	doPlay:function(opt,obj,h){
+		var that=this;
+		//onmouseout
+		obj.onmouseout=function(){
+			that._pause = 0;
+			that.doScroll(opt,obj,h);
+		}	
+	},
+	//scrollUp
+	scrollUp:function(opt,obj,h){
+		var that=this;
+		that.timer=setInterval(function(){
+					that.tempScroll+=opt._step;
+					if(that.tempScroll>h){
+						var _firstChild=obj.removeChild(obj.firstChild);
+						obj.appendChild(_firstChild);
+						that.tempScroll=0;
+					}
+					if(that.tempScroll==h){
+						clearInterval(that.timer);
+						if(that._pause == 0){
+							that.doScroll(opt,obj,h);
+						}
+					}
+					obj.style.marginTop=-that.tempScroll+"px";
+			},opt._speed);
+	},
+	//scrollDown
+	scrollDown:function(opt,obj,h){
+		var that=this;
+		that.timer=setInterval(function(){
+					that.tempScroll+=opt._step;
+					if(that.tempScroll>h){
+						that.tempScroll=0;
+						var _lastChild=obj.removeChild(obj.lastChild);
+						obj.insertBefore(_lastChild,obj.firstChild);
+					}
+					if(that.tempScroll==0){
+						clearInterval(that.timer);
+						if(that._pause == 0){	
+							that.doScroll(opt,obj,h);
+						}
+					}
+					obj.style.marginTop=that.tempScroll+"px";
+			},opt._speed);
+	},
+	//scroDir
+	scrollDir:function(opt,obj,h){
+		var that=this;
+		if (that.timer){
+			clearInterval(that.timer);
+		}
+		switch(opt._dir){
+			case "up":
+				//向上滚动
+				that.scrollUp(opt,obj,h);
+				break;
+			case "down":
+				//向下
+				that.scrollDown(opt,obj,h);
+				break;
+		}
+	},
+	//init
+	init:function(){
+		var that=this,_default= that._defaultOption,_obj=that.get$(_default._id);
+		that.clearWhiteSpce(_obj);
+		_length=_obj.getElementsByTagName(_default._tag).length;
+		var _height= _obj.firstChild.offsetHeight,_scrollHeight = _default._line *_height;
+		//scrollDir
+		//that.scrollDir(_default,_obj,_scrollHeight);
+		if( _length!=1 && _length!=0 ){
+			/*add by ZhaoWei 2011-9-21*/
+			that.doScroll(_default,_obj,_scrollHeight);
+			
+			//onmouseover
+			that.doPlay(_default,_obj,_scrollHeight);
+			that.doStop(_obj)
+		}
+		
+	}		
+}
+function scrollBT(a) {
+    if (! (this instanceof scrollBT)) {
+        return new scrollBT(a)
+    }
+    this._id = a.id || "goTop";
+    this._hnum = a.hnum || 500;
+    this._mb = a.mb || 40,
+    this._speed = a.speed || 10
+}
+scrollBT.prototype = {
+    $get: function(a) {
+        return (typeof a === "string") ? document.getElementById(a) : a
+    },
+    addEvent: function(a, c, b) {
+        if (a.addEventListener) {
+            a.addEventListener(c, b, false)
+        } else {
+            if (a.attachEvent) {
+                a.attachEvent("on" + c, b)
+            } else {
+                a["on" + c] = b
+            }
+        }
+    },
+    tpl: function() {
+        var b = this,a = document.createElement("span");
+        a.className = "mod_backTop";
+        a.id = b._id;
+        a.innerHTML = "返回顶部";
+        document.body.appendChild(a)
+    },
+    ie: (function() {
+        var c, a = 3,d = document.createElement("div"),b = d.getElementsByTagName("i");
+        while (d.innerHTML = "<!--[if gt IE " + (++a) + "]><i></i><![endif]-->", b[0]) {}
+        return a > 4 ? a: c
+    })(),
+    setPos: function() {
+        var a = this,d = a.$get(a._id);
+        if (a.ie) {
+            var c = document.documentElement || document.body;
+            var b = c.clientHeight + c.scrollTop - a.$get(a._id).offsetHeight - a._mb;
+            d.style.position = "absolute";
+            d.style.top = b + "px"
+        } else {
+            d.style.position = "fixed";
+            d.style.bottom = a._mb + "px"
+        }
+    },
+    doScroll: function() {
+        var a = this,c = document.documentElement.scrollTop || document.body.scrollTop,b = a.$get(a._id);
+        if (c > a._hnum) {
+            b.style.display = "block"
+        } else {
+            b.style.display = "none"
+        }
+        a.setPos()
+    },
+    exec: function() {
+        var b = this,a = null;
+        if (b.$get(b._id) == null) {
+            b.tpl()
+        }
+        b.doScroll();
+        var c = function() {
+            var d = 0,e = document.documentElement.scrollTop || document.body.scrollTop;
+            _scrollHeight = Math.floor(e / b._speed);
+            if (_scrollHeight == 0) {
+                clearInterval(a);
+                a = null
+            }
+            window.scrollTo(0, _scrollHeight)
+        };
+        b.$get(b._id).onclick = function() {
+            var d = document.documentElement.scrollTop || document.body.scrollTop;
+            if (a) {
+                clearInterval(a)
+            }
+            a = setInterval(c, 30)
+        }
+    },
+    init: function() {
+        var a = this;
+        a.exec();
+        a.addEvent(window, "scroll", function() {
+            a.exec()
+        })
+    }
+};

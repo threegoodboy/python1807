@@ -1,0 +1,395 @@
+@charset "utf-8";
+input::-moz-focus-inner,button::-moz-focus-inner{ border:0;padding:0}
+a{outline:none}
+.page_bg{ background:url(https://pay.img4399.com/images/default/full_bg.jpg) no-repeat center top;padding-top:0}
+.page_wrapper{ width:980px;margin:0 auto;}
+.recharge_banner{background:url(https://pay.img4399.com/images/default/default_banner.jpg) no-repeat; width:980px;height:152px;}
+/*layout*/
+.recharge_box{ margin-top: 10px; overflow: hidden;}
+.recharge_container{ float: left; width:100%;}
+.recharge_content,.recharge_record{ margin: 0 236px 0  197px;}
+.recharge_record{ margin: 0 0 0 197px;}
+.recharge_type{ float: left; width:187px; margin-left: -100%; background:#f00}
+.recharge_service{ float: left; width:226px; margin-left: -226px; display:inline; }
+
+
+.rc_box .hd,.rc_nav .rc_title,.rc_nav .lrc,.rc_nav .rrc{ background-image: url(https://pay.img4399.com/images/default/bg_sprite.png); background-repeat: no-repeat;}
+.rc_ipt,.rt_type{ border:1px solid #a6b2bf; line-height:20px; padding:2px 3px; width:140px; height: 20px; color:#626f80;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;out-line:none;}
+.rt_type{ margin: 0 20px 0 10px; width:80px;}
+.rc_ipt:focus,.rt_type:focus{ border:1px solid #F9C472;}
+.ml10{ margin-left: 10px;}
+
+/*rc_box*/
+.rc_box{ border:1px solid #d9e0e8;}
+.rc_box .hd{ background-position: 0 0; background-repeat: repeat-x; border-bottom: 1px solid #d9e0e8; height: 36px; padding:0 10px; line-height: 36px; font-size: 14px;}
+.rc_box .hd h2{ background-image: url(https://pay.img4399.com/images/default/ico_sprite.png); background-repeat: no-repeat; padding-left:20px;}
+.rc_box a{ color:#333;display:block;}
+.rc_box a:hover{ color:#fe7400}
+
+/*service_center*/
+.service_center h2{ background-position: 0 7px;}
+.service_center .bd{ padding:10px 10px 20px; zoom:1; }
+.service_center .bd p{ margin-bottom: 5px; font-size:12px;}
+/*.kf_online{ background: url(../images/default/kf_online.jpg) no-repeat; width:198px; height: 67px; display: block; margin-top: 20px;}*/
+.kf_online{ background: url(https://pay.img4399.com/images/default/kf_online.jpg) no-repeat; width:198px; height: 67px; display: block; margin-top: 20px;}
+
+/*qa_center*/
+.qa_center{ margin-top:-1px;}
+.qa_center .hd a{ font-size:12px; float: right;}
+.qa_center h2{ background-position: 0 -26px;}
+.qa_center .bd{ padding:10px 5px; zoom:1}
+
+/*qa_list*/
+.qa_list img{ margin-left:0px;width:24px;height:17px;}
+.qa_list li{ border-bottom: 1px dashed #ccc; height:19px; /*line-height: 39px;*/ padding:10px 0 10px 5px;  white-space: nowrap; overflow: hidden;width:208px; }
+
+/*rc_nav*/
+.rc_nav .rc_title{ background-position: 0 -75px; background-repeat: repeat-x; height:35px; line-height: 35px; padding:4px 34px 0; overflow: hidden;}
+.rc_nav .lrc{ float:left; background-position: 0 -36px; display:inline; width:34px; height:39px; margin-top: -39px}
+.rc_nav .rrc{ float: right; background-position: right -114px; display:inline; width: 34px; height: 39px; margin-top: -39px;}
+
+/*nav*/
+.nav li{ float: left; font-size: 14px; margin-right: 15px; display: inline; text-align: center}
+.nav li a{ color:#fff; font-weight: 700; width: 104px; height:35px; line-height: 29px; display: block;}
+.nav li a:hover{ background: url(https://pay.img4399.com/images/default/sprite.png) no-repeat 0 0; height: 29px; text-decoration: none;}
+.nav li.current a{ background: url(https://pay.img4399.com/images/default/sprite.png) no-repeat 0 -29px; height: 35px;color:#333; position: relative;}
+
+/*rc_content*/
+.rc_content{ border-width: 0 1px 1px; border-style: solid; border-color:#d9e0e8; zoom:1;overflow:hidden;}
+.bank_form{ padding:30px 10px 10px; zoom:1;background:#fff;}
+
+/*rc_dv*/
+.rc_dv{ padding:5px 0 10px 140px; zoom:1; position: relative;color:#626f80;}
+.rc_dv .label{ position:absolute;left:0;top:5px; width:130px; text-align: right;}
+.rc_dv .tip_word{ display:none;color:#fe7400}
+.rc_dv .result em{ font-size: 20px; color:#fe7400; padding:0 5px;}
+.rc_dv em.aval_yb{ font-size: 20px; color:#fe7400; padding:0 5px; line-height:1}
+
+.btn_select{ background: url(https://pay.img4399.com/images/default/sprite.png) no-repeat 0 -64px; width:74px;height: 28px; border:none; cursor: pointer; color:#fff;}
+
+/*money_list*/
+.money_list{  }
+.money_list li{ float: left; width: 180px; margin-right: 10px; padding-bottom: 10px; display: inline; color:#626f80; font-family: "tahoma"; vertical-align: text-top;}
+.money_list li input,.card_list li input{ margin:-2px 5px 0 5px;}
+.money_list .other{ width:350px; height:27px;}
+.money_list .other .rt_type,.money_list .other .rc_ipt{ margin:0 5px 0 5px; width:50px;}
+.card_list li{ float: left; width:120px;font-family:"tahoma"}
+
+/*bank_type*/
+.bank_type .hd{ border-bottom: 1px solid #cdd5dd; padding-bottom:12px; color:#3b4a5e; font-size: 14px; padding-left:20px; }
+.bank_type .bd{padding:15px 20px; zoom:1; }
+
+/*bank_select*/
+.bank_select{ height: 160px;overflow: hidden; margin-right: -20px; overflow: hidden;}
+.bank_select li{ float: left; width:165px; height: 35px; padding-bottom: 20px;}
+.bank_select li span{ margin-left: 10px;}
+
+.bank_more,.bank_more_up{ background-image:url(https://pay.img4399.com/images/default/bank_more.png);background-repeat:no-repeat; width:462px; height: 26px; margin: 0 auto; cursor: pointer; }
+.bank_more{ background-position: 0 0;}
+.bank_more_up{background-position:0 -26px;}
+.btn_dv{ width:146px; /*margin: 20px auto 0;*/ margin:20px auto;}
+.btn_recharge{ background: url(https://pay.img4399.com/images/default/sprite.png) no-repeat 0 -92px; width:146px; height: 42px; vertical-align:top; border: none; cursor: pointer;}
+
+/*bank_tip*/
+.bank_tip{ border-top:1px dashed #ccc; margin: 25px 10px 0; padding:10px 0 40px; line-height: 2; color:#898b8e}
+.bank_tip dt{ color:#fa6300}
+
+/*bank_box*/
+.bank_box .hd{ background: url(https://pay.img4399.com/images/default/bank_box.png) no-repeat; background-repeat: no-repeat; width: 187px;height:51px;text-align: center; line-height: 51px; font-size:14px; color:#333}
+.bank_box .bd{ border-style: solid; border-color:#f9c472; border-width:0 1px 1px; background: #fffae4; padding:10px 1px 40px; zoom:1}
+
+/*bank_list*/
+.bank_list{}
+.bank_list li{ background: url(https://pay.img4399.com/images/default/bank_box.png) no-repeat -187px 0; height:40px;position: relative;}
+.bank_list li a{ display: block; width:183px; height: 30px; padding:5px 0; color:#3b4a5e; font-size: 14px;}
+.bank_list li a:hover{ text-decoration: none; color:#FE7400}
+.bank_list .current a{ background: url(https://pay.img4399.com/images/default/type.png) no-repeat;  width:195px; left:-2px; top:0;position:absolute;color:#fff; font-weight: 700}
+.bank_list .current a:hover{ color:#fff}
+.bank_list .current span{ margin:0 10px 0 12px}
+.bank_list span{ background-image: url(https://pay.img4399.com/images/default/type_ico.png); background-repeat: no-repeat; width:30px; height:30px; vertical-align: middle; display: inline-block; zoom:1;*display: inline; margin:0  10px 0 10px;;}
+.b1{ background-position: 0 0}
+.b2{ background-position: -30px 0}
+.b3{ background-position: -60px 0}
+.b4,.b5{ background-position: -90px 0}
+.b6{ background-position: -120px 0}
+.b7{ background-position: -150px 0}
+.b8{ background-position: -180px 0}
+.b9{ background-position: -210px 0}
+.b10{ background-position: -240px 0}
+.b11{ background-position: -270px 0}
+.b12{ background-position: -300px 0}
+.b13{ background-position: -330px 0}
+.b14{ background-position: -360px 0}
+.b15{ background-position: -390px 0}
+.b16{ background-position: -420px 0}
+.b17{ background-position:-450px 0}
+.b18{background-position:-480px 0;}
+.b19 { background-position: -510px 0;}
+
+/*money_value*/
+.money_value li{ width: 150px;}
+
+/*record_list*/
+.record_list{ padding:20px 10px 50px; zoom:1;}
+.table_record{ border: 1px solid #f9c472; color:#3b4a5e; text-align: center; font-family: "simsun"}
+.record_list thead th{ background: #fffae4; border-width:0 1px 1px; border-style: solid; border-color:#f9c472  #ffeccf #ffeccf; padding:5px; font-weight: 400}
+.record_list tbody td{  border:1px solid #ffeccf; padding:5px;}
+.record_list .first{ border-width: 0 1px 1px 0;}
+.record_list .last{ border-width: 0 0 1px 1px;}
+.record_list .last_tr td{ border-width: 1px 1px 0 1px;}
+.record_list .last_tr .first{border-width: 0 1px 0px 0;}
+.record_list .last_tr .last{border-width: 0}
+
+.recharge_kf{ background: url(https://pay.img4399.com/images/default/ico_sprite.png) no-repeat 0 -62px; width:21px; height: 102px; display: block; position: fixed; top: 150px;left:50%; margin-left: 490px;}
+
+/*recharge_pop*/
+.recharge_tipop,.recharge_pop{border:1px solid #a24c00; background: #cd660a; padding:4px; }
+.recharge_tipop{position: absolute; left:50%;top:50%;z-index:999;}
+/*#pop_pay{ height:330px;}*/
+/*recharge_pop*/
+.recharge_pop .hd{ position: relative;}
+.recharge_pop .hd .title,.recharge_pop .hd .lt,.recharge_pop .hd .rt{ background-image: url(https://pay.img4399.com/images/default/pop.png); background-repeat: no-repeat; overflow: hidden; height:45px; }
+.recharge_pop .hd .title{ background-position: 0 -45px; background-repeat: repeat-x; line-height: 45px; padding-left:15px;}
+.recharge_pop .hd h2{padding-left:10px; color:#fe6900; font-size: 14px;}
+.recharge_pop .hd .lt{ float: left; background-position: 0 0; margin-top: -45px; width:23px; display: inline; }
+.recharge_pop .hd .rt{ float: right; background-position: right -90px; margin-top: -45px; width:23px; display: inline; }
+.recharge_pop .pop_close,#ser_close{ cursor:pointer; background: url(https://pay.img4399.com/images/default/sprite.png) no-repeat 0 -134px; width:55px; height: 32px; display: block; position: absolute;right:20px; top: 0; text-indent: -999em; overflow: hidden;}
+.recharge_pop .pop_close:hover{ background-position: -55px -134px;}
+.recharge_pop .bd{ background: #fffbec;zoom:1}
+.recharge_pop .fd,.recharge_pop .fd .lb,.recharge_pop .fd .rb{ background-image: url(https://pay.img4399.com/images/default/pop.png); background-repeat: no-repeat; overflow: hidden; height:10px; }
+.recharge_pop .fd { background-position: 0 -135px; padding:0 22px; }
+.recharge_pop .fd .lb{ background-position: 0 -145px; background-repeat: repeat-x; display: block;}
+.recharge_pop .fd .rb{ background-position: right -150px; display: block; margin: -10px -22px 0 0;  }
+.recharge_pop .arrow{ background:url(https://pay.img4399.com/images/default/game.png) no-repeat -112px -99px;width:19px;height:9px;overflow:hidden;position:absolute;left:210px;top:-9px;}
+
+/*game_box*/
+.game_box{ padding:15px 0; zoom:1}
+.game_box .ihd{ border-bottom: 1px solid #f9c472; height:35px; padding:0 10px;}
+
+.search_game{ float: right; background: url(https://pay.img4399.com/images/default/game.png) no-repeat 0 -74px; width:192px; height: 23px;margin-top:8px; display: inline;position:relative; }
+.search_game .sch_ipt{ float: left; width:178px; height: 19px; padding:2px 5px;}
+.search_game .sch_ipt input{ border: none; background:none; color:#cb936b }
+.search_game .sch_btn{ width:38px; height: 23px; border: none; cursor: pointer; background: none;display:none;}
+.game_played{ position:relative; top:1px;}
+.game_played li,.game_played li a,.game_played li.current,.game_played li.current a{ background-image: url(https://pay.img4399.com/images/default/game.png); background-repeat: no-repeat;height:35px;}
+.game_played li{ float:left; background-position:  right -35px;  padding-right:5px; margin-right:5px; display: inline;}
+.game_played li.current{ background-position: right 0}
+.game_played li a{  background-position:  -86px -35px;float:left; padding: 0 5px 0 10px; line-height: 35px; color:#3B4A5E}
+.game_played li.current a{ background-position: -86px 0; font-weight: 700; color:#FE6100 }
+.game_played li a:hover{ text-decoration:none}
+
+/*game_list*/
+.game_list{ padding: 34px 65px 10px; zoom:1; position: relative; }
+/*game_ul*/
+.game_ul{ margin-right: -20px; overflow: hidden;}
+.game_ul li{ float: left; width:100px; margin-bottom: 10px; height:19px; padding:3px 5px 2px; color:#3B4A5E; font-family:"tahoma";white-space:nowrap;overflow:hidden;}
+.game_ul li label{ width:100px;overflow:hidden;display:inline-block;*zoom:1;*display:inline;}
+.game_ul li input{/* visibility:hidden;*/ position: absolute;left:-999em;}
+.game_ul li img{ margin-right:5px;vertical-align:top;}
+
+.arrow_left,.arrow_right{ background-image: url(https://pay.img4399.com/images/default/game.png); background-repeat: no-repeat; width:13px; height: 19px; position:absolute;top:65px; display: block; text-indent: -999em; overflow: hidden;cursor: pointer;}
+.arrow_left{ background-position: 0 0; left: 25px;}
+.arrow_right{ background-position: -13px 0;right:25px;}
+
+/*game_page*/
+.game_page{ text-align: center; height: 12px; overflow: hidden; margin-top: 20px;}
+.game_page span,.game_page span.current{ background: url(https://pay.img4399.com/images/default/game.png)  no-repeat -66px 0; margin-right: 10px; display: inline-block; zoom:1;*display:inline; vertical-align: top; cursor:pointer;width:13px; height: 12px;}
+.game_page span.current{ background-position:-52px 0; }
+
+/*form_comfirm*/
+.form_comfirm{ padding:30px 0; width:450px; margin: 0 auto; }
+.form_comfirm li{ padding: 10px 0 5px 192px; zoom:1; color: #3b4a5e }
+.form_comfirm li label{ float: left; width:182px; margin-left: -192px; display: inline; text-align: right;}
+.form_comfirm li span{ color:#fe6100}
+
+.form_comfirm .form_btn{ margin: 20px 0 0 100px;}
+.btn_ok,.btn_cancel,.btn_qa{border: none; cursor: pointer; width:72px; height: 26px; cursor: pointer; margin: 0 10px;}
+.btn_ok{ background: url(https://pay.img4399.com/images/default/game.png) no-repeat 0 -19px; color:#fff;}
+.btn_cancel{ background: url(https://pay.img4399.com/images/default/game.png) no-repeat 0 -45px; width: 74px; height: 28px; color:#000}
+.btn_qa,.a_qa{background: url(https://pay.img4399.com/images/default/game.png) no-repeat 0 -97px; width: 102px; height: 33px; line-height: 28px; color:#000}
+/*pay_box*/
+.pay_box{ padding: 30px 45px; zoom:1 }
+.pay_box .title{ font-size: 20px; color:#ef6300; font-weight: 700; line-height: 28px; margin-bottom:10px;}
+.pay_box .pay_alert{ background:url(https://pay.img4399.com/images/default/pay_box.jpg) no-repeat 20px 0; padding:25px 0 50px 160px; zoom:1; margin-top: 20px; line-height: 2; color:#3b4a5e; font-size: 14px; }
+.pay_box .reflesh{ color:#f16400; font-weight: 700}
+.pay_box .pay_btn{ margin-top: 20px;}
+
+/*.pay_success */
+.pay_success {}
+.pay_success .title{ margin:0 0 20px 0;}
+.pay_success .pay_alert{ background-position: 176px 22px!important;padding:25px 0 50px 330px;}
+.pay_success .pay_alert span,.pay_success .pay_alert strong{ color:#ef6300}
+.pay_success .btn_qa,.a_qa{ display: inline-block; zoom:1;*display: inline; vertical-align: middle; text-align: center; line-height: 33px;}
+.a_qa{margin-right:10px;}
+.pay_fail .pay_alert{background:url(https://pay.img4399.com/images/default/fail.png) no-repeat 120px 0; padding:25px 0 50px 350px;}
+/* serarch game */
+.sel_game{background-color:yellow}
+#trans {background: none repeat scroll 0 0 #000000;display: none;height: 800px;left: 0;opacity: 0.5;filter:alpha(opacity=50);position: absolute;top: 0;width: 100%;z-index:998;}
+
+/*add by f2er 12-03-07*/
+.bank_ico{ background-image:url(https://pay.img4399.com/images/default/bank_sprite.png); background-repeat:no-repeat; display:inline-block;*zoom:1;*display:inline; width:116px; height:35px; vertical-align:middle;}
+.bank_icbc{ background-position:-1392px -35px;}
+.bank_ccb{ background-position:-812px -35px;}
+.bank_abc{ background-position:-1624px 0;}
+.bank_cmb{ background-position:-1160px -35px;}
+.bank_boc{ background-position:-696px -35px;}
+.bank_bcom{ background-position:-1276px -35px; }
+.bank_ceb{ background-position:-928px -35px; }
+.bank_post{ background-position:-232px 0; }
+.bank_gzrcc{ background-position:-928px 0; }
+.bank_gzcb{ background-position:-116px -35px; }
+.bank_shrcc{ background-position:-1508px -35px;}
+.bank_spdb{ background-position:-348px 0;}
+.bank_bjrcb{ background-position:0 -35px;}
+.bank_cmbc{ background-position:-348px -35px;}
+.bank_sdb{ background-position:0 0;}
+.bank_citic{ background-position:-464px -35px;}
+.bank_pab{ background-position:-116px 0;}
+.bank_shb{ background-position:-1276px 0;}
+.bank_bob{ background-position:-1392px 0;}
+.bank_hxb{ background-position:-232px -35px;}
+.bank_nbcb{ background-position:-696px 0;}
+.bank_njcb{ background-position:-1044px 0;}
+.bank_hzb{ background-position:-1160px 0;}
+.bank_hsb{ background-position:-1508px 0;}
+.bank_cbhb{ background-position:-812px 0;}
+.bank_bea{ background-position:-580px 0;}
+.bank_cib{ background-position:-1044px -35px;}
+.bank_cgb{ background-position:-464px 0;}
+.bank_czb{ background-position:-580px -35px;}
+
+.youbi_list li{ width:100px;}
+.rc_dv .inlineBlock{display:inline-block;*zoom:1;*display:inline;}
+.form_sel{height:22px; line-height:18px; padding:2px}
+.pop_noseh{ background:url(https://pay.img4399.com/images/default/pop_noseh_bg.png) no-repeat;text-align:center; color:#D30000;height:30px;left:30px;line-height:26px;position:absolute;top:-20px;width:119px;}
+.btn_tj{ display:inline-block;*zoom:1;*display:inline;text-align:center; line-height:26px;}
+.recharge_tip{ background:url(https://pay.img4399.com/images/default/recharge_tip.png) no-repeat 30px 50px; padding:50px 0 50px 120px; zoom:1; line-height:28px; font-size:14px;   }
+.recharge_tip span{color:#fb7900;}
+
+.rc_style{ border:1px solid #f9c472; background:#fff8d9; padding:0 10px; height:24px; line-height:2; margin:-15px 10px 10px 10px;color:#666; overflow: hidden;}
+.rc_style span{ float:left;}
+.rc_style em{ color:#fe6300;font-weight:700;}
+.rc_style a{ background:url(https://pay.img4399.com/images/default/ico_sprite.png) no-repeat 0 -65px; padding-left:20px;color:#666; float:right;}
+.rc_style a:hover{ color:#fe6300;}
+.rc_login{ padding:50px 0; text-align:center; line-height:2;color:#626F80;font-size:14px;}
+.rc_login a{ color:#FE6300;font-weight:700}
+.dhPic,.dhPic_fail {font-size: 14px;line-height: 28px;padding: 100px;text-align: left;}
+
+.recharge_popbox{ width:970px; margin:0 auto;}
+.select_box{ background:url(https://pay.img4399.com/images/default/game.png) no-repeat -35px -130px;line-height:2;cursor:pointer;width:120px;white-space:nowrap;overflow:hidden; height:23px;display:inline-block;*zoom:1;*display:inlne;padding:0 24px 0 3px; border:1px solid #a6b2bf;}
+.rc_desc{ border:1px solid #f9c472; background:#fffae4; width:250px; padding:5px; line-height:20px; height:60px; overflow-x:hidden;overflow-y:auto;}
+#ser_close{top:4px;z-index:999}
+.hover{ background:#FFF8D9}
+
+.reword_tip{display:none;position:fixed;width:340px;text-align:center;font-size:14px;border:4px solid #51AFEA;background:#d2ecfc;left:50%;margin-left:-175px;top:50%;line-height:2;padding:5px;z-index:1000;margin-top:-23px}
+
+/*进入游戏*/
+.jion_game{width:226px;height:46px;display:block;text-indent:-1024em;overflow:hidden;margin-bottom:10px;}
+/*优惠活动轮播*/
+.rc_carsoul{ height:220px;overflow:hidden;position:relative;width:194px;}
+.rc_carsoul .carsoul_img{position:absolute;left:0;top:0;z-index:10}
+.rc_carsoul .carsoul_img li{/*float:left;*/ position:absolute;left:0;top:0;height:220px;width:204px;}
+.rc_carsoul .carsoul_num{ position:absolute;right:10px;bottom:10px;z-index:11}
+.rc_carsoul .carsoul_num li{float:left;width:15px;height:15px;text-align:center;line-height:15px;color:#333;cursor:pointer;background:#fff;margin-left:5px;}
+.rc_carsoul .carsoul_num li.cur{background:#ff8500;color:#fff;}
+
+.kf_qq{background:url(https://pay.img4399.com/images/default/kf.png) no-repeat;width:52px;height:20px;line-height:20px;display:inline-block;zoom:1;*display:inline;margin:5px 5px 0 0;color:#4a85b2;padding-left:22px;}
+
+.rc_dv .ye_label{top:12px;}
+.ey_a{ color:#16aedd;margin-left:10px;}
+.bank_tip dt{overflow:hidden;zoom:1}
+.bank_tip dt a{color:red;font-weight:bold;font-size:14px;text-decoration:underline}
+
+.rc_go{background:url(https://pay.img4399.com/images/default/rc_go.png) no-repeat;width:94px;height:28px;float:right;text-indent:-1024em;overflow:hidden;margin:2px -24px 0 0;position:relative;}
+.rc_go:hover{ background-position:-94px 0;}
+/* add by gwc 20131029 */
+.bind_user_qq,.bind_user_sina{ background:url(https://pic.my4399.com/images/pay/qq_logo.png) no-repeat 5px 4px; width:117px; padding-left:26px;}
+.bind_user_sina{ background:url(https://pic.my4399.com/images/pay/weibo_logo.png) no-repeat 2px 3px; }
+/* add by gwc 20131031 */
+.rc_dv .removebtn{ background:url(https://pay.img4399.com/images/default/game.png) no-repeat -157px -99px; width:16px; height:16px; display:block; position:absolute; left:267px; top:10px; cursor:pointer;}
+.rc_dv .removebtn:hover{ background-position:-175px -99px;}
+
+.bind_user_qq_f{ background: url(https://pic.my4399.com/images/pay/qq_logo.png) no-repeat; padding-left:20px;}
+.bind_user_weibo_f{ background: url(https://pic.my4399.com/images/pay/weibo_logo.png) no-repeat 0 -3px; padding-left:25px;}
+#f_uname{ float:left; height:18px; line-height:18px; }
+
+.txthide {text-indent: -999em;overflow: hidden;line-height: 0;font-size: 0;}
+
+/* add by gwc (20131219 新增为好友充值按钮)*/
+.pfobtn{ background:url(https://pay.img4399.com/images/default/sprite.png) 0 -166px; width:88px; height:28px; border:none; color:#fff; cursor:pointer; margin-left:10px;}
+/* add by gwc (20140328 新增银行卡快捷支付成功提示)*/
+.rc_orderbox{ background:#f4fdec; border:#96c93c 1px solid; padding:0 10px; margin:0 10px; position:relative;}
+.rc_orderbox .actlink{ height:32px; line-height:32px; font-size:0; position:absolute; right:10px;}
+.rc_orderbox .actlink a,
+.rc_orderbox .actlink span{ font-size:12px; color:#666;}
+.rc_orderbox .actlink span{ margin:0 8px;}
+.rc_orderbox .orderinfo{ padding:10px 0 15px 58px;}
+.rc_orderbox .orderinfo .suctip{ line-height:38px; color:#75b42d; font-family:"microsoft yahei"; font-size:18px; font-weight:700;}
+.rc_orderbox .orderinfo .icon_success{ background:url(https://pay.img4399.com/images/default/icon_success.png) no-repeat; width:35px; height:26px; float:left; display:inline; margin:9px 0 0 -50px; }
+.rc_orderbox .orderlist li{ width:190px; height:22px; line-height:22px; float:left; margin-right:10px; color:#000; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+.rc_orderbox .orderlist .str{ color:#fe6300;}
+.rc_orderbox .orderdesc{ line-height:32px; color:#999; border-top:#96c93c 1px dotted; text-align:right; }
+.rc_orderframe{ margin:10px; }
+/*社区五周年 by 情封*/
+.mod_ad_tmp{display:block;width:226px;height:200px;margin-bottom:10px;}
+.mod_cz_success{border:1px solid #e9d4a5;background:#ffedc5;padding:15px 10px;zoom:1;line-height:2;position: relative;color:#8b7833;width:440px;margin-bottom:10px;}
+.mod_cz_success .mod_cz_title{color:#ee6836;font-weight:700;font-size:20px;}
+.mod_cz_success .mod_cz_btn{position: absolute;right:10px;top:22px;background:url(https://pay.img4399.com/images/default/mod_cz_btn.png);display: block;width:84px;height:30px;}
+/*=============update by 敖飞 2014.12.24============*/
+.other_list li{ float: left; display: inline; width: 100px; }
+.other_money li{ margin-bottom: 10px; }
+.other_list li input{ margin: -2px 5px 0; }
+.bank_tip dd .red{ margin: 5px 0; font-weight: 700; color: #ff0000; }
+
+.yunying_pop{ width: 550px; height: 380px; }
+.yunying_pop .bd{ height: 265px; padding: 30px 20px 30px 20px; }
+.yunying_pop .qc .img{ width:209px;height:193px;float: right; display: inline; padding-left: 15px; border-left: 1px dashed #f9c472; }
+.yunying_pop .qc .detail{ float: left; display: inline; }
+.yunying_pop .qc .detail li{ overflow: hidden; margin-bottom: 10px; }
+.yunying_pop .qc .detail li p,.yunying_pop .qc .detail li span{ float: left; display: inline; }
+.yunying_pop .qc .detail li .title{ width: 85px; text-align: right; color: #3b4a5e; }
+.yunying_pop .qc .detail li .text{ padding: 0 5px; color: #fe6100; }
+.yunying_pop .qc .detail li .tips{ color: #ff0000; }
+.yunying_pop .tip{ margin-top: 30px; }
+.yunying_pop .tip p{ margin-bottom: 10px; text-align: center; }
+.yunying_pop .tip p .blue{ color: #208cf0; }
+.yunying_pop .tip p .red{ color: #ff0000; }
+.yunying_pop .going{ width: 200px; margin: 90px auto 0;}
+.yunying_pop .going dt{ font-weight: 700; font-size: 16px; color: #3b4a5e; }
+.yunying_pop .going dd{ margin-top: 5px; color: #fe6900; }
+
+.confirm_pop .bd{ width: 200px; height: 95px; padding: 20px 45px; color: #3b4a5e; }
+.confirm_pop .bd p{ text-align: center; margin-bottom: 5px; }
+.confirm_pop .bd .closebtn,.confirm_pop .bd .cancelbtn{ float: left; display: inline; background: url(https://pay.img4399.com/images/confirm_btn.png) no-repeat; width: 74px; height: 28px; margin-top: 15px; text-align: center; line-height: 28px; color: #000; cursor: pointer; }
+.confirm_pop .bd .closebtn{ margin: 15px 20px 0 10px;}
+.confirm_pop .bd .cancelbtn{ background-position: 0 -29px; width: 72px; height: 26px; margin-top: 16px line-height: 26px; color: #fff; }
+/*20151123 add new icon*/
+.icon-new{background:url(https://pay.img4399.com/images/tuijian.gif) no-repeat;height:17px;width:53px;display:inline-block;}
+.rc_yb,.rc_yb:hover{background:url(https://pay.img4399.com/images/btn_hebi.png) no-repeat;width: 94px;height: 28px;float: right;text-indent: -1024em;overflow: hidden;margin: 2px -24px 0 0;position: relative;}
+/*2017421 add idcard input*/
+.tc_dialog_id{position:fixed;top:50%;left:50%;border:1px solid #a24c00;background:#cd660a;padding:4px;width:400px;text-align:center;font-size:20px;color:#333;overflow:hidden;z-index:999}
+.tc_dialog_id .hd{position:relative}
+.tc_dialog_id .hd .title{background-position:0 -45px;background-repeat:repeat-x!important;line-height:45px;padding-left:15px}
+.tc_dialog_id .hd .lt,.tc_dialog_id .hd .rt,.tc_dialog_id .hd .title{background-image:url(https://pay.img4399.com/images/default/pop.png);background-repeat:no-repeat;overflow:hidden;height:45px}
+.tc_dialog_id .pop_close{cursor:pointer;background:url(https://pay.img4399.com/images/default/sprite.png) no-repeat 0 -134px;width:55px;height:32px;display:block;position:absolute;right:20px;top:0;text-indent:-999em;overflow:hidden}
+.tc_dialog_id .pop_close:hover{background-position:-55px -134px}
+.tc_dialog_id .hd .lt{float:left;background-position:0 0;margin-top:-45px;width:23px;display:inline}
+.tc_dialog_id .hd .rt{float:right;background-position:right -90px;margin-top:-45px;width:23px;display:inline}
+
+.tc_dialog_id .title .tip{display:block;padding-left:10px;color:#fe6900;text-align:left;font-size:14px}
+.tc_dialog_id .bd{background-color:#fffbec;overflow:hidden}
+.tc_dialog_id dl{margin:0;padding-top:20px;padding-left:12px;font-size:12px;color:#626f80;line-height:26px;overflow:hidden}
+.tc_dialog_id dd,.tc_dialog_id dt{float:left;margin-right:10px}
+.tc_dialog_id .id_input{padding:0 6px;width:228px;height:24px;border:1px solid #a6b2bf;color:#acb1b9}
+.tc_dialog_id .id_input.black{color:#333}
+.tc_dialog_id .bd .tip{display:block;font-size:12px;line-height:24px;color:#626f80;margin-left:106px;text-align:left}
+.tc_dialog_id .ft{padding:24px 0 10px 0;background-color:#fffbec}
+.tc_dialog_id .close,.tc_dialog_id .submit{font-size:12px;color:#888;float:right;margin-right:12px;width:88px;height:30px;line-height:30px;background:url(https://pay.img4399.com/images/default/sprites_recharge.png) no-repeat 0 -193px;cursor:pointer}
+.tc_dialog_id .submit{color:#fff;background:url(https://pay.img4399.com/images/default/sprites_recharge.png) no-repeat 0 -228px}
+
+.icon-lj{
+    background: url(https://pay.img4399.com/images/default/lj.png) no-repeat;
+    width:32px;
+    height:18px;
+    display: inline-block;
+  }

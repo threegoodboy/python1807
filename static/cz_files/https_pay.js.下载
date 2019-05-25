@@ -1,0 +1,1829 @@
+window.onerror  = function (){return true;}
+var pay_domain  = 'cz.4399.com';
+var pay_protocol = 'http://';
+var global_form = new Array(),global_is_union=0,interval = '',pop_time = '',wccz_time = '',global_pay_form = new Array(),is_lock = 0;
+var need_charge_id_arr, ptype_arr, pay_title_arr, figure_type_arr, gouka_attr_arr, problem_attr, error_arr, code_title = new Array();
+var code_p_arr = { 111:'<p style="color: blue;font-weight: bolder;font-size: 14px;">注意:请打开微信"扫一扫"进行充值,同时支持微信余额支付.</p>', 119:'<p style="color: blue;font-weight: bolder;font-size: 14px;">注意:请打开手机QQ"扫一扫"进行充值,同时支持QQ钱包余额支付.</p>'
+, 132:'<p style="color: #CD660A;font-weight: bolder;font-size: 14px;">注意:请打开支付宝"扫一扫"进行充值 或 <a id="zfb_only_nocode_go" style="color: blue;text-decoration: underline;cursor: pointer">登录支付宝账号支付</a></p>' };
+var dialogFun={
+    close:function () {
+        var input_1=$(".tc_dialog_id .id_input").eq(0),
+            input_2=$(".tc_dialog_id .id_input").eq(1);
+        input_1.val(input_1.attr('data-value'));
+        input_2.val(input_2.attr('data-value'));
+        $(".tc_dialog_id .id_input").removeClass('black');
+        pop_and_center_close($(".tc_dialog_id"),pop_time);
+    },
+    show:function () {
+        pop_and_center($('.tc_dialog_id'));
+    }
+};
+$(function () {
+    $(".bank_list li span").show();
+    // 判断http，https
+    if( document.location.protocol == "https:" ){
+        pay_protocol = "https://";
+    }
+    var gname_key = get_url_gname();
+    //一开始处理ac， union参数，加载文件和样式
+    var ac_key    = get_value_bykey("ac"),
+        union_key = get_value_bykey("union"),
+        je_key    = get_value_bykey("je"),
+        ptype_key = get_value_bykey("ptype"),
+	    lock_key  = get_value_bykey("is_lock"),
+        mark_key  = get_value_bykey("mark"),
+        paygame_url   = "?ac=paygame",
+        uname_key = get_value_bykey("uname"),
+        paygame_title = "充值到游戏",paygame_htmls = '', payguide_htmls = '';
+        ac_key = ac_key==""?"paygame":ac_key;
+        union_key = union_key==''?gname_key:union_key;
+    //var pay_right_day_js = "https://my.4399.com/?ct=api&ac=pay_right_data&union="+union_key+"&key=";
+    //$("<script>").attr({ charset: "utf-8", type: "text/javascript", src: pay_right_day_js}).appendTo(".pay_right_data");
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    //script.src = "https://my.4399.com/?ct=api&ac=pay_right_data&union="+union_key+"&key=";
+    script.src = pay_protocol+"my.4399.com/webgame/home/cz-tpl?union="+union_key;
+    script.type = 'text/javascript';
+    head.appendChild(script);
+
+    if( loadding() ){
+        $.getJSON(pay_protocol+pay_domain+"/initial/loading",{ac:ac_key,union:union_key,mark:mark_key,default_uname:uname_key,rand:Math.random()},function(d){
+            need_charge_id_arr = d.need_charge_id_arr
+            ptype_arr          = d.ptype_arr
+            pay_title_arr      = d.pay_title_arr
+            figure_type_arr    = d.figure_type_arr
+            gouka_attr_arr     = d.gouka_attr_arr
+            problem_attr       = d.problem_attr
+            error_arr          = d.error_arr
+            code_title         = d.code_title
+            union_key = d.union_hid;
+            if( d.l_url ) window.location.href = d.l_url  // 地址错误重新跳转
+            if( d.css_url ){                              // 游戏配置文件css
+                document.title = d.gname+"充值"           // 改变html title
+                $("<link>").attr({rel: "stylesheet", href: d.css_url}).appendTo("head")//添加样式文件
+                var refresh_ybrh_a = "?ac=paygame&union="+union_key+"&ptype=ybrh"
+                $(".aval_yb").next("a").attr("href",refresh_ybrh_a).show() //游币充值游戏的刷新浮现
+                $(".aval_yb").next("a").next("a").show() //游币充值游戏的充值游币浮现
+                paygame_url = "?ac=paygame&union="+union_key+"&je="+je_key+"&ptype="+ptype_key
+                $(".youbi_ey_a").find("a:eq(0)").attr("href","?ac=paygame&union="+union_key+"&ptype=ybrh"); // 游币的刷新和 充值游币
+                $(".youbi_ey_a").show();
+            }else{
+                if( ac_key == "payguide" ) payguide_htmls += '<li class="current"><a href="?ac=payguide" title="充值到平台">充值到平台</a></li>'
+                else payguide_htmls += '<li><a href="?ac=payguide" title="充值到平台">充值到平台</a></li>'
+            }
+            var pub_html = d.pub_html==null?"":d.pub_html,pub_html_icon =  pub_html.icon==null?"":pub_html.icon
+
+            //子平台或游戏盒充值
+            if( (union_key >= 5000 && union_key <= 6000) || union_key == 43998 ){
+                $(".my_topbar_p_c").html('') //body 下加载文件样式变化
+                $("<link>").attr({rel: "Shortcut Icon", href:pub_html_icon}).appendTo(".my_topbar_p_c")
+                $(".my_topbar_p_c").append(pub_html.header)
+                paygame_title = "充值到"+d.gname
+                $(".footer .my_footer").html('')//底部加载文件变化
+                $(".footer .my_footer").append(pub_html.footer);
+                $(".end_load_ucenter_or").hide();
+                $(".paygame_select_or").hide();
+            }
+            //选择充值到游戏，充值到平台 处理
+            if( union_key != 43998 ){
+                if( ac_key =="paygame" ) paygame_htmls += '<li class="current"><a href="'+paygame_url+'" title="'+paygame_title+'">'+paygame_title+'</a></li>'
+                else paygame_htmls += '<li><a href="'+paygame_url+'" title="'+paygame_title+'">'+paygame_title+'</a></li>'
+                paygame_htmls += payguide_htmls
+                $(".rc_nav").find(".nav").html(paygame_htmls);
+            }else{
+                $(".rc_nav").find(".nav").html('<li class="current"><a>'+d.gname+'充值</a></li>');
+                $(".pay_user_info_or_u").find('[name="pay_user"]').attr("readonly","readonly");
+                $("[tag_title='selserver_div']").hide(); // 游戏盒充值 服务器隐藏
+            }
+
+            //游币充值 判断是否显示
+            if( ac_key != "payguide" && !(union_key >= 5000 && union_key <= 6000) && union_key != 43998 ) $("#but_ybrh").parent("li").show();
+            $("[name='pay_sign']").val(d.pay_sign); $("[name='mark']").val(d.mark); $(".aval_yb").html(d.aval_amount);
+
+            //确认充值信息 游戏跟区服
+            if( !(union_key >= 5000 && union_key <= 6000) ){
+                $("#f_gname_li").show(); $("#f_gser_li").show();
+                $(".pay_user_info_or_u label").html("充值您的4399账号");
+                $(".pay_user_info_or_ua label").html("充值您的4399账号");
+            }
+            if( union_key ){
+                $("#wccz_c").attr("href","./?ac=paygame&union="+union_key+"&je="+je_key+"&ptype="+ptype_key);
+                $(".pay_box").find(".pay_btn").find(".a_qa:eq(0)").attr("href","./?ac=paygame&union="+union_key+"&je="+je_key+"&ptype="+ptype_key);
+                $(".form1").find("[tag_title='selpack']").find("li:eq(0)").hide()
+                $("[tag_title='selpack']").find("input[name='pay_money']:eq(4)").attr("checked",'checked'); global_is_union = 1;
+            }
+
+            //选择游戏显示处理
+            var game_that = $(".game_box .game_played");
+            if( union_key != 40000){ //不是手机游戏
+                game_that.find("li:eq(3)").hide();
+                if( d.uname ){//用户有登录时
+                    game_that.find("li:eq(0)").show();
+                    game_that.find("li:eq(1)").attr("class","");
+                }
+            }else{
+                game_that.find("li:lt(3)").hide();
+                $(".game_list .game_page").hide();$("#phonegame_page").show()
+                $(".game_list .game_ul").hide();$("#phonegame").show()
+            }
+            if( d.uname != null ){
+                $("#mygame").show();
+                $("#freegame").hide();
+                $(".form_youbi").show();$(".rc_login").hide();
+            }else{
+                $(".rc_login").show(); $(".form_youbi").hide();
+            }
+
+            //重要的中间块内容处理
+            if( d.uid != null ){
+                $('input[name="uid"]').val(d.uid);
+                $('input[name="pay_uid"]').val(d.uid);
+            }
+            if( d.uname != null ){
+                $('input[name="uname"]').val(d.uname);
+                $('input[name="pay_user"]').val(d.uname);
+                $('input[name="pay_user_repeat"]').val(d.uname);
+            }
+            if( d.default_uname != null && d.default_uid != null && d.default_uname != "" && d.default_uid != "" ){
+                $('input[name="pay_uid"]').val(d.default_uid);
+                $('input[name="pay_user"]').val(d.default_uname);
+                $('input[name="pay_user_repeat"]').val(d.default_uname);
+            }
+
+
+            if( ac_key == "paygame" ){
+                $('[tag_title="selserver_div"]').show();  //显示选择服务器
+                $(".payguide_select_or").hide();
+            }else if( ac_key == "payguide" ){
+                $("#gname").html(d.game_info.unionname);
+                $(".paygame_select_or").hide();
+                $(".payguide_select_or").show(); //显示选择游戏
+                global_is_union = 1;
+                get_assign_gameinfo( 999999 , 2);
+            }
+            var load_login_name = d.login_name;
+            if( load_login_name.qqnick && (d.default_uname == null || d.default_uname == undefined) ){ //第三方登录处理
+                $(".pay_user_info_or_q").show();
+                $(".pay_user_info_or_q").find('[name="pay_user_ext"]').val(load_login_name.qqnick);
+                $(".youbi_uname").html(load_login_name.qqnick);//游币 登录名称
+                if( load_login_name.type  == 0 ){
+                    $(".pay_user_info_or_q").find("label").html("充值您的QQ账号");
+                    $(".pay_user_info_or_q").find('[name="pay_user_ext"]').addClass("bind_user_qq");
+                    $(".youbi_uname").addClass("bind_user_qq_f");  //游币添加样式
+                }else if( load_login_name.type  == 1 ){
+                    $(".pay_user_info_or_q").find("label").html("充值您的新浪账号");
+                    $(".pay_user_info_or_q").find('[name="pay_user_ext"]').addClass("bind_user_sina");
+                    $(".youbi_uname").addClass("bind_user_weibo_f");  //游币添加样式
+                }
+                $(".pay_user_info_or_u").hide();
+                $(".pay_user_info_or_u a").show();
+            }else{
+                $(".youbi_uname").html(d.uname);
+            }
+            if( (load_login_name.qqnick || union_key == 43998) && (d.default_uname == null || d.default_uname == undefined) ) $(".pay_user_info_or_ua").hide();
+
+            //有卡类的充值卡面额填充数据,其中 12:移动神州行充值; 20:一卡通; 22:易宝联通; 27:骏卡直充; 6:易宝骏网一卡通; 24:盛大一卡通; 23:腾讯Q币卡充值
+            var datas_figure = d.allow_money,datas_czfs = d.czfs,datas_tip = d.all_tip
+            $.each(figure_type_arr, function(key, val){
+                var figure_type = "figure_type_"+key,tag_title = $('[data="'+key+'"]').attr("tag_title");
+                var figure_html = '<ul class="hide_or clearfix money_list '+figure_type+'">';
+                for (var i in datas_figure[key]) {
+                    var obj = datas_figure[key][i];
+                    figure_html += '<li><input name="czfs_money" type="radio" class="radio1" id="'+tag_title+'_'+obj+'" value="'+obj+'" /><label for="'+tag_title+'_'+obj+'">'+obj+'元 '+val+'</label></li>'
+                }
+                figure_html += '</ul>'
+                $('[tag_title="card_list"]').append(figure_html);
+            });
+            //是否开启该渠道充值，以及提示 和 充值遇到问题的跳转地址
+            $.each(pay_title_arr,function(key, val){
+                var htmls_shutdown = '<div class="hide_or czfs_shutdown_common czfs_shutdown_'+key+'">';
+                var htmls_intro = key==111?'<div class="bank_tip_common bank_tip_'+key+'">':'<div class="hide_or bank_tip_common bank_tip_'+key+'">'
+                var datas_stat_key = datas_czfs[key].stat;
+                $("[data="+key+"]").attr("stat",datas_stat_key);//是否开启渠道
+                var datas_tip_key = datas_tip[key];
+                $("[data="+key+"]").attr("tip",datas_tip_key);//手续费
+                htmls_shutdown += datas_czfs[key].shutdown
+                htmls_shutdown += '</div>'
+                $(".czfs_shutdown_all").append(htmls_shutdown);//暂停渠道充值时的提示
+                htmls_intro += datas_czfs[key].intro
+                htmls_intro += '</div>'
+                $(".bank_tip").append(htmls_intro);//底下提示赋值
+                if( !problem_attr[key] ){ // 充值遇到问题
+                    switch( union_key ){
+                        case 80013:
+                            problem_attr[key] = pay_protocol+"my.4399.com/forums-thread-tagid-81116-id-32673219.html";
+                            break;
+                        case 80044:
+                            problem_attr[key] = pay_protocol+"my.4399.com/forums-thread-tagid-81116-id-35712960.html";
+                            break;
+                        default:
+                            problem_attr[key] = datas_czfs[key].helpurl;
+                    }
+                }
+            })
+	        if( lock_key == 1 ){is_lock = 1;}
+            //充值渠道筛选
+            ptype_key = ptype_key==''?'wxewm':ptype_key;
+            if( ptype_key != "wxewm" && $.inArray(ptype_key,ptype_arr)!=-1 ){ //非默认渠道充值
+                var tag_pkey = '[tag_title="'+ptype_key+'"]'
+                $(".bank_list").find(tag_pkey).trigger("click");
+                if( union_key != '' && union_key != 40000 && ac_key != 'payguide' && union_key != "index.php" ){//直接获取游戏信息
+                    get_assign_gameinfo( union_key , 2);
+                }
+            }
+            if( ptype_key == "wxewm" ){// 默认渠道微信 判断是否开启该渠道
+                $(".form1 [name='pay_tip']").val(datas_tip[111])
+                if( datas_czfs[111]['stat'] != 1 ){
+                    $(".form1").hide();
+                    $(".czfs_shutdown_111").show();
+                }
+                if( union_key != '' && union_key != 40000 && ac_key != 'payguide' && union_key != "index.php" ){//直接获取游戏信息
+                    get_assign_gameinfo( union_key , 2);
+                }
+            }
+        })
+    }
+
+    //身份证验证
+    $(".j_btn_submit").click(function () {
+        var _name = $.trim($('.tc_dialog_id .id_input').eq(0).val()),
+            _id = $.trim($('.tc_dialog_id .id_input').eq(1).val());
+        up_idcard(_name, _id);
+    });
+    $(".j_close").click(function () {
+        dialogFun.close();
+    });
+
+    //选择游戏按钮或者点击input游戏框 触发
+    $("input[tag_title='chosegame'],input[name='gamename']").click(function(){
+        if($("#serverdiv").css('display')!='none') { //还没选服时停止
+            return ;
+        }
+        $("#tc").css({"top":"342px","marginLeft":"-275px"});//选择游戏的框架自动向上对齐
+        display_tc(union_key);get_allgame(union_key);
+        $("[tag_title='searchgame']").parent("li").hide();
+        $("#searchgame").html('');
+        $("#tc").show();
+        if(union_key!=40000){
+            if( $("#mygame").css("display") == "block" ){
+                $("#tab_game li").removeClass("current");
+                $("[tag_title='mygame']").parent("li").addClass("current").show();
+                $("#tc .game_page").hide();
+                $("#mygame_page").show();
+            }else{
+                $("#tab_game li").removeClass("current");
+                $("[tag_title='freegame']").parent("li").addClass("current").show();
+                $("#tc .game_page").hide();
+                $("#freegame_page").show();
+                $("#tc .game_ul").hide();
+                $("#freegame").show();
+            }
+        }else{
+            $("#tc .game_page").hide();
+            $("#phonegame_page").show();
+            $("#tc .game_ul").hide();
+            $("#phonegame").show();
+        }
+    })
+
+    //切换下一页或上一页
+    $(".game_list .arrow_left").mousedown(function(){
+        var nowdiv = $(".game_page").not(":hidden");
+        var nowspan = nowdiv.find("span");
+        var nowspan_ = nowspan.filter(".current");
+        var nowp = nowspan.index(nowspan_);
+        to_page_go(nowp-1);
+    });
+    $(".game_list .arrow_right").mousedown(function(){
+        var nowdiv = $(".game_page").not(":hidden");
+        var nowspan = nowdiv.find("span");
+        var nowspan_ = nowspan.filter(".current");
+        var nowp = nowspan.index(nowspan_);
+        to_page_go(nowp+1);
+    });
+    $(".game_page span").live("click",function(){
+        var psize = $(this).parent().find("span").index($(this));
+        to_page_go(psize);
+    });
+
+    //切换游戏选项卡
+    $("#tab_game li").click(function(){
+        var id_game = $(this).find("a").attr("tag_title");
+        $("#tab_game").find("li").removeClass("current"); //选项卡样式切换
+        $(this).addClass("current");
+        $("#tc .game_ul").hide() //内容切换
+        $(".game_list #"+id_game).show()
+        $("#tc .game_list .game_page").hide()//分页内容
+        if( id_game == "searchgame" ){
+            $("div.game_list span.arrow_left,span.arrow_right").hide();
+        }else{
+            $("div.game_list span.arrow_left,span.arrow_right").show();
+            $(".game_list #"+id_game+"_page").show()
+        }
+    })
+    //填写游戏
+    $("#sertxt").focus(function(){
+        $("#sertip").fadeOut("slow");
+    });
+    
+    //触发选择游戏  
+    $("#allgame_list_click label").live("click",function(){
+        var guid = $(this).prev("input").val();
+        get_assign_gameinfo( guid , 1 );
+    })
+    //if(top.location!=self.location)top.location=self.location;
+})
+$(".bank_more").toggle(
+        function(){
+            $(".bank_select").css("height","320px");
+            $(this).addClass('bank_more_up');
+        },
+        function(){
+            $(".bank_select").css("height","160px");
+            $(this).removeClass('bank_more_up');
+        }
+    );
+//加载配置
+function loadding(){
+    return true;
+}
+
+//选择游戏关闭
+$(".pop_close").click(function(){
+    $("#tc").hide();
+});
+
+//选游戏服关闭
+$("#ser_close").click(function(){
+    $("#serverdiv").css("display","none");
+});
+
+//请选择服务器
+$(".select_box").click(function(){
+    if($('[name="pay_game_union"]').val()){
+        $("#serverdiv").css("display","block");
+    }else{
+        var obj=$(this).parent().parent();
+        $("input[tag_title='chosegame']").click();
+    }
+});
+
+//触发选择服务器
+$("#game_server li").live("click",function(){
+    var server_val = $(this).find("input").val()
+    $("#serverdiv").hide();//服选择关闭
+    $('[name="server"]').val(server_val);//服ID赋值
+    $(".select_box").html($(this).find("input").attr("tag_html"))//显示服名称
+    var obj = $("form").not(":hidden");
+    check_role(obj);
+})
+
+//给选游戏，绑定个hover事件，改变背景
+$("ul.game_ul li").live('mouseover',function(){
+    $(this).addClass('hover');
+}).live('mouseout',function(){
+    $(this).removeClass('hover');
+});
+
+//第三方账号与其他账号切换
+$(".removebtn").click(function(){
+    var qqnick_comp = $(".form1").find("input[name='pay_user_ext']"),
+        user_comp   = $(".form1").find("input[name='pay_user']"),
+        user_rep_comp = $(".form1").find("input[name='pay_user_repeat']"),
+        is_turn_user  = user_comp.is(":hidden");
+    if( is_turn_user ){ //第三方显示的情况下
+        global_form['pay_user_old'] = user_comp.val();
+        $(".pay_user_info_or_q").hide();
+        $(".pay_user_info_or_u").show();
+        $(".pay_user_info_or_ua").show();
+    }else{
+        $(".pay_user_info_or_q").show();
+        $(".pay_user_info_or_u").hide();
+        $(".pay_user_info_or_ua").hide();
+        user_rep_comp.val(global_form['pay_user_old']);
+        user_comp.val(global_form['pay_user_old']);
+    }
+});
+
+//账号检测
+$("input[name='pay_user'],input[name='pay_user_repeat']").blur(function(){
+    var obj = $(".form1")
+    check_id(obj);
+});
+//输入账号 取消 请输入你的充值账号 提示
+$("input[name='pay_user']").bind('keyup',function(){
+    $(".form1").find("span[tag_title='id_tishi']").removeClass("inlineBlock");
+})
+$("input[name='pay_user_repeat']").bind('keyup',function(){
+    var repeat_user=$(this).val();
+    var user=$(".form1").find("input[name='pay_user']").val();
+    if( repeat_user == user ){
+        var obj = $(".form1")
+        check_id(obj);
+    }
+});
+//左边菜单栏选择充值渠道
+$(".bank_list li").click(function(){
+    if($(".form1").find("[tag_title='card_list']").find("ul").length<6){return false;};
+    var that = $(this);
+    var stat = that.attr("stat"), data = that.attr("data"), pay_sub_type = that.attr("pay_sub_type"), pay_iscard = that.attr("pay_iscard"), card_list_or = that.attr("card_list_or"), is_gouka = that.attr("is_gouka"), tip = that.attr("tip");
+    var bank_tip_c = ".bank_tip_"+data;
+    $(".bank_list li").removeClass("current");that.addClass("current"); // 样式
+    $(".bank_tip_common").hide();$(bank_tip_c).show(); // 温馨提示 替换
+    $(".pay_title_em").html(pay_title_arr[data]); // 选择方式 提示替换
+    $("[name='pay_type']").val(data);$("[name='pay_tip']").val(tip);
+    $("form").find("[tag_title='je_tishi']").html("");$("form").find("[tag_title='sd_tishi']").html("");
+    $(".qq_active_temporary").hide();
+    if( data==200 ){ //为游币时
+        $(".form1").hide();$(".form2").show();
+        $("#gkaddr").attr('href',gouka_attr_arr[data]).addClass('rc_yb').show(); // 免费换游币
+        $('[tag_title="selpack_div"]').show()
+        $("#tc").hide();
+        var unionids = $(".form1").find("[name='pay_game_union']").val();
+        if( unionids != "" ){
+            get_assign_gameinfo(unionids, 2);
+        }
+        if(is_lock == 1){$(".form2").find("[name='pay_money_input']").val(get_value_bykey("je"))}
+        change_packages_each($(".form2"), card_list_or, data); //选择卡类与礼包联动
+        set_money($(".form2"),data);//金额选择
+    }else{
+        $(".form1").show();$(".form2").hide();
+        //银行卡充值选择时
+        if( pay_sub_type == 10 ){ $('[name="pay_sub_type"]').val(10);$(".bank_type").show(); }else{ $(".bank_type").hide();$('[name="pay_sub_type"]').val('');}
+
+        //卡类充值 需要输入卡号密码时
+        if( pay_iscard == 1 ){ $(".card_need_kp").show(); }else{ $(".card_need_kp").hide(); }
+
+        // 该渠道有开启充值时
+        if( stat != 1 ){ var stat_c = ".czfs_shutdown_"+data; $(".form1").hide(); $(".czfs_shutdown_all").show(); $(".czfs_shutdown_common").hide(); $(stat_c).show();}else{$(".form1").show(); $(".czfs_shutdown_all").hide();}
+
+        //判断 选择充值金额 还是 充值面额
+        if( card_list_or == 1 ){ $('[tag_title="card_list"]').hide();$('[tag_title="selpack_div"]').show();}else{
+            var fig_c = ".figure_type_"+data;
+            $('[tag_title="card_list"]').show();
+            $('[tag_title="card_list"]').find("ul").hide();
+            $(fig_c).show();
+            if( global_form['is_packages'] != 1 ){
+                $('[tag_title="selpack_div"]').hide();
+            }else{
+                $('[tag_title="selpack_div"]').show();
+            }
+        }
+        //if( data == 119 ){ $(".qq_active_temporary").show();}
+        if( data == 119 ){}
+        //购卡地址
+        if( is_gouka == 1 ){ $("#gkaddr").attr('href',gouka_attr_arr[data]).removeClass('rc_yb').show(); }else{  $("#gkaddr").css('display','none'); }
+
+        //五元金额选项
+        if( !global_is_union ){
+            if( data == 111 || data == 119 ){
+                $('.form1').find("[tag_title='selpack']").find("li:eq(0)").show()
+                $('.form1').find("[tag_title='selpack']").find("li:eq(6)").find("span").html("请输入(1-3000之间的整数)");
+            }else{
+                $('.form1').find("[tag_title='selpack']").find("li:eq(0)").hide()
+                $('.form1').find("[tag_title='selpack']").find("li:eq(6)").find("span").html("请输入(1-50000之间的整数)");
+            }
+            if( data == 38 )  $('.form1').find("[tag_title='selpack']").find("li:eq(6)").find("span").html("请输入(1-2000之间的整数)");
+        }
+        var unionids = $(".form1").find("[name='pay_game_union']").val();
+	    if(unionids != ""){
+            change_packages_each($(".form1"), card_list_or, data); //选择卡类与礼包联动
+            set_money($(".form1"),data);//金额选择
+	    }
+    }
+    $(".rc_style").find("a").attr("href",problem_attr[data])//充值遇到问题 地址
+});
+
+//最重要的 点击立即充值
+$("input[name='subbut']").click(function(){
+    var that = $(this);
+    that.attr("disabled", "true");//禁用掉立即充值点击事件，避免有些有用心急一下子按多次，生成无用支付订单
+    setTimeout(function(){
+        that.removeAttr("disabled");
+    }, 1500);
+    setTimeout(function(){
+        if( check_all($(".form1")) ){
+            var form_that = $(".form1");
+            var pay_type = global_pay_form['pay_type'] = form_that.find("input[name='pay_type']").val(); //支付渠道类型码
+            if( global_form['packages'] == null ){
+                if( $('"[data='+pay_type+']"').attr("card_list_or") == 1 ){ // 选择金额or选择面额
+                    var obj_money = form_that.find("input[name='pay_money']:radio[type=radio][checked]").not(":hidden").val()
+                    var pay_money = global_pay_form['pay_money'] = obj_money==0?form_that.find(".rt_type").val():obj_money //支付金额
+                }else{
+                    var cl = ".figure_type_"+pay_type;
+                    var pay_money = global_pay_form['pay_money'] = $(cl).find("input[name='czfs_money']:radio[type=radio][checked]").not(":hidden").val()
+                }
+                var czfs_money = global_pay_form['czfs_money'] = undefined;
+            }else{
+                var obj_money  = form_that.find("input[name='pay_money']:radio[type=radio][checked]").not(":hidden").val()
+                var pay_money  = global_pay_form['pay_money']  = obj_money==0?form_that.find(".rt_type").val():obj_money //支付金额
+                var cl = ".figure_type_"+pay_type
+                var czfs_money = global_pay_form['czfs_money'] = $(cl).find("input[name='czfs_money']:radio[type=radio][checked]").not(":hidden").val()
+            }
+            var uid            = global_pay_form['uid']            = form_that.find("input[name='uid']").val(),  //用户本人己登陆的UID
+                uname          = global_pay_form['uname']          = form_that.find("input[name='uname']").val(),//用户本人己登陆的UNAME,未登陆一般为空.
+                pay_uid        = global_pay_form['pay_uid']        = form_that.find("input[name='pay_uid']").val(),         //充值的目标帐号的PAY_UID
+                pay_user       = global_pay_form['pay_user']       = $.trim(form_that.find("input[name='pay_user']").val()),//取充值的目标帐号的PAY_USER,是必填项.
+                pay_game_union = global_pay_form['pay_game_union'] = form_that.find("input[name='pay_game_union']").val(),//游戏ID
+                server         = global_pay_form['server']         = form_that.find("input[name='server']").val(),//服ID
+                role           = global_pay_form['role']           = form_that.find("select[name='role'] option:selected").val(),//角色
+                pay_sub_type   = global_pay_form['pay_sub_type']   = form_that.find("input[name='pay_sub_type']").val(),//10 为银行卡，11 为快钱充值
+                pay_bank       = global_pay_form['pay_bank']       = form_that.find("input[name='pay_bank']").filter(":checked").val(),//各种银行卡，例如CCB 为建设银行，ABC 为农业银行
+                kastr          = global_pay_form['kastr']          = form_that.find("input[name='kastr']").val(),//卡号
+                kapwd          = global_pay_form['kapwd']          = form_that.find("input[name='kapwd']").val(),//卡密码
+                captcha        = global_pay_form['captcha']        = form_that.find("input[name='captcha']").val(),//验证码
+                phone          = global_pay_form['phone']          = form_that.find("input[name='phone']").val(),//手机号
+                mark           = global_pay_form['mark']           = get_value_bykey("mark");//mark传值
+            if(code_p_arr[pay_type]){
+                var ewm_mark = rand_str()+'|'+pay_uid;
+            }
+            $.post(pay_protocol+pay_domain+"/pay/api",
+                { pay_type:pay_type,uid:uid,uname:uname,puid:pay_uid,puname:pay_user,pay_money:pay_money,role:role,
+                    pay_game_union:pay_game_union,server:server,pay_sub_type:pay_sub_type,pay_bank:pay_bank,
+                    kastr:kastr,kapwd:kapwd,captcha:captcha,czfs_money:czfs_money,phone:phone,mark:mark,ewm_mark:ewm_mark,rand:Math.random()
+                },
+                function(data) {
+                    //取返回值
+                   if( data == 'capt_error' ){
+                        if( captcha == undefined ){
+                            $("div.reword_tip").html("请不要在短时间内多次提交订单.").css('display','block').fadeOut(3000);
+                            insert_captcha();
+                        }else{
+                            $("div.reword_tip").html("请输入正确的验证码").css('display','block').fadeOut(3000);
+                            flush_capt();
+                        }
+                   }else if( error_arr[data] ){
+                        $("div.reword_tip").html(error_arr[data]).css('display','block').fadeOut(3000);
+                   }else{
+                        var s = data.split("||");
+                        if( data.indexOf("msg") > 0 ){
+                            var d = eval('('+data+')');
+                            if( d.stat == 'idcard_none' ){
+                                if(pay_uid != uid){
+                                    $("div.reword_tip").html("需先登录账号"+pay_user+"后绑定身份信息方可继续充值").css('display','block').fadeOut(3000);
+                                    return;
+                                }
+                                dialogFun.show();
+                            }else{
+                                $("div.reword_tip").html(d.msg).css('display','block').fadeOut(6000);
+                            }
+                            return;
+                        }
+                        //PC扫码充值，qq钱包，微信，支付宝超级扫码
+                        if( code_p_arr[pay_type] ){
+                            scan_code_display(0); //二维码div显示与否
+                            if(pay_uid == "" && uid == ""){
+                                $("div.reword_tip").html("请刷新本页面重新充值").css('display','block').fadeOut(3000);
+                                return;
+                            }
+                            //有无充值目标UID,无则用已登陆UID
+                            pay_uid = pay_uid?pay_uid:uid;
+                            var gname = form_that.find("input[name='gamename']").val();
+                            var sname = form_that.find(".select_box").not(":hidden").html();
+                            if(form_that.find(".select_box").is(":hidden")){
+                                $("#wxe_server").parent().hide();
+                            }else{
+                                $("#wxe_server").parent().show();
+                            }
+                            $("#wxewm_img").html("");
+                            $("#wxe_title").html(code_title[pay_type]);
+                            //给各DOM节点赋值
+                            $("#wxe_game").html(gname);
+                            $("#wxe_server").html(sname);
+                            $("#wxe_user").html(pay_user);
+                            $("#wxe_money").html(pay_money + "元");
+                            //生成二维码图片
+                            var qrcode = new QRCode("wxewm_img", {
+                                text: s[1],
+                                width: 193,
+                                height: 193,
+                                colorDark : "#000000",
+                                colorLight : "#ffffff",
+                                correctLevel : QRCode.CorrectLevel.L
+                            });
+                            $("#wxewm_img table").css("margin","0px");
+                            //弹窗提示
+                            pop_time = pop_and_center($("#pop_pay_wxewm"));
+                            $("#pop_pay_wxewm").find(".tip").html(code_p_arr[pay_type]);
+                            //自动检查状态
+                            check_mark(ewm_mark);
+                            return;
+                        }
+                        //PC端页游充值确认界面
+                        $("#qxinfo1").css("display","none");
+                        $("#qxinfo2").css("display","block");
+                        $("#f_order").html(s[0]);
+                        $("#f_money").html(s[1]);
+                        $("#f_href").attr("href",s[2]);
+
+                        //取页面DOM值,gname有两种情况.
+                        var gname_obj = form_that.find("input[name='gamename']");
+                        var gname_obj_span = $("#gname");
+                        var gstr = gname_obj.val();
+                        //取充值方式的名字
+                        var czfs_name = $(".bank_list .current a").attr('title');
+                        if(gstr != null){
+                            var gname = gstr;
+                        }else{
+                            var gname = gname_obj_span.html();
+                        }
+                        var sname = form_that.find("select[name='server'] option:selected").text();
+                        if(sname.length!=0){
+                            $("#f_gser_li").css("display","");
+                            $("#f_gser").html(sname);
+                        }else{
+                            $("#f_gser_li").css("display","none");
+                        }
+                        if(server){
+                            var ser_str=form_that.find("span[class='select_box']").html();
+                            $("#f_gser").html(ser_str);
+                            $("#f_gser_li").css('display','');
+                        }
+                        $("#f_czfs").html(czfs_name);
+                        $("#f_gname").html(gname);
+                        $("#f_uname").attr("class","");
+                        //增加对快捷支付的支持，主要在本页提示成功
+                        if(pay_type == 7){
+                            $('#kj_bd').attr("href",pay_protocol+"pay.4399.com/cft_mini.php?order="+s[0]);
+                            $('#kj_div').css("display","");
+                            form_that.css("display","none");
+                            $("#kj_order").html(s[0]);
+                            $("#kj_money").html(s[1]);
+                            $("#kj_href").attr("src",s[2]);
+                            $("#kj_gname").html(gname);
+                            $("#kj_uname").html(uname);
+                            $("#kj_gser").html(ser_str);
+
+                        }
+                        //第三方登陆了并且选择充值第三方帐号时，显示第三方帐号
+                        if(form_that.find("input[name='pay_user']").is(":hidden")){
+                            var tmp_uext = form_that.find("input[name='pay_user_ext']");
+                            pay_user = tmp_uext.val();
+                            var class_str = tmp_uext.attr("class");
+                            if(class_str.search(/qq/)!=-1){
+                                $("#f_uname").addClass("bind_user_qq_f");
+                            }else if(class_str.search(/sina/)!=-1){
+                                $("#f_uname").addClass("bind_user_weibo_f");
+                            }
+                        }else{
+                            $("#f_uname").attr("class","");
+                        }
+                        $("#f_uname").html(pay_user);
+                        $("select[name='server']").css("display","none");
+                        $("select[name='role']").css("display","none");
+                        //弹出确认充值信息框
+                        if(pay_type != 7){
+                            pop_time = pop_and_center($("#pop_pay"));
+                        }
+                        flush_capt();
+                    }
+                }
+            );
+        }
+    }, 500);
+})
+
+//支付宝超级扫码
+$("#zfb_only_nocode_go").live("click",function(){
+    $("#pop_wxewm_confirm").css("display","none");
+    pop_and_center_close($("#pop_pay_wxewm"),pop_time);
+    //停止轮询
+    if(interval!=''){
+        clearInterval(interval);
+    }
+    var win = window.open();
+    $.post(pay_protocol+ pay_domain + "/pay/api",
+        { pay_type:3,uid:global_pay_form['uid'],uname:global_pay_form['uname'],puid:global_pay_form['pay_uid'],puname:global_pay_form['pay_user'],pay_money:global_pay_form['pay_money'],role:global_pay_form['role'],
+            pay_game_union:global_pay_form['pay_game_union'],server:global_pay_form['server'],pay_sub_type:global_pay_form['pay_sub_type'],pay_bank:global_pay_form['pay_bank'],
+            kastr:global_pay_form['kastr'],kapwd:global_pay_form['kapwd'],captcha:global_pay_form['captcha'],czfs_money:global_pay_form['czfs_money'],phone:global_pay_form['phone'],mark:global_pay_form['mark'],rand:Math.random()
+        },
+        function(data) {
+            var s = data.split("||");
+            pop_and_center_close($("#pop_pay"),pop_time);
+            wccz_time = pop_and_center($("#wccz"));
+            win.location = s[2];
+        }
+    );
+})
+
+//提交订单之前检查所有选项
+function check_all( obj ){
+     $("[name='subbut_rh']").attr("disabled", "true");
+      setTimeout(function(){
+        $("[name='subbut_rh']").removeAttr("disabled");
+      }, 1000);
+    var pay_type = obj.find("input[name='pay_type']").val();
+    //创建角色判断
+    if( (obj.find("span[tag_title='id_tishi']").html() == "你尚未在该服创建角色") || (obj.find("span[tag_title='id_tishi']").html() == "你尚未在该游戏创建角色") ){
+        var warm_str = "请先创建角色再进行充值";
+        $("div.reword_tip").html(warm_str).css('display','block').fadeOut(3000);
+        return false;
+    }
+    //检查是否选择游戏
+    if( !obj.find("input[name='pay_game_union']").val() ){
+        obj.find("span[tag_title='yx_tishi']").html("请先选择游戏。").addClass("inlineBlock");
+        return false;
+    }
+    //检查是否选择区服
+    if( obj.find("[tag_title='selserver_div']").css("display")=="block" && obj.find("input[name='server']")=='' ){
+        obj.find("span[tag_title='js_tishi']").html("请选择游戏区服。").addClass("inlineBlock");
+        return false;
+    }
+    //检查用户信息
+    var check_user = obj.find("input[name='pay_user']").val(),
+        check_user_rep = obj.find("input[name='pay_user_repeat']").val(),
+        tishi1 = obj.find("span[tag_title='id_tishi']"),
+        tishi2 = obj.find("span[tag_title='id_tishi2']")
+    if( check_user == "" ){ // 不存在此账号
+        tishi1.html("请输入你的充值帐号。").addClass("inlineBlock");
+        return false;
+    }else if( check_user != check_user_rep ){
+        tishi2.html("两次输入的帐号不一致。").addClass("inlineBlock");
+        return false;
+    }
+    //检查充值金额是否合理
+    var not_hidden_money = obj.find("input[name='pay_money']:radio[type=radio][checked]").not(":hidden").val()
+    if( obj.find("[tag_title='selpack_div']").css("display") == "block" ){
+        if( not_hidden_money ==  undefined ){
+            obj.find("span[tag_title='je_tishi']").html("请选择充值金额。").addClass("inlineBlock");
+            return false;
+        }else if( not_hidden_money == 0 && !(obj.find(".rt_type").val()) ){
+            obj.find("span[tag_title='je_tishi']").html("请填写充值金额。").addClass("inlineBlock");
+            return false;
+        }else if( not_hidden_money == 0 && obj.find(".rt_type").val()< 1 ){
+            obj.find("span[tag_title='je_tishi']").html("请填写合法的充值金额。").addClass("inlineBlock");
+            return false;
+        }
+    }
+    if( obj.find("[tag_title='card_list']").css("display") == "block" ){
+	var cls = ".figure_type_"+pay_type;
+        if ($(cls).find("input[name='czfs_money']:radio[type=radio]").attr("disabled") == true && is_lock == 1 && $(cls).find("input[name='czfs_money']:radio[type=radio][checked]").val() == undefined ) {
+            obj.find("span[tag_title='je_tishi']").html("没有适合此金额的充值卡，建议您换一种充值方式").addClass("inlineBlock");
+            return false;
+        }
+	if( obj.find("input[name='czfs_money']:radio[type=radio][checked]").val() == undefined ){
+            obj.find("span[tag_title='je_tishi']").html("请选择充值金额。").addClass("inlineBlock");
+            return false;
+        }
+    }
+    //检查卡号与卡密
+    if( obj.find(".card_need_kp").css("display") == "block" ){
+        var pay_card = $.trim(obj.find("input[type=text][name='kastr']").val());
+        var pay_pwd = $.trim(obj.find("input[type=text][name='kapwd']").val());
+        //一卡通只能提交16位长度卡密
+        if(pay_type == 20){
+            var exp = /^\d{16}$/;
+            if(!exp.test(pay_card) || !exp.test(pay_pwd)){
+                obj.find("span[tag_title='card_tishi']").html("请输入16位数字的卡号和密码").addClass("inlineBlock");
+                return false;
+            }
+        }
+	//易宝电信卡
+	if( pay_type == 115 ){
+            var exp1 = /^\d{19}$/;var exp2 = /^\d{18}$/;
+            if( !exp1.test(pay_card) || !exp2.test(pay_pwd) ){
+                obj.find("span[tag_title='card_tishi']").html("请输入19位数字的卡号和18位数字的密码").addClass("inlineBlock");
+                return false;
+            }
+        }
+	//腾讯Q币卡
+	if( pay_type == 23 ){
+            var exp1 = /^\d{9}$/;var exp2 = /^\d{12}$/;
+            if(!exp1.test(pay_card) || !exp2.test(pay_pwd)){
+                obj.find("span[tag_title='card_tishi']").html("请输入9位数字的卡号和12位数字的密码").addClass("inlineBlock");
+                return false;
+            }
+        }
+	//盛大一卡通
+	if( pay_type == 24 ){
+            var exp1 = /^[a-zA-Z0-9]{15,16}$/;var exp2 = /^\d{8,9}$/;
+            if(!exp1.test(pay_card) || !exp2.test(pay_pwd)){
+                obj.find("span[tag_title='card_tishi']").html("请输入15或16位数字字母的卡号和8或9位数字的密码").addClass("inlineBlock");
+                return false;
+            }
+        }
+	//骏网一卡通
+	if( pay_type == 6 ){
+            var exp1 = /^[a-zA-Z0-9]{16}$/;var exp2 = /^\d{16}$/;
+            if(!exp1.test(pay_card) || !exp2.test(pay_pwd)){
+                obj.find("span[tag_title='card_tishi']").html("请输入16位数字或字母的卡号和16位数字的密码").addClass("inlineBlock");
+                return false;
+            }
+        }
+	//骏网直充
+	 if( pay_type == 27 ){
+            var exp1 = /^\d{16}$/;var exp2 = /^\d{16}$/;
+            if(!exp1.test(pay_card) || !exp2.test(pay_pwd)){
+                obj.find("span[tag_title='card_tishi']").html("请输入16位数字的卡号和16位数字的密码").addClass("inlineBlock");
+                return false;
+            }
+        }
+	//联通充值卡
+	 if( pay_type == 22 ){
+            var exp1 = /^\d{15}$/;var exp2 = /^\d{19}$/;
+            if(!exp1.test(pay_card) || !exp2.test(pay_pwd)){
+                obj.find("span[tag_title='card_tishi']").html("请输入15位数字的卡号和19位数字的密码").addClass("inlineBlock");
+                return false;
+            }
+        }
+	//移动神州行充值卡
+	if( pay_type == 12 ){
+            var exp1 = /^\d{17}$/;var exp2 = /^\d{18}$/;
+            if(!exp1.test(pay_card) || !exp2.test(pay_pwd)){
+                obj.find("span[tag_title='card_tishi']").html("请输入17位数字的卡号和18位数字的密码").addClass("inlineBlock");
+                return false;
+            }
+        }
+	obj.find("span[tag_title='card_tishi']").html("").removeClass("inlineBlock");	
+    }
+    //检查验证码
+    var pay_cpat = obj.find("input[name='captcha']").val();
+    if(pay_cpat != undefined){
+        if(pay_cpat == ''){
+            $("div.reword_tip").html("请先输入验证码").css("display","block").fadeOut(3000);
+            return false;
+        }
+    }
+    //检查手机号
+    var pay_phone = obj.find("input[name='phone']").val();
+    if(pay_phone != undefined){
+        if(pay_phone == ''){
+            $("div.reword_tip").html("请先输入手机号码。").css("display","block").fadeOut(3000);
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * 点击选择游戏 获取所有游戏
+ * @param integer  key  是否是手机游戏
+ * @return var
+ */
+function get_allgame(key){
+    $("div.game_list span.arrow_left,span.arrow_right").show();
+    var mode=get_value_bykey('mode')
+    var ajax_url = pay_protocol+pay_domain+'/gameinfo/allgame?mode='+mode+'&is_phone='+key+'&rand='+Math.random()
+    $.getJSON(ajax_url,function(d){
+        if( key == 40000 ){
+            get_game_html(d.phonegame, 'phonegame') //手机游戏
+        }else{
+            get_game_html(d.mygame, 'mygame') //我玩过的游戏
+            get_game_html(d.freegame, 'freegame') //休闲游戏
+            get_game_html(d.webgame, 'webgame') //网页游戏
+        }
+    })
+}
+
+/**
+ * 检查账号是否匹配以及角色验证
+ * @param object  obj  要验证的对象
+ * @return boolean
+ */
+function check_id( obj ){
+    var check_user = obj.find("input[name='pay_user']").val(),
+        check_user_rep = obj.find("input[name='pay_user_repeat']").val(),
+        tishi1 = obj.find("span[tag_title='id_tishi']"),
+        tishi2 = obj.find("span[tag_title='id_tishi2']")
+    if( check_user == "" ){ // 不存在此账号
+        tishi1.html("请输入你的充值帐号。").addClass("inlineBlock");
+        return false;
+    }else if( check_user != check_user_rep ){
+        tishi2.html("两次输入的帐号不一致。").addClass("inlineBlock");
+        return false;
+    }else{
+        tishi1.removeClass("inlineBlock");
+        tishi2.removeClass("inlineBlock");
+        is_exist_id(obj);
+    }
+}
+
+/**
+ * 检查账号是否在平台存在
+ * @param string obj  要验证的对象
+ * @return var
+ */
+function is_exist_id( obj ){
+    var pay_user = obj.find("input[name='pay_user']").val();
+    if( pay_user ){
+        $.get(pay_protocol+pay_domain+'/role/info',{ac:'cuid',uname:pay_user,rand:Math.random()},function(g){
+            if(g!=''){
+                obj.find("input[name='pay_uid']").val(g);
+                check_role(obj);
+            }else{
+                obj.find("span[tag_title='id_tishi']").html("你输入的帐号不存在。").addClass("inlineBlock");
+                obj.find("input[name='pay_uid']").val('');
+            }
+        })
+    }
+}
+
+/**
+ * 检查该账号是否有角色
+ * @param string obj  要验证的对象
+ * @return var
+ */
+function check_role( obj ){
+    if( obj.find("[name='pay_user']").val() != "" && obj.find("[name='pay_user']").val() != undefined ){
+        var uname = obj.find("[name='pay_user']").val();
+    }else{
+        var uname = obj.find("input[name='uname']").val();
+    }
+    if( obj.find("[name='pay_uid']").val() != "" && obj.find("[name='pay_uid']").val() != undefined  ){
+        var uid = obj.find("[name='pay_uid']").val()
+    }else{
+        var uid = obj.find("input[name='uid']").val();
+    }
+    var guid = obj.find("[name='pay_game_union']").val();
+    var server = obj.find("[name='server']").val();
+    $.ajax({
+        type:'GET',
+        url:pay_protocol+pay_domain+'/role/stat',
+        data:'uname='+uname+'&uid='+uid+'&guid='+guid+'&server='+server+'&rand='+Math.random(),
+        success:function(stat){
+            if(guid==905 || guid==80036 || guid==80043){
+                var f_stat=stat.substr(0,1);
+                if(f_stat==1){
+                    $("form").find("span[tag_title='id_tishi']").html('');
+                    var arr_str=eval('('+stat.substring(2)+')');
+                    var select_str='';
+                    for( var k in arr_str.role){
+                        select_str+='<option value="'+k+'">'+arr_str.role[k]+'</option>';
+                    }
+                    obj.find("select[name='role']").html(select_str);
+                    obj.find("div[tag_title='role_div']").css('display','block');
+                    obj.find("span[tag_title='js_tishi']").html('').removeClass('inlineBlock');
+                }else if(f_stat==2){
+                    $("form").find("span[tag_title='id_tishi']").html('你尚未在该服创建角色').addClass("inlineBlock");
+                    obj.find("select[name='role']").html('');
+                    obj.find("div[tag_title='role_div']").css('display','none');
+                }
+            }else{
+                var idts = $("form").find("span[tag_title='id_tishi']");
+                if( stat == 2 ){
+                    if( obj.find("[name='server']").val() ){
+                        idts.html('你尚未在该服创建角色').addClass("inlineBlock");
+                    }else{
+                        idts.html('你尚未在该游戏创建角色').addClass("inlineBlock");
+                    }
+                    obj.find("select[name='role']").html('');
+                    obj.find("div[tag_title='role_div']").css('display','none');
+                }else{
+                    idts.html('').removeClass("inlineBlock");
+                }
+            }
+        }
+    })
+}
+
+/**
+ * 获取游戏的各个类型信息
+ * @param array  obj  要遍历的游戏数组
+ * @param string objs 指定哪个类型的游戏，例如freegame:休闲游戏
+ * @return var
+ */
+function get_game_html(obj,objs){
+    var get_game_htmls = '',imgurl = '',objs_id = "#"+objs,objs_lt = "#"+objs+" li:gt(15)",objs_li="#"+objs+" li",pstr = '',psize=0,game_page = "#"+objs+"_page",game_page_first = "#"+objs+"_page span:first-child";
+    if( obj ){
+        $.each(obj, function(key, val) {
+            imgurl = val.icon!=null?val.icon:pay_protocol+'s4.img4399.com/1/apps/1021978';
+            get_game_htmls += "<li><input type='radio' py='"+val.appkey+"' gtype='"+val.apptype+"' name='pay_game_union'  class='radio1' id='g"+val.unionid+"' value='"+val.unionid+"' /><label for='g"+val.unionid+"'><img src='"+imgurl+"' width='16' height='16' alt=''>"+val.gname+"</label></li>";
+        });
+        $(objs_id).html(get_game_htmls);
+        $(objs_lt).hide();
+        psize = Math.ceil($(objs_li).size()/16);
+        for(var i=1; i<=psize; i++){
+            pstr += "<span></span>";
+        }
+        $(game_page).html(pstr);
+        $(game_page_first).addClass("current");
+    }else{
+        $(objs_id).html("<li>尚无游戏记录...</li>");
+    }
+}
+
+//指定分页
+function to_page_go(pno){
+    var page_id = $(".game_page").not(":hidden").attr("id");
+    var now_dom = $("#"+page_id+" span").filter(".current");
+    var count_no = $("#"+page_id+" span").length;
+    var now_index = $("#"+page_id+" span").index(now_dom);
+    var pre_str = $(".game_page").not(":hidden").attr("data");
+    if(pno < count_no && pno > now_index){
+        //切换分页的CSS
+        $("#"+page_id+" span").eq(now_index).removeClass("current");
+        $("#"+page_id+" span").eq(pno).addClass("current");
+        //切换游戏列表
+        $("#"+pre_str+" li").css("display","none");
+        var next_li = $("#"+pre_str+" li:gt("+(pno*16-1)+")");
+        next_li.filter("li:lt(16)").css("display","block");
+    }else if(pno >=0 && pno < now_index){
+        $("#"+page_id+" span").eq(now_index).removeClass("current");
+        $("#"+page_id+" span").eq(pno).addClass("current");
+        //切换游戏列表
+        $("#"+pre_str+" li").css("display","none");
+        var pre_li = $("#"+pre_str+" li:lt("+(now_index*16)+")");
+        if(pno == 0){
+            pre_li.filter("li:lt(16)").css("display","block");
+        }else{
+            pre_li.filter("li:gt("+(pno*16-1)+")").filter("li:lt(16)").css("display","block");
+        }
+    }
+}
+
+//绑定搜索事件
+function display_tc(union_key){
+    $("span#sertip").css('display','none');  // 将未找到游戏的提示改为隐藏状态
+    $("select[name='server']").css("visibility","hidden");
+    $("select[name='role']").css("display","none");
+    $("#tc").css("display","block");
+    $("input[name='gamename']").blur();
+
+    if(/msie/i.test(navigator.userAgent)) {
+        $("#sertxt").keyup(function(event){
+            //清空searchgame的内容
+            $("#searchgame").html('');
+            //切换当前类别为游戏搜索
+            $("#tab_game li").removeClass('current');
+            $("[tag_title='searchgame']").parent("li").show().addClass('current');
+            //切换当前显示游戏列别为游戏搜索
+            $("#tc ul.game_ul").css('display','none');
+            $("#searchgame").css('display','block');
+            if( union_key == 40000 ){
+                var lis1=$("#phonegame").find("li"),lis2 = '';
+            }else{
+                var lis1=$("#freegame").find("li");
+                var lis2=$("#webgame").find("li");
+            }
+            var keywords=$.trim($(this).val());
+            //当用户的输入内容为空时
+            if(keywords==''){
+                $("#searchgame").html('请输入您要搜索的内容');
+            }else{
+                var reg=/^\w+$/;
+                if( !reg.test( keywords )  ){
+                    lis1.each(function(){
+                        var label_s=$(this).find("label").html();
+                        reg=/<.*?>(.*?)$/;
+                        a_tmp=label_s.match(reg);
+                        var gname=$.trim(a_tmp[1]);   // 游戏名称
+                        var reg= new RegExp(keywords);
+                        if(reg.test( gname )){
+                            $(this).clone().appendTo("#searchgame").css('display','');
+                        }
+                    });
+                    if( lis2 != ''){
+                        lis2.each(function(){
+                            var label_s=$(this).find("label").html();
+                            reg=/<.*?>(.*?)$/;
+                            a_tmp=label_s.match(reg);
+                            var gname=$.trim(a_tmp[1]);   // 游戏名称
+                            var reg= new RegExp(keywords);
+                            if(reg.test( gname )){
+                                $(this).clone().appendTo("#searchgame").css('display','');
+                            }
+                        });
+                    }
+                }else{
+                    lis1.each(function(){
+                        var py=$(this).find("input").attr('py');
+                        if(py.indexOf( keywords )!=-1){
+                            $(this).clone().appendTo("#searchgame").css('display','');
+                        }
+                    });
+                    if( lis2 != ''){
+                        lis2.each(function(){
+                            var py=$(this).find("input").attr('py');
+                            if(py.indexOf( keywords )!=-1){
+                                $(this).clone().appendTo("#searchgame").css('display','');
+                            }
+                        });
+                    }
+                }
+                if( $("#searchgame li").size()==0 ){
+                    $("#sertip").css('display','');
+                }else{
+                    $("#sertip").css('display','none');
+                }
+
+                $("div#tc div.game_list" ).find("span").css('display','none');
+                $("#mygame_page span").remove();$('.arrow_left').hide();$('.arrow_right').hide();
+            }
+        })
+    }else{
+        document.getElementById("sertxt").addEventListener('input',function(){
+            //清空searchgame的内容
+            $("#searchgame").html('');
+            //切换当前类别为游戏搜索
+            $("#tab_game li").removeClass('current');
+            $("[tag_title='searchgame']").parent("li").show().addClass('current');
+            $("#tc ul.game_ul").css('display','none');
+            $("#searchgame").css('display','block');
+            if( union_key == 40000 ){
+                var lis1=$("#phonegame").find("li"),lis2 = '';
+            }else{
+                var lis1=$("#freegame").find("li");
+                var lis2=$("#webgame").find("li");
+            }
+            var keywords=$.trim($(this).val());
+            //当用户的输入内容为空时
+            if(keywords==''){
+                $("#searchgame").html('请输入您要搜索的内容');
+            }else{
+                var reg=/^\w+$/;
+                if( !reg.test( keywords )  ){
+                    lis1.each(function(){
+                        var label_s=$(this).find("label").html();
+                        reg=/<.*?>(.*?)$/;
+                        a_tmp=label_s.match(reg);
+                        var gname=$.trim(a_tmp[1]);   // 游戏名称
+                        var reg= new RegExp(keywords);
+                        if(reg.test( gname )){
+                            $(this).clone().appendTo("#searchgame").css('display','');
+                        }
+                    });
+                    if( lis2 != ''){
+                        lis2.each(function(){
+                            var label_s=$(this).find("label").html();
+                            reg=/<.*?>(.*?)$/;
+                            a_tmp=label_s.match(reg);
+                            var gname=$.trim(a_tmp[1]);   // 游戏名称
+                            var reg= new RegExp(keywords);
+                            if(reg.test( gname )){
+                                $(this).clone().appendTo("#searchgame").css('display','');
+                            }
+                        });
+                    }
+                }else{
+                    lis1.each(function(){
+                        var py=$(this).find("input").attr('py');
+                        if(py.indexOf( keywords )!=-1){
+                            $(this).clone().appendTo("#searchgame").css('display','');
+                        }
+                    });
+                    if( lis2 != ''){
+                        lis2.each(function(){
+                            var py=$(this).find("input").attr('py');
+                            if(py.indexOf( keywords )!=-1){
+                                $(this).clone().appendTo("#searchgame").css('display','');
+                            }
+                        });
+                    }
+                }
+                if( $("#searchgame li").size()==0 ){
+                    $("#sertip").css('display','');
+                }else{
+                    $("#sertip").css('display','none');
+                }
+                $("div#tc div.game_list .game_page").hide();
+                $("#mygame_page span").remove();$('.arrow_left').hide();$('.arrow_right').hide();
+            }
+        })
+
+    } //end nav test
+    var stxt = "请输入你要找的游戏名称";
+    $("#sertxt").val(stxt);
+    $("#sertxt").click(function(){
+        if($(this).val()==stxt){
+            $(this).val("");
+        }
+    });
+    $("#sertxt").blur(function(){
+        if($(this).val()==''){
+            $(this).val(stxt);
+        }
+    });
+}
+
+/**
+ * 获取游戏信息
+ * @param integer union_key 游戏ID
+ * @param integer is_server_key 是否显示选择服务器的框
+ * @return var
+ */
+function get_assign_gameinfo(union_key,is_server_key){
+    var obj = $("form").not(":hidden");
+    var mode = get_value_bykey('mode');//测试用
+    var data_type = obj.find("[name='pay_type']").val();
+    var card_list_or = $('[data="'+data_type+'"]').attr("card_list_or");//区分是否是卡类
+    var tag_title = $('[data="'+data_type+'"]').attr("tag_title");
+    var g_url=pay_protocol+pay_domain+'/gameinfo/gamebyid';
+    $.getJSON(g_url,{gid:union_key,mode:mode,rand:Math.random()},function(d){
+        $('[name="pay_game_union"]').val(d.unionid);
+        $('[name="proportion"]').val(d.proportion); //游戏的兑换比例
+        $('[name="unint"]').val(d.unint);
+        $('[name="charge_stat"]').val(d.charge_stat);
+        $("#tc").hide();
+        global_is_union = 1;
+        var ico = d.icon,server_htmls = '';
+        $("input[name='gamename']").val(d.gname).css({'background-image':'url('+ico+')','padding-left':'25px','background-repeat':'no-repeat','background-position':'5px 50%','width':'118px'});
+        if( d.servers == null ){ //游戏无服务器
+            $("[tag_title='selserver_div']").hide();
+	    obj.find('[name="server"]').val('');
+            check_role(obj);
+            obj.find(".select_box").html('');
+        }else{
+            $("[tag_title='selserver_div']").show();
+	        var server_key = get_value_bykey("server");
+            $.each(d.servers,function(k,v){
+                var arr_server = v.split('|');
+                server_htmls += "<li><input value="+arr_server[1]+" type='radio' tag_html='"+arr_server[0]+"' name='server_id'><label title="+arr_server[0]+">"+arr_server[0]+"</label></li>"
+            	if( is_server_key == 2 && server_key == arr_server[1] ){
+                    obj.find('[name="server"]').val(arr_server[1]);//服ID赋值
+                    obj.find(".select_box").html(arr_server[0])//显示服名称
+ 	            check_role(obj);
+                }
+	        });
+            $("#game_server").html("").html(server_htmls);
+            server_page();
+            if(is_server_key == 1) {
+                $("#serverdiv").show();
+                $("#game_server").show();
+                $("#server_page").show();
+            }
+        }
+        global_form['explain'] = d.explain;
+        //设置卡类与礼包
+        global_form['packages'] = d.packages;
+        if( d.packages != null ){
+            if(data_type == undefined){tag_title == "ybrh"}
+            global_form['is_packages'] = 1;
+            var selstr = '';
+            $.each(d.packages,function(k,v){
+                selstr += "<li><input name='pay_money' type='radio' class='radio1' id='p_"+tag_title+k+"' value='"+k+"' /><label for='p_"+tag_title+k+"'>"+v+"</label></li>"
+            });
+            if( card_list_or == 1 ){//只在非卡类充值处支持自定义充值
+                //其中有几款游戏同时支持礼包和自定义金额的
+                if (union_key == 162 || union_key == 170 || union_key == 182 || union_key == 183) {
+                    selstr += '<li class="other"><input type="radio" name="pay_money" value="0"><input class="rt_type" type="text">元&nbsp;请输入(1-50000)之间的整数</li>';
+                }
+            }
+            $("form").find("ul[tag_title='selpack']").html(selstr);
+            $('[tag_title="selpack_div"]').show();
+        }else{
+            global_form['is_packages'] = 0;
+            var yeif = global_form['ye']==1 ? true : false;
+            var unit = yeif ? "游币" : "元";
+            var selstr = insert_czlist(tag_title, unit);
+            obj.find("ul[tag_title='selpack']").html(selstr);
+            if( card_list_or == 2 ){
+                $('[tag_title="selpack_div"]').hide();
+            }
+        }
+        //选择卡类与礼包联动
+        change_packages_each(obj, card_list_or, data_type);
+        obj.find("p[tag_title='yx_tishi']").removeClass("inlineBlock");
+        obj.find("p[tag_title='js_tishi']").removeClass("inlineBlock");
+        set_money(obj,data_type);//金额选择
+    })
+}
+
+function change_packages_each(now_form, card_list_or, ptype){
+    var gunion = now_form.find("input[name='pay_game_union']").val();
+    var need_charge_id = need_charge_id_arr[gunion] == undefined ? need_charge_id_arr["allgame_nofree"] : need_charge_id_arr[gunion];
+    //手续费
+    var figure_class = ".figure_type_"+ptype;
+    var tip_val = now_form.find("input[name='charge_stat']").val() == 1 && !in_array(ptype, need_charge_id) ? 1 : now_form.find("input[name='pay_tip']").val();
+    var paymoney_obj = now_form.find("input[name='pay_money']"),czfs_obj = now_form.find(figure_class).find("input[name='czfs_money']")
+
+    //判断是否游戏补充说明，有则写入html
+    if ( global_form['explain'] != null ) {
+        now_form.find("div[tag_title='game_explain'] .rc_desc").html(global_form['explain']);
+        now_form.find("div[tag_title='game_explain']").css("display", "block");
+    } else {
+        now_form.find("div[tag_title='game_explain']").css("display", "none");
+    }
+
+    if( global_form['packages']!=null && card_list_or == 2){//在卡类充值时.
+        czfs_obj.click(function () {
+            if( gunion ){
+                //取卡联动选礼包
+                var card_val = $(this).val();
+                var paymoney_val = new Array();
+                //另外须检查是否使用余额
+                var use_aval = now_form.find("input[name='use_aval']").attr("checked");
+                var user_aval = $("#user_aval").html();
+                paymoney_obj.each(function (index) {  //历遍礼包
+                    var had_pay = use_aval ? card_val * tip_val + parseInt(user_aval) : card_val * tip_val; //had_pay 是用户需要支付的金额
+                    var chage_val = had_pay - $(this).val();
+                    if (chage_val >= 0) { //取所有足以支付的卡
+                        paymoney_val.push(parseInt($(this).val()));
+                    }
+                });
+                //最终推荐的卡值
+                var best_pval = paymoney_val[0] > paymoney_val[1] ? paymoney_val.shift() : paymoney_val.pop();
+                if ( best_pval != undefined ) {
+                    var now_had_pay = use_aval ? card_val * tip_val + parseInt(user_aval) : card_val * tip_val;
+                    var after_pay = now_had_pay - best_pval;
+                    //皮卡带礼包，在免手续费的时候多出来的游币是扣掉手续费的
+                    if (after_pay > 0 && gunion == 185 && $.inArray(ptype, need_charge_id_arr[185]) == -1) {
+                        after_pay = after_pay * now_form.find("input[name='pay_tip']").val();
+
+                    }
+                    paymoney_obj.filter("input[value='" + best_pval + "']").attr("checked", "checked");
+                    var yestr = use_aval ? "+平台余额" : "";
+                    var ts_str = after_pay == 0 ? "此卡" + yestr + "适合购买以上礼包." : "此卡<em>" + yestr + "</em>适合购买以上礼包，购买后余额为：<em>" + Math.round(after_pay * 100) / 100 + "</em>游币";
+                    now_form.find("p[tag_title='sd_tishi']").html(ts_str).addClass("inlineBlock");
+                } else {
+                    now_form.find("p[tag_title='sd_tishi']").html("此卡面额不足购买任何礼包。").addClass("inlineBlock");
+                    paymoney_obj.attr("checked", "");
+                }
+            }
+        });
+        paymoney_obj.click(function(){
+            now_form.find("p[tag_title='je_tishi']").removeClass("inlineBlock");
+            if( gunion ){
+                //取礼包联动选卡
+                var pay_val = $(this).val();
+                var card_val = new Array();
+                //另外须检查是否使用余额
+                var use_aval = now_form.find("input[name='use_aval']").attr("checked");
+                var user_aval = $("#user_aval").html();
+                czfs_obj.each(function(index){//历遍卡类
+                    var had_pay = use_aval?$(this).val()*tip_val+parseInt(user_aval):$(this).val()*tip_val;//had_pay 是用户需要支付的金额
+                    var chage_val = had_pay - pay_val;
+                    if(chage_val>=0){ //取所有足以支付的卡
+                        card_val.push($(this).val());
+                    }
+                });
+                var best_cval = card_val.shift();//最终推荐的卡值
+                if(best_cval != undefined){
+                    if(parseInt(user_aval)>=parseInt(pay_val)){
+                        now_form.find("p[tag_title='sd_tishi']").html("你当前余额：<em>"+user_aval+"</em>足以购买此礼包，可转用游币兑换。").addClass("inlineBlock");
+                    }else{
+                        var now_had_pay = use_aval?best_cval*tip_val+parseInt(user_aval):best_cval*tip_val;
+                        var after_pay = now_had_pay - pay_val;
+                        //皮卡带礼包，在免手续费的时候多出来的游币是扣掉手续费的
+                        if( after_pay>0 && gunion==185 && $.inArray(ptype,need_charge_id_arr[185])==-1) {                                                                               after_pay = after_pay*now_form.find("input[name='pay_tip']").val();
+                        }
+                        czfs_obj.filter("input[value='"+best_cval+"']").attr("checked","checked");
+                        var yestr = use_aval?"+平台余额":"";
+                        var ts_str = after_pay==0?"<em>"+best_cval+"</em>元卡<em>"+yestr+"</em>可获得此礼包<em>":"<em>"+best_cval+"</em>元卡<em>"+yestr+"</em>可获得此礼包,扣费后余额：<em>"+Math.round(after_pay*100)/100+"</em>游币";
+                        now_form.find("p[tag_title='sd_tishi']").html(ts_str).addClass("inlineBlock");
+                    }
+                }else{
+                    var ts_str = "没有适合此礼包的充值卡，建议您换一种充值方式.";
+                    now_form.find("p[tag_title='sd_tishi']").html(ts_str).addClass("inlineBlock");
+                    czfs_obj.attr("checked","");
+                }
+            }
+        });
+	//now_form.find(figure_class).find("input[name='czfs_money']:checked").click();
+        now_form.find("input[name='pay_money']:checked").click();
+    }else{
+        now_form.find("p[tag_title='je_tishi']").removeClass("inlineBlock");
+        var g_unint = now_form.find("input[name='unint']").val();
+        var g_pro = now_form.find("input[name='proportion']").val();
+        var payu = "元";
+        paymoney_obj.click(function(){
+            var ptype = $(this).attr("type");
+            //游戏带礼包的情况
+            if(ptype == 'radio'){
+                var pay_money_ = $(this).val();
+                global_form['pay_pm'] = pay_money_;
+                var ghtml_id = $(this).attr("id");
+                var pay_html_ = $("label[for='"+ghtml_id+"']").html();
+                if(pay_html_ != null){
+                    var f_index = pay_html_.indexOf("[");
+                    var f_pay_html = pay_html_.substr(0,f_index);
+                }else{
+                    f_pay_html = '';
+                }
+                if( pay_money_ == 0 && parseInt($("input.rt_type").val()) > 0 ){
+                    pay_money_ = parseInt($("input.rt_type").val());
+                }
+                var more_money = (pay_money_*tip_val).toString().split(".");
+                if(g_unint=='游币'){
+                    var f_gif = f_pay_html!=''?f_pay_html:"<em>"+Math.round(pay_money_*tip_val*100)/100+"</em>游币";
+                }else{
+                    var f_gif = f_pay_html!=''?f_pay_html:"<em>"+Math.round(more_money[0]*g_pro*100)/100+"</em>"+g_unint;
+                    f_gif = gunion!=43998?f_gif:"<em>"+Math.round(pay_money_*tip_val*g_pro*100)/100+"</em>"+g_unint;
+                }
+                var more_str = more_money[1]&&g_unint!="游币"?",剩余:<em>0."+more_money[1].substr(0,2)+"</em>游币":"";
+                more_str = gunion==43998?'':more_str;
+                var ts_str = "充值<em>"+pay_money_+"</em>"+payu+",将获得:"+f_gif+more_str;
+                if(global_form['packages']!=null){
+                    var ts_str = "充值<em>"+pay_money_+"</em>"+payu+",将获得:"+"<em>"+pay_html_+"</em>"+more_str;
+                }
+                now_form.find("p[tag_title='sd_tishi']").html(ts_str).addClass("inlineBlock");
+            }
+        });
+        czfs_obj.click(function(){
+            var ptype = $(this).attr("type");
+            //游戏带礼包的情况
+            if(ptype == 'radio'){
+                var pay_money_ = $(this).val();
+                global_form['czfs_pm'] = pay_money_;
+                var ghtml_id = $(this).attr("id");
+                var pay_html_ = $("label[for='"+ghtml_id+"']").html();
+                if(pay_html_ != null){
+                    var f_index = pay_html_.indexOf("[");
+                    var f_pay_html = pay_html_.substr(0,f_index);
+                }else{
+                    f_pay_html = '';
+                }
+                var more_money = (pay_money_*tip_val).toString().split(".");
+                if(g_unint=='游币'){
+                    var f_gif = f_pay_html!=''?f_pay_html:"<em>"+Math.round(pay_money_*tip_val*100)/100+"</em>游币";
+                }else{
+                    var f_gif = f_pay_html!=''?f_pay_html:"<em>"+Math.round(more_money[0]*g_pro*100)/100+"</em>"+g_unint;
+                    f_gif = gunion!=43998?f_gif:"<em>"+Math.round(pay_money_*tip_val*g_pro*100)/100+"</em>"+g_unint;
+                }
+                var more_str = more_money[1]&&g_unint!="游币"?",剩余:<em>0."+more_money[1].substr(0,2)+"</em>游币":"";
+                more_str = gunion==43998?'':more_str;
+                var ts_str = "充值<em>"+pay_money_+"</em>"+payu+",将获得:"+f_gif+more_str;
+                now_form.find("p[tag_title='sd_tishi']").html(ts_str).addClass("inlineBlock");
+            }
+        });
+    }
+}
+
+//实现js的in_array
+function in_array(stringToSearch, arrayToSearch) {
+    for (s = 0; s < arrayToSearch.length; s++) {
+        thisEntry = arrayToSearch[s].toString();
+        if (thisEntry == stringToSearch) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * 金额选择列表
+ * @param string now_form_id id区分
+ * $param string unit        游币or元
+ * @return string
+ */
+function insert_czlist(now_form_id, unit) {
+    var selstr = "";
+    selstr += '<li><input type="radio" value="10" id="p_' + now_form_id + '10" class="radio1" name="pay_money"><label for="p_' + now_form_id + '10">10' + unit + '</label></li>';
+    selstr += '<li><input type="radio" value="30" id="p_' + now_form_id + '30" class="radio1" name="pay_money"><label for="p_' + now_form_id + '30">30' + unit + '</label></li>';
+    selstr += '<li><input type="radio" value="50" id="p_' + now_form_id + '50" class="radio1" name="pay_money"><label for="p_' + now_form_id + '50">50' + unit + '</label></li>';
+    selstr += '<li><input type="radio" value="100" id="p_' + now_form_id + '100" class="radio1" checked="checked" name="pay_money"><label for="p_' + now_form_id + '100">100' + unit + '</label></li>';
+    selstr += '<li><input type="radio" value="500" id="p_' + now_form_id + '500" class="radio1" name="pay_money"><label for="p_' + now_form_id + '500">500' + unit + '</label></li>';
+    selstr += '<li class="other"><input type="radio" name="pay_money" value="0"><input type="text" class="rt_type"> ' + unit + '&nbsp;请输入(1-50000)之间的整数</li>';
+    return selstr;
+}
+
+//给充值金额input绑定个keyup事件
+$("input.rt_type").live("keyup",function(){
+    var m = $(this).val();
+    var c = m.replace(/[^\d]/g,'')
+    $(this).val(c);
+    if( $(".form2").css("display") == "block" ){
+        $("input[name='pay_money_input']").val(m);
+    }
+    global_form['input_pm'] = m;
+    $("input[name='pay_money'][value='0']").attr("checked",true);
+    //充值多少获取多少游戏专用词游戏币.例如星钻，
+    var now_form = $("form").not(":hidden");
+    var gunion = now_form.find("input[name='pay_game_union']").val();
+    if( gunion ){
+        var ptype = parseInt(now_form.find("input[name='pay_type']").val());
+        var pay_money_ = m<50000?m:"50000",payu = "元",g_pro = now_form.find("input[name='proportion']").val(),g_unint = now_form.find("input[name='unint']").val();
+        var need_charge_id = need_charge_id_arr[gunion]==undefined?need_charge_id_arr["allgame_nofree"]:need_charge_id_arr[gunion];
+        var tip_val = now_form.find("input[name='charge_stat']").val()==1 && !in_array(ptype,need_charge_id)?1:now_form.find("input[name='pay_tip']").val();
+        if( global_form['packages'] ){
+            var ts_str = "充值<em>"+pay_money_+"</em>"+payu+",将获得:<em>"+had_pay_*g_pro+"</em>"+g_unint;
+            now_form.find("p[tag_title='sd_tishi']").html(ts_str).addClass("inlineBlock");
+        }else{
+            var more_money = (Math.round(pay_money_*tip_val*100)/100).toString().split(".");
+            var f_gif = "<em>"+Math.round(more_money[0]*g_pro*100)/100+"</em>"+g_unint;
+            var more_str = more_money[1]&&g_unint!="游币"?",剩余:<em>0."+more_money[1].substr(0,2)+"</em>游币":"";
+            var ts_str = "充值<em>"+pay_money_+"</em>"+payu+",将获得"+f_gif+more_str;
+            now_form.find("p[tag_title='sd_tishi']").html(ts_str).addClass("inlineBlock");
+        }
+    }
+});
+
+/**
+ * 设置金额选择,url传金额 金额不能修改
+ * @param obj       obj      要处理的对象
+ * $param integer data_type  当前的渠道号，主要用于获取czfs_name 的值
+ * @return var
+ */
+function set_money(obj,data_type){
+    var jeurl = window.location.href,p_m = 0;
+    var jearr = jeurl.substr(jeurl.search("je=")).split("&")[0].split("=");
+    var jeis = jearr[0];
+    var je = jearr[1]=='0'?'10':jearr[1];
+    // 如果游戏跳出来有传je值
+    if( jeis == 'je' && parseInt(je) > 0 ){
+        //做法跟之前不一样，之前czfs_money 无礼包会更改为，现在还是czfs_money
+        if( obj.find('[tag_title="selpack_div"]').css("display") == "block" ){
+            var mobj = obj.find("input[name='pay_money']"),
+                ispack = global_form['packages'];
+            mobj.each(function(){
+                var tval = $(this).val();
+                if( (parseInt(tval) >= parseInt(je)) && ispack != null ){
+                    $(this).click();p_m = 1;
+                    return false;
+                }else if( (parseInt(tval) == parseInt(je)) && ispack == null ){
+                    $(this).click();p_m = 1;
+                    return false;
+                }
+            });
+            if( p_m == 0 ){ //有传金额 不匹配，要在input框做选中
+                $(".rt_type").val(je.replace(/[^\d]/g,''));
+                $(".rt_type").click().keyup();
+            }
+	     if( is_lock == 1 ){
+                mobj.attr("disabled","disabled");
+                $(".rt_type").attr("disabled","disabled");
+            }
+        }
+	if( obj.find('[tag_title="card_list"]').css("display") == "block" ){
+            var cl = ".figure_type_"+data_type;
+            var mobj = $(cl).find("input[name='czfs_money']")
+            if( global_form['packages'] == null) {
+                mobj.each(function(){
+                    var tval = $(this).val();
+                    if( parseInt(tval) >= parseInt(je) ){
+                        $(cl).find("[name='czfs_money'][value='"+tval+"']").attr("checked",true).click();
+                        return false;
+                    }
+                });
+            }
+            if (is_lock == 1) {
+                mobj.attr("disabled", "disabled");
+            }
+        }
+    }else{//默认选择100
+        obj.find("input[name='pay_money']").removeAttr("disabled");
+        var cl = ".figure_type_"+data_type;
+        $(cl).find("input[name='czfs_money']").removeAttr("disabled");
+        var radiop_pm = global_form['pay_pm'],input_pm = global_form['input_pm'],radioc_pm = global_form['czfs_pm']
+        if( obj.find("[tag_title='selpack_div']").css("display") == "block" && parseInt(radiop_pm) > 0 ){
+            obj.find("input[name='pay_money'][value='"+radiop_pm+"']").click(); obj.find(".rt_type").val('');return false;
+        }
+        if( obj.find("[tag_title='card_list']").css("display") == "block" ) {
+            if( parseInt(radioc_pm) > 0 ){
+                $(cl).find("input[name='czfs_money'][value='"+radioc_pm+"']").attr("checked",true).click();return false;
+            }else{
+                $(cl).find("input[name='czfs_money'][value='"+radiop_pm+"']").attr("checked",true).click();return false;
+            }
+        }
+	if( global_is_union == 1 ){
+	   obj.find("input[name='pay_money'][value='100']").attr("checked",true).click();
+	}//有选择游戏的时候 选择100金额
+    }
+}
+
+//服务器分页
+function server_page(){
+    //分页的目标内容
+    var pobj_str = "#game_server li";
+    //分页按扭上层div
+    var ser_but_div = "#server_page";
+    //分页按扭
+    var ser_but = "span";
+    //按扭CLASS
+    var ser_but_class = "current";
+    //左则按扭
+    var lobj_str = "#lb_ser";
+    //右则按扭
+    var robj_str = "#rb_ser";
+    //单页的数量
+    var one_page = 16;
+    //首页的OBJ
+    var pobj = $(pobj_str+":gt("+(one_page-1)+")");
+    //分页总数
+    var allpage = Math.ceil($(pobj_str).size()/one_page);
+    //当前分页
+    var nowp = 1;
+    pobj.css("display","none");
+    //显示分页按扭
+    var bstr = '';
+    for(i=1;i<=allpage;i++){
+        bstr += '<span></span>';
+    }
+    $(ser_but_div).html(bstr);
+    $(ser_but_div+" "+ser_but+":first").addClass(ser_but_class);
+    //向右翻
+    $(robj_str).unbind('click').click(function(){
+        if(nowp>=allpage){
+            return false;
+        }
+        $(pobj_str+":visible").css("display","none");
+        $(pobj_str+":gt("+(one_page*nowp-1)+"):lt("+(one_page)+")").css("display","block");
+
+        $(ser_but_div+" "+ser_but).removeClass();
+        $(ser_but_div+" "+ser_but+":eq("+nowp+")").addClass(ser_but_class);
+        nowp++;
+    });
+    //向左翻
+    $(lobj_str).unbind('click').click(function(){
+        if(nowp<=1){
+            return false;
+        }
+        $(pobj_str+":visible").css("display","none");
+        if(nowp==2){
+            $(pobj_str+":lt("+(one_page)+")").css("display","block");
+        }else{
+            $(pobj_str+":gt("+(one_page*(nowp-2)-1)+"):lt("+(one_page)+")").css("display","block");
+        }
+        nowp--;
+        $(ser_but_div+" "+ser_but).removeClass();
+        $(ser_but_div+" "+ser_but+":eq("+(nowp-1)+")").addClass(ser_but_class);
+    });
+    // 点击选服的下面那个span翻页
+    $("#server_page span").unbind('click').click(function(){
+        nowp=$(this).parent().find("span").index($(this))+1;
+        $(pobj_str+":visible").css("display","none");
+        if(nowp==1){
+            $(pobj_str+":lt("+(one_page)+")").css("display","block");
+        }else{
+            $(pobj_str+":gt("+(one_page*(nowp-1)-1)+"):lt("+(one_page)+")").css("display","block");
+        }
+        $(ser_but_div+" "+ser_but).removeClass();
+        $(ser_but_div+" "+ser_but+":eq("+(nowp-1)+")").addClass(ser_but_class);
+    })
+}
+
+/**
+ * 取URL中的指定参数值
+ * @param string key 参数值，例如union
+ * @return null|string
+ */
+function get_value_bykey(key){
+    var sUrl = location.href;
+    if( sUrl.substr(sUrl.length-1,1) == '#' ){ //去掉最后的#
+        sUrl = sUrl.substring(0,sUrl.length-1);
+    }
+    var sPos=sUrl.indexOf(key);
+    if( sPos != -1 ){                    // 判断参数是否在url里
+        var action = sUrl.substr(sPos);  // ptype: 数字表示的充值方式
+    }else{
+        return '';
+    }
+    var pos = action.indexOf('&');
+    if( pos != -1 ){
+        action = action.substr(0,pos);
+    }
+    var pos = action.indexOf('=');
+    if( pos != -1 ){
+        action = action.substr(pos+1);
+    }
+    if( action.length <= 32 ){  //长度超长的都是非法的
+        return action;
+    }else{
+        return '';
+    }
+}
+
+//随机生成一个字符串
+function rand_str(){
+    var data=["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+
+    var result="";
+    for(var i=0;i<12;i++){
+        var r=Math.floor(Math.random()*62);     //取得0-62间的随机数，目的是以此当下标取数组data里的值！
+        result+=data[r];        //输出20次随机数的同时，让rrr加20次，就是20位的随机字符串了。
+    }
+    return result;
+}
+
+//插入验证码html
+function insert_captcha(){
+    var desc = $(".form1").find("span[tag_title='je_tishi']").parent();
+    var urls = pay_protocol+pay_domain+'/pay/captcha?rand='+Math.random();
+    var cat_str='<div class="rc_dv"><label class="label">请输入验证码:</label><input class="rc_ipt" type="text" size="5"  name="captcha" />&nbsp;&nbsp;<img src="'+urls+'" name="paycap" /> </div>';
+    desc.after(cat_str);
+}
+//刷新验证码
+function flush_capt(){
+    $("img[name='paycap']").attr("src",pay_protocol+pay_domain+"/pay/captcha?"+Math.floor(Math.random()*99));
+}
+//自动横纵居中
+function auto_center(obj1){
+    var ww = $(window).width();
+    var wh = $(window).height();
+    var lv1 = (ww - obj1.outerWidth())/2+$(window).scrollLeft();
+    var tv1 = (wh - obj1.outerHeight())/2+$(window).scrollTop();
+    obj1.css({
+        position:'absolute',
+        left: lv1,
+        top: tv1
+    });
+}
+//提交订单完成后弹出
+function pop_and_center(obj){
+    var trans = $("#trans");
+    trans.css("display","block");
+    trans.css("height",$(document).height());
+    trans.css("width",$(document).width());
+    auto_center(obj);
+    //自动横纵居中
+    var wctimeid = setInterval(function(){auto_center(obj)},200);
+    obj.css("display","block");
+    return wctimeid;
+}
+//关闭弹出的完成界面
+function pop_and_center_close(obj,tid){
+    var trans = $("#trans");
+    obj.css("display","none");
+    trans.css("display","none");
+    $("select[name='server']").css("display","block");
+    $("select[name='role']").css("display","block");
+    clearInterval(tid);
+}
+
+//手机扫描二维码之后PC端弹出进行中的提示
+function check_mark(ewm_mark) {
+    var t_num = 0;
+    var check_stat = 0;
+    var porder = null;
+    if (interval != '') {
+        clearInterval(interval);
+    }
+    interval = setInterval(function () {
+        t_num += 1;
+        //自动请求的次数,300次，10分钟
+        if (t_num === 300 && porder != null) {
+            //self.location.href = pay_protocol+ pay_domain + '/pay_info_display.php?msg=card-99&porder=' + porder;
+            self.location.href = 'http://' + pay_domain + '/pay_info_display.php?msg=card-99&porder=' + porder;
+            clearInterval(interval);
+            return;
+        }
+        //查询
+        $.get(pay_protocol+ pay_domain + '/pay/display', {"ewm_mark": ewm_mark, "rand":Math.random()}, function (data) {
+            var f = data.split("|");
+            if (f[0] != '' && check_stat == 0) {
+                check_stat = 1;
+                porder = f[0];
+            } else if (f[1] == 1 && check_stat == 1) {
+                self.location.href = 'http://' + pay_domain + '/pay_info_display.php?porder=' + f[0];
+                clearInterval(interval);
+                return;
+            }
+        });
+    }, 2000);
+}
+
+//直接页面支付扫码
+function scan_code_display(istrue) {
+    if (istrue) {
+        $("#pop_pay_wxewm .bd .qc").css("display", "none");
+        $("#pop_pay_wxewm .bd .tip").css("display", "none");
+    } else {
+        $("#pop_pay_ewm .bd .qc").css("display", "");
+        $("#pop_pay_ewm .bd .tip").css("display", "");
+    }
+}
+
+//点击确认提交
+$("a[name='f_href']").click(function(){
+    pop_and_center_close($("#pop_pay"),pop_time);
+    wccz_time = pop_and_center($("#wccz"));
+});
+
+//微信二维码确认信息关闭
+$("#wxqx3").click(function(){
+    $("#pop_wxewm_confirm").css("display","none");
+    pop_and_center_close($("#pop_pay_wxewm"),pop_time);
+    //停止轮询
+    if(interval!=''){
+        clearInterval(interval);
+    }
+});
+//充值信息确认关闭
+$("#qx1,#qx2").click(function(){
+    $("select[name='server']").css("display","block");
+    $("select[name='role']").css("display","block");
+
+    pop_and_center_close($("#pop_pay"),pop_time);
+});
+//更新身份证信息
+function up_idcard(name, idc) {
+    var g_url = pay_protocol+ pay_domain + '/idcard/up_idcard';
+    $.ajax({
+        dataType: "json",
+        type: "POST",
+        url: g_url,
+        data: 'idcard=' + idc + '&realname=' + name,
+        success: function (data) {
+            if (data.stat == 'ok') {
+                $("div.reword_tip").html(data.msg).css('display', 'block').fadeOut(6000);
+                dialogFun.close();
+            } else {
+                $("div.reword_tip").html(data.msg).css('display', 'block').fadeOut(6000);
+            }
+        }
+    });
+}
+
+//取url中的游缩写
+function get_url_gname(){
+    var g_pathname = location.pathname;
+    if(g_pathname.substr(g_pathname.length-1,1)=='/'){
+        var game_key = g_pathname.substr(1,g_pathname.length-2);
+    }else{
+        var game_key = g_pathname.substr(1,g_pathname.length-1);
+    }
+    if(game_key.length <= 12){
+        return game_key;
+    }else{
+        return '';
+    }
+}

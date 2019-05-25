@@ -1,0 +1,515 @@
+
+
+(function ($) {
+    function headerInit() {
+        var tm = function (s, h) {
+            s = s.replace(/(^\s+|\s+$)/gi, '');
+            return h ? s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', "&quot;") : s;
+        };
+        var ec = function (s) {
+            var p = /%[a-f0-9]{2}/ig;
+            while (p.test(s)) {
+                s = decodeURIComponent(s);
+            }
+            return s;
+        };
+        var gc = function (n) {
+            var p = '; ', c = p + document.cookie + p;
+            n = p + n + '=';
+            var s = c.indexOf(n);
+            if (s == -1) {
+                return false;
+            }
+            c = c.substr(s + n.length).split(p)[0];
+            return tm(ec(c));
+        };
+        var ui = (function () {
+            var c = gc('Pauth');
+            if (!c || c.length <= 5) {
+                return false;
+            }
+            c = c.split('|');
+            var ui = {};
+            ui.uid = c[0];
+            ui.username = tm(c[1] || '', 1);
+            ui.nick = tm(gc('Pnick') || '', 1);
+            //if (typeof GNick == 'string') {
+            //    ui.nick = GNick;
+            //}
+            if (ui.nick.replace(/[^\x00-\xFF]/g, '**').length < 2) {
+                ui.nick = '';
+            }
+            var unl = ui.username.length;
+            if (!(new RegExp('^[1-9]\\d{0,10}$').test(ui.uid)) || unl < 2 || unl > 30) {
+                return false;
+            }
+            ui.disName = ui.nick ? (ui.nick) : '[设置昵称]';
+
+            ui.disUsername = decodeURIComponent(ui.username);
+            ui.avatar = '//a.img4399.com/123/small'.replace('123', ui.uid);
+            var au = (gc('PAvatar') || '').replace(/\D+/, '');
+            au && (ui.avatar += '?' + au);
+            return ui;
+        })();
+        var html = '';
+        var target = '';
+        if (typeof GCurrentModule != 'undefined' && GCurrentModule == 'game') {
+            target = ' target="_blank" ';
+        }
+        var domain = GCurrentDomain;
+        if (ui) {
+            html = '<ul class="my_groupitem">' +
+                '<li class="my_group_li" id="j-drop-msg">' +
+                '<a href="javascript:void(0)" title="消息" class="my_group_a">' +
+                '<span>' +
+                '<i class="my_ico_mail"><em id="msgnum" style="display: none;" class="msgnum png"><b class="png">5</b></em></i>' +
+                '</span>' +
+                '</a>' +
+                '<div class="my_dropmodal my_dropmodal_msg">' +
+                '<iframe frameborder="0" width="122" height="250" style="position:absolute; left:0; top:0"></iframe>' +
+                '<ul>' +
+                '<li><a ' + target + 'href="' + domain + '/plugins/notice/index-forums" title="群组消息" id="j-thread">话题消息<span>(<em>0</em>)</span></a></li>' +
+                '<li><a ' + target + 'href="' + domain + '/plugins/notice/index-feed" title="动态消息" id="j-feed">动态消息<span>(<em>0</em>)</span></a></li>' +
+                '<li><a ' + target + 'href="' + domain + '/plugins/notice/" title="通知消息" id="j-notice">通知消息<span>(<em>0</em>)</span></a></li>' +
+                '<li><a ' + target + 'href="' + domain + '/plugins/pm/" title="短消息" id="j-pm">短消息<span>(<em>0</em>)</span></a></li>' +
+                '</ul>' +
+                '</div>' +
+                '</li>' +
+                '<li class="my_group_li" id="j-drop-config">' +
+                '<a href="javascript:void(0)" class="my_group_a" title="设置">' +
+                '<span>' +
+                '<i class="my_ico_set"><em class="warning png" id="j-my_ico_set" style="display: none;"></em></i>' +
+                '</span>' +
+                '</a>' +
+                '<div class="my_dropmodal my_dropmodal_msg">' +
+                '<iframe frameborder="0" width="122" height="250" style="position:absolute; left:0; top:0"></iframe>' +
+                '<ul>' +
+                '<li><a target="_blank" href="' + domain + '/' + ui.uid + '?ver=2">个人主页<em> new</em></a></li>' +
+                '<li><a target="_blank" href="' + domain + '/zone/active">活跃达人</a></li>' +
+                '<li><a ' + target + 'href="' + domain + '/' + ui.uid + '/rela-friend">我的好友</a></li>' +
+                '<li><a ' + target + 'href="' + domain + '/shoucang/">我的收藏盒</a></li>' +
+                '<li><a ' + target + 'href="' + domain + '/jifen/myProduct-scoreList">积分记录</a></li>' +
+                '<li><a ' + target + 'href="' + domain + '/profile/" id="j-profile" class="a_setting">个人设置<i class="ico_warning" style="display:none;"></i></a></li>' +
+                '<li><a ' + 'href="" onclick="UniLogin.logout();return false;">退出</a></li>' +
+                '</ul>' +
+                '</div>' +
+                '</li>' +
+                '<li class="my_group_li">' +
+                '<a ' + target + ' href="' + domain + '/help/" title="帮助中心" class="my_group_a">' +
+                '<span>' +
+                '<i class="my_ico_ques"></i>' +
+                '</span>' +
+                '</a>' +
+                '</li>' +
+                '<li class="my_group_li">' +
+                '<a ' + target + ' href="//my.4399.com/forums/app" title="群组手机版" class="my_group_a png" target="_blank">' +
+                '<span>' +
+                '<i class="my_ico_app"></i>' +
+                '</span>' +
+                '</a>' +
+                '</li>' +
+                '</ul>' +
+                '<div class="my_login clearfix">' +
+                //'<div class="my_avatar_panel">' +
+                //'<div class="my_avatar_cut">' +
+                '<a ' + target + ' id="header_nick" href="' + (domain + '/' + ui.uid) + '" class="my_nickname" title="' +
+                (ui.nick ? '我的个人主页' : '设置一个属于你的昵称') + '">' + ui.disName + '</a>' +
+                '<a ' + target + ' href="' + domain + '/' + ui.uid + '" class="my_username" title="我的个人主页">' + ui.disUsername + '</a>' +
+                '<a ' + target + ' href="' + domain + '/' + ui.uid + '" class="my_avatar">' +
+                '<img src="' + ui.avatar + '" width="26" height="26" alt="' + ui.nick + '"/>' +
+                '</a>' +
+                //'</div>' +
+                //'</div>' +
+                //活跃达人领取提示
+                '<div class="u-active-guide-a">' +
+                '<i class="icon-arr"></i>' +
+                '<a href="javascript:void(0)" class="txt" id="u-guide-in">' +
+                '你有一个达人称号可以领取</a>' +
+                '<a href="javascript:void(0)" class="close" id="active-guide-close"></a>' +
+                '</div>' +
+                '</div>';
+        } else {
+            html = '<div class="my_unlogin">' +
+                '<a href="javascript:UniLogin.showPopupLogin(\'\',\'\',true)" title="登录">登录</a>' +
+                '<a href="javascript:UniLogin.showPopupReg(true)" title="注册">注册</a>' +
+                '<a ' + target + ' href="' + domain + '/help/" title="帮助">帮助</a>' +
+                '</div>';
+        }
+        document.getElementById('my_person').innerHTML = html;
+        window.my = window.my ? window.my : {};
+        window.my.checkNick = (function () {
+            var timer = null, n = 2000;
+
+            return function (callback) {
+                function nickClearInterval() {
+                    if (timer !== null) {
+                        clearInterval(timer);
+                        timer = null;
+                    }
+                }
+
+                if (timer === null) {
+                    timer = setInterval(function () {
+                        var nick = UniLogin.getNick();
+                        if (typeof nick == 'string' && nick.length > 0) {
+                            nickClearInterval();
+                            if (typeof callback == 'function') {
+                                callback(nick);
+                            }
+                            return;
+                        }
+                        if (--n <= 0) nickClearInterval();
+                    }, 200);
+                }
+
+                UniLogin.fetchNick(function (nick) {
+                    if (typeof nick == 'string' && nick.length > 0) {
+                        if (typeof callback == 'function') {
+                            callback(nick);
+                        }
+                    }
+                    else if (!nick) {
+                        UniLogin.showPopupEditNick(true);
+                    }
+                });
+                return false;
+            }
+        })();
+
+        setTimeout(function () {
+            if (ui.nick) {
+
+            } else {
+                var domNick = document.getElementById('header_nick');
+                if (domNick)
+                    domNick.onclick = function () {
+                        my.checkNick(function (nick) {
+                            domNick.innerHTML = nick;
+                            domNick.title = '我的个人主页';
+                            domNick.onclick = function () {
+                                return true;
+                            };
+                        });
+                        return false;
+                    };
+            }
+        }, 1);
+    }
+
+    var flashHideTimer = null;
+
+    function toggleFlash(showOrHide) {
+        var a = navigator.userAgent.toLowerCase().match(/chrome\/(\d+)/);
+        if (a && a.length == 2 && a[1] <= 21) {
+            if (typeof showhideflash == 'function') {
+                if (showOrHide == 'show') {
+                    clearInterval(flashHideTimer);
+                    flashHideTimer = setTimeout(function () {
+                        showhideflash(showOrHide);
+                    }, 200);
+                } else {
+                    clearInterval(flashHideTimer);
+                    showhideflash(showOrHide);
+                }
+            }
+        }
+    }
+
+    var game = false;
+    $("#j-drop-game").bind("mouseover",
+        function () {
+            var $this = $(this);
+            toggleFlash('hide');
+            clearTimeout($this.data("data-delay"));
+            $this.data("data-delay", setTimeout(function () {
+                $this.addClass("my_dropon");
+            }, 500));
+
+            if (game == false) {
+                var shoucang = function (o, id, num, cb) {
+                    var s = '', n = 0;
+                    if (o.recommendList) {
+                        for (var i = 0, l = o.recommendList.length; i < l; i++) {
+                            var name = o.recommendList[i].name;
+                            var url = o.recommendList[i].url;
+                            var pic = o.recommendList[i].pic;
+                            s += '<li><div class="game"><a title="' + name + '" target="_blank" name="4_" href="' + url + '">' +
+                                '<img src="' + pic + '" alt="' + name + '">' +
+                                '</a></div><a href="' + url + '" title="' + name + '">' + name + '</a></li>';
+                        }
+                    } else {
+                        for (var i in o.played_gids || o.game_infos) {
+                            n++;
+                            if (n > num) break;
+
+                            if (o.played_gids) {
+                                var gid = o.played_gids[i].gid;
+                            } else {
+                                var gid = i;
+                            }
+                            var name = o.game_infos[gid].name;
+                            var url = o.game_infos[gid].url;
+                            var pic = o.game_infos[gid].pic;
+                            s += '<li><div class="game"><a title="' + name + '" target="_blank" name="4_" href="' + url + '">' +
+                                '<img src="' + pic + '" alt="' + name + '">' +
+                                '</a></div><a href="' + url + '" title="' + name + '">' + name + '</a></li>';
+                        }
+                    }
+
+                    document.getElementById(id).innerHTML = s;
+                    if (s == '') document.getElementById(id).parentNode.parentNode.parentNode.removeChild(document.getElementById(id).parentNode.parentNode);
+                    if (typeof cb == 'function') {
+                        cb(n);
+                    }
+                };
+
+                $.getJSON('//gprp.4399.com/cg/get_gamehistory.php?callback=?&page_size=5', {charset: 'unicode'}, function (o) {
+                    shoucang(o, 'my_game_history', 5, function (n) {
+                        n = n > 0 ? 5 : 10;
+                        $.getJSON('//gprp.4399.com/cg/recommend_or_hot_by_both.php?callback=?&page_size=' + n, {
+                            charset: 'unicode',
+                            type: 'list'
+                        }, function (o) {
+                            shoucang(o, 'my_game_recommend', n);
+                        });
+                    });
+                });
+                $('.my_drop_ad img').attr('src', '');
+                //广告
+                $.getJSON('//my.4399.com/jifen/ad-get-cid-27-type-json?callback=?', '', function (o) {
+                    if (o.code == 100 && o.result.length > 0) {
+                        var ad = o.result[0];
+                        $('.my_drop_ad').attr('href', ad.ad_anchor);
+                        $('.my_drop_ad').attr('title', ad.ad_title);
+                        $('.my_drop_ad img').attr('src', ad.ad_picurl);
+                    }
+                });
+            }
+            game = true;
+        }).bind("mouseout",
+        function () {
+            var $this = $(this);
+            toggleFlash('show');
+            clearTimeout($this.data("data-delay"));
+            $this.data("data-delay", setTimeout(function () {
+                $this.removeClass("my_dropon");
+            }, 100));
+        });
+
+    var msg = {
+        isOpen: true,
+        timer: null,
+        filter: {},
+        delay: false,
+        profile: {},
+        stop: function () {
+            if (this.timer !== null) {
+                this.timer = null;
+                clearInterval(this.timer);
+            }
+        },
+        is_hover: false,
+        _listeners: {},
+        init: function () {
+//            if (typeof DD_belatedPNG != 'undefined') {
+//                DD_belatedPNG.fix('.png');
+//            }
+            this.stop();
+            var _this = this;
+            $("#j-drop-msg,#j-drop-config").bind("mouseover",
+                function () {
+                    toggleFlash('hide');
+                    $(this).addClass("my_dropon");
+                    clearTimeout($(this).data("data-delay"));
+                }).bind("mouseout",
+                function () {
+                    var $this = $(this);
+                    toggleFlash('show');
+                    $this.data("data-delay", setTimeout(function () {
+                        $this.removeClass("my_dropon");
+                    }, 100));
+                });
+            if (typeof in_webgame != 'undefined') return false;
+            this.getProfile(function(){
+                msg.start();
+            });
+        },
+        start: function () {
+            var _this = this;
+            if (this.delay) {
+                return;
+            }
+            _this.get();
+            if (typeof in_webgame != 'undefined') {
+                return false;
+            }
+            setInterval(_this.get, 60000);
+        },
+        get:function () {
+            var url = '/services/site-notice?callback=?';
+            $.getJSON(url, function (res) {
+                var result = msg.filterRes(res.result);
+                msg.datas = result;
+                msg.getCallback(msg.getNoticeAll(result));
+                msg.fire('noticeUpdate', result);
+            });
+        },
+        getProfile:function (next) {
+            var profileApi = "/profile/notice-profile";
+            $.getJSON(profileApi, function (res) {
+                msg.profile = res.result;
+                next();
+            });
+        },
+        filterRes:function(res){
+            var list = {};
+            for (var item in res) {
+                if (!msg.profile[item]) {
+                    list[item] = 0;
+                } else {
+                    list[item] = res[item];
+                }
+            }
+            return list;
+        },
+        getCallback: function (data) {
+            var count = 0;
+            $(".my_dropmodal_msg a span").hide();
+            if (data !== null) {
+                /*
+                 newpm 短消息
+                 notenum 通知
+                 评论
+                 留言板
+                 话题回复
+                 打招呼
+                 好友请求
+                 */
+                for (var p in data) {
+                    if (p == 'security') {
+                        if (data[p] == 1) {
+                            $('#j-my_ico_set').show();
+                            $('#j-profile i').show();
+                        } else {
+                            $('#j-my_ico_set').hide();
+                            $('#j-profile i').hide();
+                        }
+                        continue;
+                    }
+                    data[p] = parseInt(data[p]);
+                    if (data[p] > 0) {
+                        if (msg.filter.hasOwnProperty(p)) continue;
+                        count += data[p];
+                        var $megNum = $("#j-" + p + " span em");
+                        if (data[p] >= 10000) {
+                            var _count = (data[p] / 10000).toFixed(1) + '万';
+                            $megNum.html(_count);
+                        } else {
+                            $megNum.html(data[p]);
+                        }
+                        $("#j-" + p + " span").show();
+                    } else {
+                        $("#j-" + p + " span").hide();
+                    }
+                }
+            }
+
+            if (count == 0) {
+                //总消息数
+                $("#msgnum").hide();
+            } else if (count > 99) {
+                $(".msgnum b").html('99+');
+                $("#msgnum").show();
+            } else {
+                $(".msgnum b").html(count);
+                $("#msgnum").show();
+            }
+        },
+        // 各类通知总数
+        getNoticeAll: function (datas) {
+            if (typeof datas == 'undefined') {
+                if (typeof this.datas == 'undefined') {
+                    return false;
+                } else {
+                    datas = this.datas;
+                }
+            }
+            return {
+                feed: datas.feed + datas.feed_notice + datas.good + datas.feed_at,
+                notice: datas.friend + datas.follow + datas.app + datas.book,
+                pm: datas.pm,
+                thread: datas.thread + datas.at + datas.thread_cmt
+            }
+        },
+        getNotice: function (type) {
+            if (typeof this.datas == 'undefined') {
+                return;
+            }
+            return typeof type != 'undefined' ? this.datas[type] : this.datas;
+        },
+        on:function(eventName,callback){
+            var eventNames = eventName.split(' ');
+            for (var _i = 0; _i < eventNames.length; _i++) {
+                if (!this._listeners[eventNames[_i]]) {
+                    this._listeners[eventNames[_i]] = [];
+                }
+                this._listeners[eventNames[_i]].push(callback);
+            }
+            return this;
+        },
+        fire: function (eventName, params) {
+            if (params === void 0) {
+                params = {};
+            }
+            if (this._listeners[eventName]) {
+                for (var _i = 0, _a = this._listeners[eventName]; _i < _a.length; _i++) {
+                    var callback = _a[_i];
+                    var extendArgs = $.extend(params, this.getNotice());
+                    callback.call(this, extendArgs);
+                }
+            }
+            return this;
+        }
+    };
+
+    window.myPerson = {
+        init: function () {
+            headerInit();
+            game = false;
+            $('#my_game_recommend,#my_game_history').html('<li><img src="//s4.img4399.com/album/loading.gif"></li>');
+            setTimeout(function () {
+                msg.init();
+            }, 0);
+        }
+    };
+
+    //活跃达人未领取达人提示窗口
+
+    $("#u-guide-in").bind('click', function () {
+        document.cookie = "active_guide_closed=1";
+        window.location.href = '/zone/active';
+    });
+    $("#active-guide-close").bind('click', function () {
+        $(".u-active-guide-a").hide();
+        document.cookie = "active_guide_closed=1";
+    });
+    window.activeIconClick = function (e) {
+        e = e || event;  //兼容火狐
+        (e.preventDefault) ? e.preventDefault() : e.returnValue = false; //兼容IE
+        if (!globalFunc.checkLogin()) {
+            return false;
+        }
+        window.open("/zone/active");
+    }
+    window.activeIconClickForums = function (e) {
+        e = e || event;  //兼容火狐
+        (e.preventDefault) ? e.preventDefault() : e.returnValue = false; //兼容IE
+        if (!checkLogin()) {
+            return false;
+        }
+        window.open("/zone/active");
+    }
+    myPerson.init();
+    msg.delay = typeof commonMsg != 'undefined' && commonMsg.delay || false;
+    window.commonMsg = msg;
+})(jQuery);

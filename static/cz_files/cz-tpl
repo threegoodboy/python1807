@@ -1,0 +1,55 @@
+function loadJs(url,callback){
+ var _js = document.createElement('script');
+ _js.setAttribute('src',url);
+ _js.setAttribute('id','__js__');
+ _js.setAttribute('charset','utf-8');
+ if( document.getElementById('__js__')){
+ return;
+ }
+ _js.onload = _js.onreadystatechange = function(){
+ if(_js.readyState && _js.readyState != 'loaded' && _js.readyState != 'complete'){
+ return;
+ }
+ _js.onreadystatechange = _js.onload = null;
+ if({}.toString.call(callback) == '[object Function]'){
+ callback();
+ }
+ };
+ var first=document.body.firstChild;
+ document.body.insertBefore(_js,first);
+}
+var tmp_right_data_global ;
+tmp_right_data_global = '';
+tmp_right_data_global += '<div class="rc_box service_center">';
+tmp_right_data_global += ' <div class="hd">';
+tmp_right_data_global += ' <h2>客服中心</h2>';
+tmp_right_data_global += ' </div>';
+tmp_right_data_global += ' <div class="bd">';
+tmp_right_data_global += ' <p>客服电话：400-633-4399转3号键</p>';
+tmp_right_data_global += ' <p>服务时间：9:00~21:00</p>';
+tmp_right_data_global += ' <a class="kf_online txthide" id="service" title="联系在线客服" target="_blank" href="http://my.4399.com/kefu/czkf.html">联系在线客服</a>';
+tmp_right_data_global += ' </div>';
+tmp_right_data_global += '</div>';
+tmp_right_data_global += '<div class="rc_box qa_center">';
+tmp_right_data_global += ' <div class="hd clearfix">';
+tmp_right_data_global += ' <a title="更多" target="_blank" href="http://my.4399.com/forums-mtag-tagid-81906.html">更多&gt;&gt;</a>';
+tmp_right_data_global += ' <h2>常见问题解答</h2>';
+tmp_right_data_global += ' </div>';
+tmp_right_data_global += ' <div class="bd">';
+tmp_right_data_global += ' <ul id="j_faq" class="qa_list"></ul>';
+tmp_right_data_global += ' </div>';
+tmp_right_data_global += '</div>';
+tmp_right_data_global += '<div class="rc_box qa_center">';
+tmp_right_data_global += ' <div class="hd clearfix">';
+tmp_right_data_global += ' <h2>充值优惠活动</h2>';
+tmp_right_data_global += ' </div>';
+tmp_right_data_global += ' <div class="bd">';
+tmp_right_data_global += ' <ul id="j_activity" class="qa_list"></ul>';
+tmp_right_data_global += ' </div>';
+tmp_right_data_global += '</div>';
+
+document.getElementById('recharge_service').innerHTML = tmp_right_data_global;
+var j_faq_html = '<li><a target="_blank" href="http://my.4399.com/forums-thread-tagid-81116-id-34610614.html" title="关于充值时的特别提示与约定">关于充值时的特别提示与约定</a></li><li><a target="_blank" href="http://my.4399.com/forums-thread-tagid-81116-id-36019880.html" title="4399游戏吧充值方式教程汇总">4399游戏吧充值方式教程汇总</a></li><li><a target="_blank" href="http://my.4399.com/space-458736982-do-thread-id-30307652-tagid-81116.html" title="4399游戏吧常见充值问题FAQ">4399游戏吧常见充值问题FAQ</a></li><li><a target="_blank" href="http://my.4399.com/forums-thread-tagid-81906-id-37883030.html" title="第三方账号登录充值注意事项">第三方账号登录充值注意事项</a></li>';
+var j_activity_html = '<li><a target="_blank" href="http://my.4399.com/forums/thread-59798827" title="【4399生死狙击】激情夏日 狙击狂欢季">【4399生死狙击】激情夏日 狙击狂欢季</a></li><li><a target="_blank" href="http://my.4399.com/forums/thread-59800500" title="【三国杀】助力消费热力 520收藏册福利不停">【三国杀】助力消费热力 520收藏册福利不停</a></li><li><a target="_blank" href="http://my.4399.com/forums/thread-59810928" title="【三国杀新服】百宝锦匣登场 程昱上线">【三国杀新服】百宝锦匣登场 程昱上线</a></li><li><a target="_blank" href="http://my.4399.com/forums/thread-59602886" title="【4399梦幻恋舞】小年狂欢 丰厚豪礼来袭">【4399梦幻恋舞】小年狂欢 丰厚豪礼来袭</a></li><li><a target="_blank" href="http://my.4399.com/forums/thread-59597971" title="【4399TOUCH热舞】消费福利送不停">【4399TOUCH热舞】消费福利送不停</a></li>';
+document.getElementById('j_faq').innerHTML = j_faq_html;
+document.getElementById('j_activity').innerHTML = j_activity_html;

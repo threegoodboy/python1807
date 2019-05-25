@@ -1,0 +1,18 @@
+#hy_right .box.noborder{height: 200px;margin-bottom: 20px; background:none;padding-left: 0px;padding-right: 0px;}
+h2.mtitle{font-size:20px; font-family:微软雅黑; color:#666;  text-indent: 50px; height:30px; line-height:30px; margin-top:30px; background:#FFF;position:relative;margin-top:15px;color:#0C97C0;}
+h2.mtitle span{position:absolute; background:url(../images/title.png) no-repeat left top; width:30px; height:30px; left:10px; top:-1px}
+
+.member_center{overflow:hidden; padding:10px; background:#FFFFFF}
+.member_center .welcome{height:20px; line-height:20px; padding:3px 10px}
+.member_center .welcome strong{color:#003A5A; margin-right:10px}
+.member_center .mleft{float:left;}
+.member_center .mleft p{text-align:center; margin-top:10px}
+.member_center .mright{float:right; width:660px}
+
+
+.centerTable{background:#E5E5E5; width:100%;margin-top: 15px;}
+.centerTable th{background:#F8F8F8; height:20px; line-height:20px; padding:5px 0px; text-align:center; font-family:微软雅黑; border-top:1px solid #FFF}
+.centerTable td{background:#FFF; text-align:center;height:30px; line-height:30px; padding:5px 0px; color:#CF394D;border-bottom: 1px solid #E8E8E8;}
+
+.recharge{margin-left:70px}
+.wdr{margin-left:30px}

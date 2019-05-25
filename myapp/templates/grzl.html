@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://www.whzxcf.com/member-index-index.shtml#divtab-1 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<link href="../../static/grzl_files/style.css" rel="stylesheet">
+<link href="../../static/grzl_files/newstyle.css" rel="stylesheet">
+<link href="../../static/grzl_files/bankdps.css" rel="stylesheet">
+<link href="../../static/grzl_files/style(1).css" rel="stylesheet" type="text/css">
+<link href="../../static/grzl_files/newstyle(1).css" rel="stylesheet" type="text/css">
+<link href="../../static/grzl_files/left.css" rel="stylesheet" type="text/css">
+<link href="../../static/grzl_files/l18style.css" rel="stylesheet">
+<link href="../../static/grzl_files/detailslist.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="https://www.whzxcf.com/statics/home/images/favicon.ico" type="image/x-icon">
+<script src="../../static/grzl_files/hm.js.下载"></script><script type="text/javascript">var GV = { DIMAUB: "",JS_ROOT: "/statics/member/js/",WEB_ROOT: "",STATICS_RUL:"/statics",TOKEN: "64acdd2bfe4341cc0bf9ff7f46481b11_fa462bcc24f8192ededc5233b8d8ca9c",	MAIN_DOMAIN:"http://www.whzxcf.com" };</script>
+<script type="text/javascript" src="../../static/grzl_files/WdatePicker.js.下载"></script><link href="../../static/grzl_files/WdatePicker.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../static/grzl_files/common.js.下载"></script>
+<script type="text/javascript" src="../../static/grzl_files/jquery.js.下载"></script>
+<script type="text/javascript" src="../../static/grzl_files/ui.core.js.下载"></script>
+<script type="text/javascript" src="../../static/grzl_files/ui.tabs.js.下载"></script>
+<script type="text/javascript" src="../../static/grzl_files/validator.js.下载"></script>
+<!--tipBOx-->
+<link type="text/css" rel="stylesheet" href="../../static/grzl_files/colorbox.css">
+<script src="../../static/grzl_files/jquery.colorbox.js.下载"></script>
+<script src="../../static/grzl_files/layer.js.下载"></script><link type="text/css" rel="stylesheet" href="../../static/grzl_files/layer.css" id="skinlayercss">
+<script src="../../static/grzl_files/common.js(1).下载"></script>
+
+<!--tipBOx-->
+<script type="text/javascript">
+//全局变量
+var currentUrl=window.location.href;
+if(currentUrl.indexOf("#")==(-1)) window.location.href=currentUrl+"#divtab-1";
+
+$(document).ready(function() {
+	$('#rotate > ul').tabs();/* 第一个TAB渐隐渐现（{ fx: { opacity: 'toggle' } }），第二个TAB是变换时间（'rotate', 2000） */
+	/*
+	var initCurlHttp = currentUrl.split("#");
+	$('#rotate > ul').tabs('select', "#"+initCurlHttp[1]);
+	alert(initCurlHttp[1]);
+	*/
+	$('#rotate > ul').bind('tabsselect', function(event, ui) {
+		if(typeof someBodySelected=="function") someBodySelected(ui);
+		var _this = $(ui.tab);
+		var geturl = _this.attr('ajax_href');
+		var hasget = _this.attr('get')||0;
+		var nowurl = _this.attr('href');
+		var vid = nowurl.split("#");
+		var curlHttp = currentUrl.split("#");
+		if(hasget!=1) ajaxGetData(geturl,vid[1]);
+		_this.attr('get','1');
+		window.location.href=curlHttp[0]+"#"+vid[1];
+	
+	});
+	
+	$('#hy_left .tzgl_nr a').click(function(e) { // 绑定单击事件
+		var nowurl = $(this).attr('href');
+		var vid = nowurl.split("#");
+		try{
+			if(currentUrl.indexOf(vid[0]) != -1 ){
+				$('#rotate > ul').tabs('select', "#"+vid[1]); // 切换到第三个选项卡标签
+				return false;
+			}
+		}catch(ex){};
+		return true;
+	});
+});
+</script>
+<script type="text/javascript">
+ window.onload=function(){
+  window._bd_share_config = {
+    common : {
+      bdText : '自定义分享内容', 
+      bdDesc : '自定义分享摘要', 
+      bdUrl : 'https://www.whzxcf.com/member-register-index-invite-MjAwNDMy.shtml', 
+    },
+    share : [{
+      "bdSize" : 16
+    }],
+    slide : [{     
+      bdImg : 0,
+      bdPos : "right",
+      bdTop : 100
+    }],
+    selectShare : [{
+      "bdselectMiniList" : ['qzone','tqq','kaixin001','bdxc','tqf']
+    }]
+  }
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+ }
+</script>
+
+<title>我的账户-- 中兴财富</title>
+<link href="../../static/grzl_files/index.css" rel="stylesheet" type="text/css">
+<script src="../../static/grzl_files/highcharts.js.下载"></script>
+
+<script src="../../static/grzl_files/Chart.js.下载"></script>
+<style type="text/css">
+.xtitle{ cursor:pointer}
+#calendar_body td{ padding:2px 0; }
+#calendar_body td.hot{ background:none; color:#9b9b9b; }
+.coloro{ color:#fd9f25; }
+#calendar_body td.newhot{ background:url(/statics/member/images/newcenter/whk_1.png) no-repeat center; color:#fff; }
+#calendar_body td.newonhot{ background:url(/statics/member/images/newcenter/yhk_1.png) no-repeat center; color:#9b9b9b; }
+</style>
+<script>
+
+</script>
+
+<style>
+.block { margin:0 auto; }
+
+/*日期：20160921*/
+.mem_left{ width:260px; float:left; } 
+.memc_l{ width:840px; height:103px; padding:25px 25px 30px 45px; background:#fff; border:1px solid #d7e0f1; }
+.memc_r{ width:268px; height:158px; background:#fff; border:1px solid #d7e0f1; }
+.memc{ margin-bottom:18px; }
+.memc_c { width:210px; }
+.memc_c p{ height:25px; line-height:25px; vertical-align:middle; font-size:14px; color:#333;  }
+.memcc{ margin:5px 0 2px; }
+.memc_ts span{ display:block; float:left; }
+.memc_vip,.memc_safe{ display:block; width:40px; height:17px; border-radius:3px; background:#03a9f4; text-align:center; line-height:17px; vertical-align:middle; color:#fff; margin-top:4px; font-size:12px; }
+.memc_vip:hover,.memc_safe:hover{ color:#fff; }
+.memc_t{ padding-left:55px; margin-left:30px; border-left:1px solid #d7e0f1; }
+.memc_t a{ display:block; width:130px; height:38px; line-height:38px; border:1px solid #fd9f25; border-radius:5px; font-size:18px; vertical-align:middle; text-align:center; }
+.memc_t1{ background:#fd9f25; color:#fff; margin-bottom:15px; }
+#memcc .memc_tt1{ background:#eee; color:#999; margin-bottom:15px; border:1px solid #eee; }
+.memc_t1:hover{ background:#ff7512; color:#fff; }
+.memc_t2{ color:#fd9f25; }
+.memc_t2:hover{ background:#fd9f25; color:#fff; }
+.memc_name{ color:#ff7512; font-size:18px; }
+.memc_ibg{ width:75px; height:75px; margin:0 17px 8px 17px; border-radius:100%; overflow:hidden; }
+.mr6{ margin-right:6px; }
+.memc_i{ margin-right:60px; }
+.memvip{ height:25px; }
+.memvip img{ margin-bottom:3px; }
+
+/*右侧现金券*/
+.coupon_c{ width:169px; height:110px; overflow:hidden; position:relative; margin:27px 51px 0 48px; }
+#nzx_pol{ width:507px; position:absolute; left:0; }
+.nzx_polc{ float:left; position:relative; }
+.nzx_num1{ position:absolute; top:100px; left:65px; }
+.nzx_num1 span{ cursor:pointer; display:block; width:7px; height:7px; background:#fff; border-radius:50%; border:1px solid #ffa800; float:left; margin-right:5px; }
+#nzx_num1 .nzx_cut{ background:#ffa800; }
+.nzx_polc a{ display:block; font-size:14px; color:#fff; }
+.nzx_polc a p{ line-height:24px; vertical-align:middle; }
+.envelope{ width:120px; text-align:center; height:79px; padding:13px 15px 0 34px; background:url(/statics/home/images/16nzx/envelope.png) no-repeat center; }
+.coupon{ width:134px; height:79px; text-align:center; padding:13px 35px 0 0; background:url(/statics/home/images/16nzx/coupon.png) no-repeat center; }
+.vouchers{ width:169px; height:77px; padding:15px 0 0; text-align:center; background:url(/statics/home/images/16nzx/vouchers.png) no-repeat center; }
+.vouchers_t{ font-size:32px; font-weight:bold; height:45px; }
+.mem_num{ width:20px; text-align:center; /*border-radius:50%;*/ height:20px; line-height:20px; vertical-align:middle; background:#fd9f25; color:#fff; position:absolute; right:0px; top:0px; }
+
+/*会员中心首页banner*/
+.memBan{ width:260px; height:142px; overflow:hidden; position:relative; -moz-box-shadow: 3px 5px 5px rgba(0,0,0,.1); /* drop shadow */-webkit-box-shadow: 3px 5px 5px rgba(0,0,0,.1); /* drop shadow */ box-shadow: 3px 5px 5px rgba(0,0,0,.1); /* drop shadow */ }
+.memB_img{ width:780px; position:absolute; left:0; top:0; }
+.memB_img a{ display:block; width:260px; height:142px; float:left; } 
+.memB_sum { position:absolute; left:110px; bottom:10px; }
+.memB_sum span{ cursor:pointer; display:block; width:7px; height:7px; background-color:rgba(255,255,255); border-radius:50%; border:1px solid #fff; float:left; margin-right:5px; }
+#memB_sum .nzx_cut{ background:#ff7512; border:1px solid #ff7512; }
+.mem_ewm{ -moz-box-shadow: 3px 5px 5px rgba(0,0,0,.1); /* drop shadow */-webkit-box-shadow: 3px 5px 5px rgba(0,0,0,.1); /* drop shadow */ box-shadow: 3px 5px 5px rgba(0,0,0,.1); /* drop shadow */ }
+.mem_ewm h3{ width:260px; height:42px; background:#fd9f25; line-height:42px; vertical-align:middle; text-align:center; font-size:14px; color:#fff; }
+.mem_ewmbox{ background:#fff; padding:17px 40px 12px; }
+.mem_ewml{ width:78px; text-align:center; font-size:14px; }
+.mem_ewml h4{ line-height:25px; vertical-align:middle; }
+
+.bankdpscoc{ width:1170px; margin:12px auto 0; padding:15px; text-align:center; background:#fffefb; border:1px solid #d7e0f1; font-size:14px; }
+#bankdpscoc a{ color:#F00; }
+.bdpsLayer{ width:100%; height:100%; background:#000000; position:fixed; left:0; top:0; filter:alpha(opacity=80); opacity:0.8; z-index:999998; }
+.bdpsLcon{ width:520px; height:375px; position:fixed; left:50%; margin-left:-260px; top:20%; z-index:999999; background:url(/statics/home/images/bankdps/toOpen.png) no-repeat center;  }
+.bdpstoClose{ display:block; width:28px; height:28px; position:absolute; right:15px; top:15px; }
+.toOpen{ display:block; width:300px; height:55px; position:absolute; top:257px; left:118px; text-align:center; line-height:55px; vertical-align:middle; font-size:30px; color:#fff; font-weight:bold; }
+.toOpen:hover{ color:#fffeee; }
+
+</style>
+<script src="../../static/grzl_files/share.js.下载"></script></head>
+<body>
+
+<div class="l18header_top" id="l18header_top">
+  <div class="l18header_top_c px1200 clearfix">
+<!--     <div class="fl l18topicon l18phonecon">
+      <div class="l18phonec disN"></div>    
+    </div>
+    <div class="fl l18topicon l18weixincon">
+      <div class="l18weixinc disN"></div>    
+    </div> -->
+    <a href=# class="l18note l18recom fl">推荐有礼</a>
+    <a href=# class="l18note fl" >出借排行榜</a>
+    <a href=# class="l18note fl" >活动中心</a>
+
+    <a href=# class="l18note fl" >帮助中心</a>
+    <a href="javascript:;" class="l18note l18topiicon l18phonecon fl" >手机客户端
+      <div class="l18phonec disN" style="overflow: hidden; display: none; height: 134px; padding-top: 0px; margin-top: 0px;"></div>
+    </a>
+    <a href="javascript:;" class="l18note l18topiicon l18weixincon fl" >关注微信<div class="l18weixinc disN" style="overflow: hidden; display: none; height: 134px; padding-top: 0px; margin-top: 0px;"></div></a>
+    <a href=# class="l18note fl orange" style="color:#ff7512;">风险提示</a>
+  </div>
+</div>
+
+<div class="l18header_cen">
+  <div class="l18header_cen_c px1200 clearfix">
+    <div class="l18logo fl"><a href=#><img src="../../static/grzl_files/logo.jpg"></a></div>
+    <div class="fr">
+      <div class="clearfix">
+          <div class="fl l18nav" id="l18nav">
+		    <ul class="clearfix">
+		   
+		      		      		        <li class="fl"> 
+		          <a href=# class="zm_cura">首            页</a>
+		        </li>		        <li class="fl"> 
+		          <a href=# class="">我要出借</a>
+		        </li>		        <li class="fl"> 
+		          <a href=# class="">积分商城</a>
+		        </li>		        <li class="fl"> 
+		          <a href=# class="">信息披露</a>
+		        </li>	<!-- 		    <li class="fl"><a href="">首页</a></li>
+			    <li class="fl"><a href="">我要投资</a></li>
+			    <li class="fl"><a href="">积分商城</a></li>
+			    <li class="fl"><a href="">信息披露</a></li> -->
+		    </ul>
+		  </div>
+	      <div class="fl" id="l18kuajieBtnc">
+	        <!--已登录显示-->
+	        <div class="l18kuajieBtnc">
+                <a href=# class="l18myusercount">我的账户</a>
+		        <ul class="l18kuajiecc" style="overflow: hidden; display: none; height: 180px; padding-top: 0px; margin-top: 0px;">
+		          <li><a href=#>充       值</a></li>
+		          <li><a href=#>提       现</a></li>
+		          <li><a href=#>自动投标</a></li>
+		          <li><a href=#>徽商账户</a></li>
+		          <li><a href=#>我的卡劵</a></li>
+		          <li><a href=#>安全退出</a></li>
+		        </ul>
+	        </div>
+	        <!--已登录显示-->
+	        	      </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(function(){
+	$(".l18phonecon").mouseenter(function(){
+		$(".l18phonec").stop().slideDown();
+	});
+	$(".l18phonecon").mouseleave(function(){
+		$(".l18phonec").stop().slideUp();
+	});
+
+	$(".l18weixincon").mouseenter(function(){
+		$(".l18weixinc").stop().slideDown();
+	});
+	$(".l18weixincon").mouseleave(function(){
+		$(".l18weixinc").stop().slideUp();
+	});
+
+	$(".l18kuajieBtnc").mouseenter(function(){
+		$(".l18kuajiecc").stop().slideDown();
+		$(this).addClass("l18myusercount_on");
+	});
+	$(".l18kuajieBtnc").mouseleave(function(){
+		$(".l18kuajiecc").stop().slideUp();
+		$(this).removeClass("l18myusercount_on");
+	});
+})
+</script>
+
+<script type="text/javascript" src="../../static/grzl_files/jquery.cookie.js.下载"></script>
+
+
+
+<div id="bdpsLayer" class="bdpsLayer disN" style="display: none;"></div>
+<div id="bdpsLcon" class="bdpsLcon disN" style="display: none;">
+<a href="javascript:;" class="bdpstoClose"><img src="../../static/grzl_files/toClose.png"></a>
+<a href="https://www.whzxcf.com/member-register-registerstepone" class="fl w90 abdps_icon2 toOpen">开通徽商存管账户</a>
+</div>
+<script>
+$(function(){
+	    //设置15分钟
+	    var date = new Date();
+        date.setMinutes(date.getMinutes()+15);
+        $('.bdpstoClose').click(function(){
+		    $('.bdpsLayer').css('display','none');
+		    $('.bdpsLcon').css('display','none');			
+			//$.cookie("div_display","none",{expires:1});//设置1天			
+			$.cookie("div_display","none",{expires:date});//设置15分钟
+			
+		})
+		
+		
+		
+		if($.cookie("div_display")){  //如果cookie存在
+	       $(".bdpsLayer").css("display",$.cookie("div_display")); //设置div的样式为cookie的值
+	       $(".bdpsLcon").css("display",$.cookie("div_display")); //设置div的样式为cookie的值
+	    }else{
+	   
+			$('.bdpsLayer').css('display','block');
+			$('.bdpsLcon').css('display','block');	
+		}	
+})
+
+</script>
+
+<div id="mina_a" class="clearfix">
+<!--mina_a-->
+
+
+
+
+
+<div class="bankdpscoc" id="bankdpscoc">您暂未开通徽商存管账户，<a href=#>立即前往开通</a></div>
+
+
+
+
+<!--中部开始-->
+<div id="maincontent">
+
+<div class="clearfix memc">
+  <div class="fl memc_l clearfix">
+    <div class="fl memc_i">
+	  <div class="memc_ibg"><a href=#><img src="../../static/grzl_files/noavatar_middle.gif" width="75"></a></div>
+	  <div class="clearfix" style="margin-left:11px;">
+	    <div class="fl mr6 memc_i1">
+		  <!--<img src="/statics/member/images/newcenter/nzx_cp1.png" width="17" />-->		  
+			<a href=#>
+			  			  <img src="../../static/grzl_files/nzx_cp1.jpg" width="17">			</a>
+		</div>
+	    <div class="fl mr6 memc_i2">
+		    <!--<img src="/statics/member/images/newcenter/nzx_cp2.png" width="17" />-->
+			<a href=#>
+            <img src="../../static/grzl_files/nzx_cp2h.jpg" width="17">
+                          </a> 
+		</div>
+	    <div class="fl mr6 memc_i3">
+		  <!--<img src="/statics/member/images/newcenter/nzx_cp3.png" width="17" />-->
+		    
+			<a href=#>
+                          <img src="../../static/grzl_files/nzx_cp3.jpg" width="17">            </a>
+		</div>
+	    <div class="fl mr6 memc_i4">
+		  <!--<img src="/statics/member/images/newcenter/nzx_cp3.png" width="17" />-->
+		    
+			<a href=#>
+                          <img src="../../static/grzl_files/nzx_cp4.jpg" width="17">            </a>
+		</div>
+	  </div>
+	</div>
+	<div class="fl memcc memc_c">
+	  <p class="mb10">您好，<span class="memc_name fBold">18501495…</span></p>
+
+	  <p class="mb10 memc_ts clearfix"><span>会员等级：</span><span class="memvip">
+	  <img src="../../static/grzl_files/zxcf_vip1.png" height="22"></span><!--  <span class="ml10">
+	 <a href="/member-safe.shtml#divtab-1" class="memc_vip">提升</a></span></p> -->
+	  </p><p><span>当前积分：</span><span class="orange ">1</span></p>
+	</div>
+	<div class="fl memcc memc_c">
+	  <p class="mb10">ID：<span class="">267193</span></p>
+	  <p class="mb10 memc_ts clearfix"><span>安全等级：</span><span>中等</span><span class="ml10"><a href=# class="memc_safe">提升</a></span></p>
+	  <p>上次登录：<span class=" ">2019-05-24 20:13:33</span></p>
+	</div>
+	<div class="fl memcc memc_t" id="memcc">
+	  <a href="javascript:;" class="memc_t1  ">签到</a>
+	  <a href=# class="memc_t2">自动投标</a>
+	</div>
+  </div>
+  <div class="fr memc_r">
+    <div class="coupon_c">
+          <div id="nzx_pol" class="clearfix" style="left: -213.595px;">
+			<div class="nzx_polc">
+			  <div class="mem_num" style=" background:#d8292f;">0</div>
+			  <a href="# class="coupon">
+			    <p class="mb10">未使用的现金券</p>
+				<p>共<span class="vouchers_t">0</span>元</p>
+			  </a>
+			</div>
+		    <div class="nzx_polc">
+			  <div class="mem_num">0</div>
+			  <a href=# class="envelope">
+			    <p class="mb10">未使用的红包</p>
+				<p>共<span class="vouchers_t">0</span>元</p>
+			  </a>
+			</div>
+			<div class="nzx_polc">
+			  <div class="mem_num">0</div>
+			  <a href=# class="vouchers">
+			    <p class="mb10">未使用的最大加息券</p>
+				<p>+<span class="vouchers_t">0</span>%</p>
+			  </a>
+		    </div>
+          </div>
+          <div id="nzx_num1" class="nzx_num1">
+		    <span class="nzx_cut"></span> <span class=""></span> <span class=""></span>
+		  </div>
+	</div>
+  </div>
+</div>
+<script type="text/javascript">
+
+   jQuery (function ($)
+    {
+        var CRT = 0;
+        var w = $ ("#nzx_pol a").innerWidth(), pol = $("#nzx_pol"), spans = $ ("#nzx_num1 span");
+        spans.hover (function ()
+        {
+            var me = $ (this);
+            me.addClass ("nzx_cut").siblings (".nzx_cut").removeClass ("nzx_cut");
+            spans.eq(CRT).clearQueue();
+            pol.stop ().animate (
+            {
+                left : "-" + w * (CRT = me.index ()) + "px"
+            }, "slow");
+        }, function()
+        {
+            anony();
+        });
+        var anony = function ()
+        {
+            CRT++;
+            CRT = CRT > spans.length - 1 ? 0 : CRT;
+            spans.eq(CRT).clearQueue().delay(5000).queue (function()
+            {
+                spans.eq(CRT).triggerHandler ("mouseover");
+                anony();
+            });
+        };
+        anony();
+    });
+	
+	function reloadnew(){
+       window.location.reload();
+    }
+	
+	$(".memc_t1").click(function(){
+	getData("/common-qd.shtml",function(d){
+	  if(d.status==1){
+        $('.memc_t1').addClass("gh_btn");
+	    $(".memc_t1").html("已签到");
+			Mix.msg("签到成功",'success',1);
+			setTimeout(reloadnew(),1000)
+		}else{
+			Mix.msg(d.message,"fail",1);	
+		}
+	});
+	$('.gq_btn').unbind('click');
+});
+</script>
+<div class="mem_left mb30">
+<div id=#>
+<a href=# class="hyzx">我的账户</a>
+<style>
+.mem_box{ padding:30px 45px 15px; background:fff; }
+.membox1 a{ display:block; width:73px; height:28px; border:1px solid #fd9f25; border-radius:5px; text-align:center; line-height:28px; vertical-align:middle; font-size:16px; }
+.mem_recharge{ background:#fd9f25; color:#fff; }
+.mem_recharge:hover{ background:#ff7512; color:#fff; }
+.mem_cash{ background:#fff; color:#fd9f25; }
+.mem_cash:hover{ background:#fd9f25; color:#fff; }
+
+</style>
+
+<div class="mem_box">
+    <div class="clearfix membox1 mb10">
+      <a href=# class="mem_recharge fl">充值</a>
+	  <a href=# class="mem_cash fr">提现</a>
+    </div>
+	<div class="box">
+	  <div class="lefthy_01">
+		<ul class="dk_ml">
+		  <li class="mn_dk"><span class="mn_2"></span> <span>出借管理</span> </li>
+		</ul>    
+		<ul class="tzgl_nr clearfix">
+		  <li><a href=#>我的出借</a></li>
+		  <li><a href=#>自动投标</a></li>
+		  <li><a href=#>债权转让</a></li>
+		  <li><a href=#>我的卡券</a></li>
+		  <!-- <li><a href="/member-real_love.shtml#divtab-1" ><font color="#00CC00">真爱回馈</font></a></li> -->
+		  <li><a href=#><font color="">回购额度</font></a></li>
+		  <li><a href=#><font color="">领取兑付</font></a></li>
+		 <!--   -->
+		  <!-- 	<li><a href="/member-tender.shtml#divtab-1">智能投标</a></li> -->
+		  	<!-- <li><a href="/member-ucode.shtml#divtab-1">年会红包</a></li> -->
+		 
+		</ul>
+	  </div>
+	</div>
+	
+	
+	<div class="box">
+	  <div class="lefthy_01">
+		<ul class="dk_ml btp">
+		  <li class="mn_dk"><span class="mn_2"></span> <span>资金管理</span> </li>
+		</ul>     
+		<ul class="tzgl_nr clearfix">     
+		  <li><a href=#>资金明细</a></li>
+		  <li><a href=#>资金统计</a></li>
+		  <!--下面2个链接还要更改-->
+		  <!--<li><a href="/member-usercenter.shtml">新浪支付</a></li>  
+		  <li><a href="/member-usercenter.shtml">存钱罐</a></li>-->
+		</ul>
+	  </div>
+	</div>
+	<div class="box">
+	  <div class="lefthy_01">
+		<ul class="dk_ml btp">
+		  <li class="mn_dk"><span class="mn_2"></span> <span>用户管理</span> </li>
+		</ul>
+		<ul class="tzgl_nr clearfix">  
+		  <li><a href=#>个人信息</a></li>
+		  <!--<li><a href="/member-safe.shtml#divtab-1">安全中心</a></li>-->
+		  <li><a href=#>推荐好友</a></li>
+		  <!--<li><a href="/member-bank.shtml#divtab-1">银行卡管理</a></li>-->
+		  <li><a href=#>消息中心</a></li>
+		  <li><a href=#>积分商城</a></li>
+		  <li><a href=#>会员积分</a></li>
+		  <li><a href=#>徽商账户</a></li>
+		  <li><a href=#><font color="">风险评估</font></a></li>
+		  <li><a href=#><font color="">国顺评估</font></a></li>
+		  <!-- <li><a href="/member-ucode.shtml#divtab-1" style="position:relative;">年会红包<img style=" position:absolute; left:65px; top:0;" src="/statics/member/images/gif-jf.gif" class="ml5" /></a></li> -->
+		</ul>
+	  </div>
+	</div>
+	<div class="box">
+	  <div class="lefthy_01">
+		<ul class="dk_ml btp">
+		  <li class="mn_dk"><span class="mn_2"></span> <span>借款管理</span> </li>
+		</ul>
+		<ul class="tzgl_nr clearfix">
+		  <li><a href=#>个人资料</a></li>
+		  <li><a href=#>资料上传</a></li>
+		  <li><a href=#>我要借款</a></li>
+		  <li><a href=#>借款记录</a></li>
+		</ul>
+	  </div>
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+var currentUrl=window.location.href;
+$("#hy_left ul.tzgl_nr a").each(function(index, element) {
+    var curl = $(this).attr("href");
+	if(currentUrl.indexOf(curl)!=(-1)){
+		$(this).addClass("memaur");
+	}
+});
+</script>
+ 
+</div>
+<div class="mt20 memBan">
+  <div class="memB_img clearfix" id="memB_img" style="left: -328.607px;">
+      <a href="#><img src="../../static/grzl_files/022nff.jpg"></a>
+      <a href=#><img src="../../static/grzl_files/02cgg.jpg"></a>
+      <!--<a href="/recom"><img src="/statics/home/images/16nzx/02d.jpg" /></a>-->
+      <a href=#><img src="../../static/grzl_files/19marn.jpg"></a>
+  </div>
+  <div class="memB_sum" id="memB_sum">
+      <span class="nzx_cut"></span><span class=""></span><span class=""></span>
+  </div>
+</div>
+<script type="text/javascript">
+   jQuery (function ($)
+    {
+        var CRT = 0;
+        var w = $ (".memB_img a").innerWidth(), pol = $("#memB_img"), spans = $ ("#memB_sum span");
+        spans.hover (function ()
+        {
+            var me = $ (this);
+            me.addClass ("nzx_cut").siblings (".nzx_cut").removeClass ("nzx_cut");
+            spans.eq(CRT).clearQueue();
+            pol.stop ().animate (
+            {
+                left : "-" + w * (CRT = me.index ()) + "px"
+            }, "slow");
+        }, function()
+        {
+            anony();
+        });
+        var anony = function ()
+        {
+            CRT++;
+            CRT = CRT > spans.length - 1 ? 0 : CRT;
+            spans.eq(CRT).clearQueue().delay(5000).queue (function()
+            {
+                spans.eq(CRT).triggerHandler ("mouseover");
+                anony();
+            });
+        };
+        anony();
+    });
+</script>
+<div class="mem_ewm mt20">
+  <h3>扫一扫下载手机APP、关注微信</h3>
+  <div class="mem_ewmbox clearfix">
+    <div class="mem_ewml fl">
+	  <div class=""><img src="../../static/grzl_files/app.png"></div>
+	  <h4 class="mt5">手机APP</h4>
+	</div>
+    <div class="mem_ewml fr">
+	  <div class=""><img src="../../static/grzl_files/wx.png"></div>
+	  <h4 class="mt5">微信订阅号</h4>
+	</div>
+  </div>
+</div>
+
+</div>
+<!--右边开始-->
+<div id="hy_right">
+
+<!--中部开始-->
+<style>
+.nzx_memcon{ background:#fff; border:1px solid #d7e0f1; }
+.nzx_memcon h4{ height:48px; margin:0px 33px; line-height:48px; vertical-align:middle; font-size:18px; color:#333; border-bottom:1px solid #d7e0f1; position:relative; }
+.tommore{ display:block; position:absolute; right:0; top:3px; font-size:16px;  } 
+.nzx_memcondetail{  padding:23px 33px 23px; background:#fff; font-size:14px; color:#333; line-height:20px; vertical-align:middle; }
+.equal{ margin:60px 10px 0 15px; }
+.mem_pl{ padding-left:12px; line-height:25px; vertical-align:middle; color:#999; }
+.mem_pl1{ background:url(/statics/home/images/16nzx/icon_ky.png) no-repeat left center; }
+.mem_pl2{ background:url(/statics/home/images/16nzx/icon_bj.png) no-repeat left center; }
+.mem_pl3{ background:url(/statics/home/images/16nzx/icon_lx.png) no-repeat left center; }
+.mem_pl4{ background:url(/statics/home/images/16nzx/icon_dj.png) no-repeat left center; }
+.mem_pl5{ background:url(/statics/home/images/16nzx/icon_yslx.png) no-repeat left center; }
+.mem_pl6{ background:url(/statics/home/images/16nzx/icon_dslx.png) no-repeat left center; }
+.mem_pl7{ background:url(/statics/home/images/16nzx/icon_qtjl.png) no-repeat left center; }
+.df_member_csf_box1{ min-height:294px; }
+.memamount1{ width:98px; text-align:left; margin-top:22px; }
+.memamount2{ width:117px; text-align:left; margin-top:22px; }
+.memamount3{ width:85px; text-align:left; margin-top:22px; }
+.addcon{ margin-top:22px; }
+.mem_active{ background:#f5f7f9; padding:15px 33px; }
+.mem_active h5 a{ height:26px; line-height:26px; font-size:16px; color:#333; padding-left:65px; background:url(/statics/home/images/16nzx/new.png) no-repeat left center; }
+.mem_active h5 a:hover{ color:#fd9f25; }
+.mem_txt p{ color:#999; font-size:14px; line-height:23px; vertical-align:middle; }
+
+.earning{ padding:10px 33px 5px; background:#fff; width:482px; border:1px solid #d7e0f1; }
+.calendar{ width:300px; background:#fff; border:1px solid #d7e0f1; padding:10px 24px 15px; }
+
+.mem_img{ width:145px; height:145px; position:relative; background:url(/statics/home/images/16nzx/circle0.png) no-repeat center;   }
+.mem_pie{ width:145px; height:145px; overflow:hidden; /*background:#FF0000;*/ position:absolute; left:0; top:0; z-index:0; }
+.mem_pho{ width:105px; text-align:center; padding-top:30px; height:75px; /*background:#fff;*/ background:url(/statics/home/images/circle.png) no-repeat left center; border-radius:50%; position:absolute; left:20px; top:20px; z-index:10; }
+.color9{ color:#999; }
+#calendar_upY{ width:20px; height:20px; border-radius:50%; color:#9fa2a3; background:#eee; }
+#calendar_upY:hover{ background:#ccc; }
+#calendar_upM{ width:20px; height:20px; border-radius:50%; color:#9fa2a3; background:#eee; }
+#calendar_upM:hover{ background:#ccc; }
+#calendar_dnM{ width:20px; height:20px; border-radius:50%; color:#9fa2a3; background:#eee; }
+#calendar_dnM:hover{ background:#ccc; }
+#calendar_dnY{ width:20px; height:20px; border-radius:50%; color:#9fa2a3; background:#eee; }
+#calendar_dnY:hover{ background:#ccc; }
+<!--.mem_pienew{ width:145px; height:145px; position:absolute; left:-30px; top:-47px; }-->
+</style>
+
+<script>
+
+	 $(function(){
+		$("#toloaddata").bind("click",function(){
+			toloaddata();
+		});
+	 }) 
+	 
+	 var second=60;
+	 var timer=null;
+	 
+	 function toloaddata(){
+		 
+		var p={};
+		 
+		//var url="/member-Index-toloaddata";//请求刷新的数据接口
+		
+		var url="/member-accountset-toloaddata.shtml";
+		postData(url,p,function(d){			
+			if(d.status==1){
+				Mix.msg("数据更新中...",'success',2);
+				//setLeftTime();
+				updateMoneyInfo(d);
+			}
+			else  Mix.msg(d.message);
+		});
+		 
+	 }
+	 function updateMoneyInfo(d){
+	 	$(".AvailMoney").html(d.balance);
+	 	$(".freezeMoney").html(d.frozen_money);
+
+	 }
+	 
+	 function setLeftTime(){
+		if(second<0){
+			clearTimeout(timer);
+			second=60;
+			$("#toloaddata").html("重新刷新").bind("click",function(){
+				toloaddata();
+			});
+		}else{
+			$("#toloaddata").unbind().html(second + "秒后可重发"); 
+			timer = setTimeout(function(){
+				 second--;
+				 clearTimeout(timer);
+				 setLeftTime();
+			 },1000);
+		}
+	 }
+</script>
+
+<div class="nzx_memcon">
+  <h4 style="font-size:14px; color:#666;" data="" rel=""><b>徽商银行存管账户：</b>未开通，<a href=# style=" color:#fd9f25; ">前往开通</a>
+  <a href=# class="tommore">更多&gt;</a></h4>
+  <div class="nzx_memcondetail clearfix">
+    <!-- <div class="memdetail_l fl clearfix">
+      <div class="fl mem_img">
+        <div class="mem_pie" id="">
+          <canvas id="mem_pienew" height="145" width="145"></canvas>
+        </div>
+        <div class="mem_pho">
+          <p class="color9 mb5">账户总额</p>
+          <p>￥<span>0.00</span></p>
+        </div>
+      </div>
+      <div class="fl equal"><img src="/statics/home/images/16nzx/equal.png" /></div>
+      <div class="fl memamount1">
+        <ul class="mb10">
+          <li class="mem_pl mem_pl1">可用资金</li>
+          <li>￥<span class="AvailMoney">0.00</span></li>
+        </ul>
+        <ul>
+          <li class="mem_pl mem_pl2">待收收益</li>
+          <li>￥<span class="collectMoney">0.00</span></li>
+        </ul>
+      </div>
+      <div class="fl addcon mr20">
+        <div class="add mt15"><img src="/statics/home/images/16nzx/add.png" /></div>
+        <div class="add mt30"><img src="/statics/home/images/16nzx/add.png" /></div>
+      </div>
+      <div class="fl memamount2">
+        <ul class="mb10">
+          <li class="mem_pl mem_pl3">待收本金</li>
+          <li>￥<span class="principal">0.00</span></li>
+        </ul>
+        <ul>
+          <li class="mem_pl mem_pl4">冻结资金</li>
+          <li>￥<span class="freezeMoney">0.00</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="memdetail_l fl clearfix">
+      <div class="fl mem_img">
+        <div class="mem_pie" id="">
+          <canvas id="mem_pieold" height="145" width="145">
+        </div>
+        <div class="mem_pho">
+          <p class="color9 mb5">总收益</p>
+          <p></p>
+        </div>
+      </div>
+      <div class="fl equal"><img src="/statics/home/images/16nzx/equal1.png" /></div>
+      <div class="fl memamount1">
+        <ul class="mb10">
+          <li class="mem_pl mem_pl5">已收收益</li>
+          <li>￥<span class="receivedRate">0.00</span></li>
+        </ul>
+        <ul>
+          <li class="mem_pl mem_pl6">待收收益</li>
+          <li>￥<span class="unreceivedRate">0.00</span></li>
+        </ul>
+      </div>
+      
+    </div> -->
+  </div>
+  <div class="mem_active">
+
+    <h5 class="mb5"><a href=# >推荐好友享返利!</a></h5>
+    <div class="mem_txt">
+      <p>推荐赢红包，好友出借还能分享收益！</p>
+    </div>
+  </div>
+</div>
+<div class="nzx_memcon_1 mt20 mb20 clearfix">
+  <div class="fl earning" id="dfbox1" style=" height:297px; " data-highcharts-chart="0"><div id="highcharts-l99r3jp-0" class="highcharts-container " style="position: relative; overflow: hidden; width: 482px; height: 297px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" class="highcharts-root" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="482" height="297" viewBox="0 0 482 297"><desc>Created with Highcharts 5.0.10</desc><defs><clippath id="highcharts-l99r3jp-1"><rect x="0" y="0" width="434" height="188" fill="none"></rect></clippath></defs><rect fill="#ffffff" class="highcharts-background" x="0" y="0" width="482" height="297" rx="0" ry="0"></rect><rect fill="none" class="highcharts-plot-background" x="38" y="53" width="434" height="188"></rect><g class="highcharts-grid highcharts-xaxis-grid "></g><g class="highcharts-grid highcharts-yaxis-grid "></g><rect fill="none" class="highcharts-plot-border" x="38" y="53" width="434" height="188"></rect><g class="highcharts-axis highcharts-xaxis "><path fill="none" class="highcharts-axis-line" stroke="#ccd6eb" stroke-width="1" d="M 38 241.5 L 472 241.5"></path></g><g class="highcharts-axis highcharts-yaxis "><text x="28" text-anchor="middle" transform="translate(0,0) rotate(270 28 147)" class="highcharts-axis-title" style="color:#666666;fill:#666666;" y="147">收益金额(元)</text><path fill="none" class="highcharts-axis-line" d="M 38 53 L 38 241"></path></g><g class="highcharts-series-group"><g class="highcharts-series highcharts-series-0 highcharts-line-series highcharts-color-0 " transform="translate(38,53) scale(1 1)" clip-path="url(#highcharts-l99r3jp-1)"></g><g class="highcharts-markers highcharts-series-0 highcharts-line-series highcharts-color-0 " transform="translate(38,53) scale(1 1)"></g></g><text x="241" text-anchor="middle" class="highcharts-title" style="color:#333333;font-size:18px;fill:#333333;" y="24"><tspan>平台收益月视图</tspan></text><g class="highcharts-legend" transform="translate(198,253)"><rect fill="none" class="highcharts-legend-box" rx="0" ry="0" x="0" y="0" width="87" height="29" visibility="visible"></rect><g><g><g class="highcharts-legend-item highcharts-line-series highcharts-color-0 highcharts-series-0" transform="translate(8,3)"><path fill="none" d="M 0 11 L 16 11" class="highcharts-graph" stroke="#7cb5ec" stroke-width="2"></path><path fill="#7cb5ec" d="M 4 7 L 12 7 12 15 4 15 Z" class="highcharts-point"></path><text x="21" style="color:#333333;font-size:12px;font-weight:bold;cursor:pointer;fill:#333333;" text-anchor="start" y="15">收益金额</text></g></g></g></g><g class="highcharts-axis-labels highcharts-xaxis-labels "></g><g class="highcharts-axis-labels highcharts-yaxis-labels "></g></svg></div></div>
+  <!--回款日历开始-->
+  <style>
+  .zxhk{ font-size:12px; width:200px; }
+  .zxwhk{ padding-left:15px; background:url(/statics/member/images/newcenter/whk.png) no-repeat left 2px; }
+  .zxyhk{ padding-left:15px; background:url(/statics/member/images/newcenter/yhk.png) no-repeat left 2px; }
+  .nzx_recycle{ height:285px; }
+  </style>
+<!--   <div class="fr calendar nzx_recycle">
+    <h4 class="clearfix">
+	    <span class="fl">回款日历</span>
+	    <div class="fr zxhk">
+		  <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" id="calendar_control">
+              <tr>
+                <th width="24%" align="left" scope="col" class="year_pre"> <input type="button" title="上一年" value="<<" id="calendar_upY" />
+                  <input type="button" title="上一月" value="<" id="calendar_upM" />
+                </th>
+                <th width="52%" id="calendar_str" scope="col" title="点击返回今天."></th>
+                <th width="24%" align="right" scope="col" class="year_nex"> <input type="button" title="下一月" value=">" id="calendar_dnM" />
+                  <input type="button" title="下一年" value=">>" id="calendar_dnY" />
+                </th>
+              </tr>
+          </table>
+		  
+		</div>
+	</h4>
+    <div class="recycle_con" id="recycle_con" style="height:170px;">
+      <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" style="overflow:hidden;">
+        <tr>
+          <td height="90%" id="calendar_body"></td>
+        </tr>
+      </table>
+	  <div class="">
+		<div class="">
+		  <h5 style="font-size:14px; margin:8px 0 5px; color:#333;" class="clearfix">
+		     <span class="fl">还款计划</span>			 
+	         <div class="fr" style="width:120px; font-size:12px;"><span class="mr10 zxwhk">未还款</span><span class="zxyhk">已还款</span></div>
+		  </h5>
+		  <p>本月还款本金：<span class="coloro rcapital">0</span>元；本月还款利息：<span class="coloro rinterest">0</span>元；已还：<span class="coloro zxwh"></span>元；未还：<span class="coloro zxyh">0</span>元；</p>
+		</div>
+	  </div>
+      <div class="recycle_detail" id="recycle_detail" style="display:none;  position: absolute;top: 250px;width: 255px;"></div>
+    </div>
+  </div> -->
+  
+</div>
+<style>
+.dfmlie{ float:left; padding:0 12px; font-size:14px; color:#999; cursor:pointer; }
+{ height:48px; line-height:48px; vertical-align:middle; font-size:18px; color:#333; border-bottom:1px solid #d7e0f1; }
+.nzx_recycle h4{ line-height:20px; height:20px; vertical-align:middle; padding:3px 0 13px; color:#333; border-bottom:1px solid #d9dfe9; font-size:18px; margin-bottom:10px; }
+
+.df_member_consec{width:852px; background-color:#ffffff;overflow:hidden; margin:0 auto; }
+.df_member_consec_fir{ width:852px; /*background-color:#eaeaea;*/ border-bottom:1px solid #d9dfe9;  }
+.df_member_consec_fir h5{ height:20px; line-height:20px; vertical-align:middle; margin:13px 0; }
+.df_member_consec_fir h5 span{ width:88px; border-right:1px solid #d9dfe9; text-align:left; font-size:18px; color:#333; }
+#df_member_oul .df_member_cfl_cur{ color:#03a9f4; }
+.df_member_csf_boxul1{padding:12px 0;overflow:hidden;_height:25px; /*background:#f7f7f7; font-weight:bold;*/ color:#999; }
+.df_member_csf_boxul1 li{float:left;color:#999;font-size: 14px;/*font-weigh:bold;*/text-align: center;}
+.df_member_csf_boxul2{padding:3px 0;overflow:hidden;/*border-bottom:1px dashed #e3e4e8;*/ margin-bottom:10px; _height:30px;}
+.df_member_csf_boxulbg{background-color:#f9f9f9;}
+.df_member_csf_boxul2 li{float:left;color:#333;font-size: 14px;text-align: center;}
+.df_member_csf_boxul2 li a{ color:#333; }
+.df_member_csf_boxul2 li a:hover{ color:#ff7512; }
+#calendar_str{ font-size:12px; }
+</style>
+
+
+
+
+
+
+
+<!-- <div class="nzx_memcon">
+
+  <div  class="df_member_consec" id="df_member_consec">
+    <div class="df_member_consec_fir clearfix" id="">
+      <h5> 	    
+		<span class="fl mr20">交易记录</span>
+        <ul class="fl clearfix" id="df_member_oul">
+          <li class="dfmlie df_member_cfl_cur" id="ias1" data="/member-index-investlist.shtml"> 最新投资记录 </li>
+          <li class="dfmlie" id="ias5"  data="/member-index-moneylist.shtml"> 资金记录 </li>
+          <li class="dfmlie" id="ias6" data="/member-index-rechargelist.shtml"> 充值记录 </li>
+          <li class="dfmlie" id="ias7" data="/member-index-withdrawlist.shtml"> 提现记录 </li>
+        </ul>
+      </h5>
+    </div> -->
+    <!-- end  -->
+	
+	
+    <!--部分一-->
+    <!-- <div class="df_member_csf_box1" id="dfboxs1">
+	   <ul class="df_member_csf_boxul1">
+  <li class="df_member_zw170">标号</li>
+  <li class="df_member_zw80">投资金额</li>
+  <li class="df_member_zw80">收益率</li>
+  <li class="df_member_zw110">投资/计息日</li>
+  <li class="df_member_zw110">结束期</li>
+  <li class="df_member_zw80">已还/总期数</li>
+  <li class="df_member_zw110">应收利息</li>
+  <li class="df_member_zw110">应收总额</li>
+</ul>
+  <div class="df_member_csf_pic" style="height: 140px;"> <img src="/statics/member/images/mempic03.jpg" style="padding-top: 50px;"> </div>	  
+    </div> -->
+	<!--部分一-->	
+	
+    <!--部分二-->
+    <!-- <div class="df_member_csf_box1" id="dfboxs5" style="display:none;">	  
+	   <ul class="df_member_csf_boxul1">
+  <li class="df_member_zw170">发生日期267193</li>
+  <li class="df_member_zw120">类型</li>
+  <li class="df_member_zw110">影响金额</li>
+  <li class="df_member_zw110">可用余额</li>
+  <li class="df_member_zw110">冻结金额</li>
+  <li class="df_member_zw80">待收金额</li>
+  <li class="df_member_zw180">说明</li>
+</ul>
+  <div class="df_member_csf_pic"> 暂时还没有资金记录 </div>
+    </div> -->
+	<!--部分二-->
+	
+	
+    <!--部分三-->
+    <!-- <div class="df_member_csf_box1 ajaxdata" id="dfboxs6" style="display:none;" >
+	   <ul class="df_member_csf_boxul1">
+  <li class="df_member_zw150"> 充值时间 </li>
+  <li class="df_member_zw150"> 充值金额（元） </li>
+  <li class="df_member_zw150"> 手续费 </li>
+  <li class="df_member_zw150"> 到帐金额 </li>
+  <li class="df_member_zw110"> 充值状态 </li>
+  <li class="df_member_zw110"> 备忘 </li>
+</ul>
+  <div class="df_member_csf_pic"> 暂时还未充值 </div>
+    </div> -->
+	<!--部分三-->
+	
+	
+    <!--部分四-->
+    <!-- <div class="df_member_csf_box1" id="dfboxs7" style="display:none;">
+	   <ul class="df_member_csf_boxul1">
+  <li class="df_member_zw150"> 充值时间 </li>
+  <li class="df_member_zw150"> 充值金额（元） </li>
+  <li class="df_member_zw150"> 手续费 </li>
+  <li class="df_member_zw150"> 到帐金额 </li>
+  <li class="df_member_zw110"> 充值状态 </li>
+  <li class="df_member_zw110"> 备忘 </li>
+</ul>
+  <div class="df_member_csf_pic"> 暂时还未充值 </div>
+    </div> -->
+	<!--部分四-->
+	
+	
+  <!-- </div>
+</div> -->
+</div>
+<script language="JavaScript">
+	//账户总额开始
+	var AvailMoney=parseInt($('.AvailMoney').html());
+	var collectMoney=parseInt($('.collectMoney').html());
+	var principal=parseInt($('.principal').html());
+	var freezeMoney=parseInt($('.freezeMoney').html());
+	//alert(AvailMoney+"s"+collectMoney+"s"+principal+"s"+freezeMoney);
+	//alert(typeof AvailMoney);
+	var doughnutDatanew = [
+		{
+			value : collectMoney,
+			color : "#03a9f4" //代收本金
+		},{
+			value : AvailMoney,
+			color : "#0297db" //可用资金
+		},{
+			value : principal,
+			color : "#24bbff" //代收利息
+		},{
+			value : freezeMoney,
+			color : "#66d0ff" //冻结资金
+		}
+	];
+	var myDoughnut = new Chart(document.getElementById("mem_pienew").getContext("2d")).Doughnut(doughnutDatanew);
+	//账户总额结束
+	//总收益开始
+	var receivedRate=parseInt($('.receivedRate').html());
+	var unreceivedRate=parseInt($('.unreceivedRate').html());
+	var otherRate=parseInt($('.otherRate').html());
+	//alert(receivedRate+"s"+unreceivedRate+"s"+otherRate);
+	var doughnutDataold = [
+		{
+			value : receivedRate,
+			color : "#f58b00"  //已收利息
+		},{
+			value : unreceivedRate,
+			color : "#fd9f25"  //代收利息
+		}
+	];
+	var myDoughnut = new Chart(document.getElementById("mem_pieold").getContext("2d")).Doughnut(doughnutDataold);
+	//总收益结束
+
+</script>
+<script type="text/javascript">
+$(function () {
+    $('#dfbox1').highcharts({
+		credits: {
+          enabled:false
+        },
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '平台收益月视图',
+			//style:{ "color": "#333333", "display": "block", "width": "100%", "border-bottom-width": "1px", "border-bottom-color": "#eee", "border-bottom-style": "solid" } 
+        },
+        xAxis: {
+            categories: [],
+			
+        },
+        yAxis: {
+            title: {
+                text: '收益金额(元)'
+            },
+            labels: {
+                formatter: function () {
+                    return '￥'+this.value;
+                }
+            }
+        },
+        tooltip: {
+            crosshairs: true,
+            shared: true
+        },
+        plotOptions: {
+            spline: {
+                marker: {
+                    radius: 4,
+                    lineColor: '#666666',
+                    lineWidth: 1
+                }
+            }
+        },
+        series: [{
+            name: '收益金额',
+            marker: {
+                symbol: 'square'
+            },
+			data:[]
+        }]
+    });
+});
+</script>
+<script type="text/javascript">
+    $(function(){
+		$('.df_member_csf_box1 ul li').each(function(index, element) {
+            if($(this).html() == "") {
+				$(this).html("&nbsp;&nbsp;");
+			}
+        });
+    });
+</script>
+<script>
+
+
+    // 获取dom属性
+    function getAttr( attr )
+    {
+        return this.getAttribute( attr );
+    }
+    //设置属性
+    function setAttr( attr, val )
+    {
+        this.setAttribute( attr, val );
+        return this;
+    };
+    // 编辑元素class
+    function editClass( mode, data )
+    {
+        var cls = getAttr.call( this, "class" ) || '';
+        var arr = cls.split( /\s+/ );
+        switch( mode )
+        {
+            case "add":
+                return setAttr.call( this, "class", cls + " " + data );
+            break;
+            case "remove":
+                for( var i = 0; i < arr.length; i++ )
+                {
+                    if( arr[ i ] == data )
+                    {
+                        arr.splice( i, 1 );
+                    }
+                };
+                var cls = arr.join( " " );
+                cls = cls.replace( /^\s|\s$/g, "" );
+                // cls = cls == "" ? null : cls;
+                return setAttr.call( this, "class", cls );
+            break;
+            default:
+                console.log( "EditClass mode error!" );
+                return this;
+            break;
+        }
+    }
+    // 添加class
+    function addClass( cls )
+    {
+        return editClass.call( this, "add", cls );
+    }
+    //删除class
+    function removeClass( cls )
+    {
+        return editClass.call( this, "remove", cls );
+    }
+
+
+
+var calendar={
+       STR:function(){ with(this.data) return ""+Y+"年,"+M+"月,"+D+"号"; },
+       V:function(spli){ with(this) return ""+data.Y+spli+data.M+spli+data.D },
+       T:function(){with(this)return data.TABLE},
+       dnY:function(){with(this){calendarChange(data.Y+1,data.M-1,data.D)}},
+       dnM:function(){with(this){calendarChange(data.Y,data.M,data.D)}},
+       upY:function(){with(this){calendarChange(data.Y-1,data.M-1,data.D)}},
+       upM:function(){with(this){calendarChange(data.Y,data.M-2,data.D)}},
+       day:function(o){with(this){data.D=o;calendarChange(data.Y,data.M-1,data.D)}},
+       data:{Y:null,M:null,D:null,W:null,H:null,U:null,YMD:null,YMD_C:"hot",ARR:null,TABLE:null,MN:null,WN:null,SELECT:null,TADAY:new Date(),TADAY_C:"taday",ROWLEN:7,VALUE:null},
+       creatTable:function(){with(this){
+           var table="<table height=100% width=100%><tr>"
+           for(var i=0;i<data.ROWLEN;i++){
+		      var t=data.WN[i]||" ";
+			  table+="<th>"+t+"</th>";
+		   }
+           for(var i in data.ARR){
+		      var showText=data.ARR[i]||" ",br=i%data.ROWLEN,title,css="";
+              if(!br){
+			    table+="</tr><tr>"
+			  };
+              data.ARR[i]?title=data.Y+"-"+data.M+"-"+showText:title="";
+			  
+			  /*确定回款日期*/
+              if(String(data.D)==String(data.ARR[i])){css+=" "+data.YMD_C;}
+			  /**/
+			  
+              if(data.YMD.getFullYear()==data.TADAY.getFullYear()&&
+			     data.YMD.getMonth()==data.TADAY.getMonth()&&String(data.TADAY.getDate())==String(data.ARR[i])){
+				 css=" "+data.TADAY_C
+			  }
+              table+="<td  id='"+title+"' moneydata='"+0+"' title='"+title+"' class="+css+">"+showText+"</td>";
+           }
+		      table+="</tr></table>"
+              data.TABLE=table;
+			  return table;
+        }},
+        calendarStarArr:function(userY,userM,userD){with(this){
+           var Arr=[];
+           var now = new Date(userY,userM,userD);
+           var LastDay = now.getLastDay();
+           var FirstDayofWeek = now.FirstDayofWeek();
+           data.YMD=now;data.Y=now.getFullYear();
+           data.M=now.getMonth()+1;data.D=now.getDate();data.W=now.getDay();
+           while(Arr.length!=FirstDayofWeek){Arr.push(false)}
+           for(var i=0;i<LastDay;i++){Arr.push(i+1)}
+           while(Arr.length%data.ROWLEN!=0){Arr.push(false)}
+           data.ARR=Arr;return Arr;
+        }},
+        calendarChange:function(userY,userM,userD){with(this){
+          calendarStarArr(userY,userM,userD);
+          creatTable();
+        }},
+        calendarStar:function(userY,userM,userD){with(this){
+           data.MN = ["零","一","二","三","四","五","六","七","八","九","十","十一","十二"];
+           data.WN = ["日","一","二","三","四","五","六"];
+           calendarChange(userY,userM,userD);
+        }},
+        init:function(){with(this){
+           Date.prototype.getLastDay=function(){return(new Date(this.getFullYear(),this.getMonth()+1,0).getDate())}
+           Date.prototype.FirstDayofWeek=function(){return(new Date(this.getFullYear(),this.getMonth(),1).getDay())}
+           calendarStar(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())
+        }}
+}
+
+
+
+
+
+//回款日历开始
+calendar.init()
+function calendarChange(){
+    var calendar_body=document.getElementById("calendar_body")
+    calendar_body.innerHTML=calendar.T()//显示表格
+    var calendar_str=document.getElementById("calendar_str")
+    calendar_str.innerHTML=calendar.STR()//显示日期字符串
+    calendarControl()//调用日历控制
+}
+calendarChange()//日历更新
+
+
+
+
+
+function calendarControl(){
+    var calendar_str=document.getElementById("calendar_str")
+    calendar_str.onclick=function(){ calendar.init();calendarChange()}//返回今天功能实现
+    var calendar_dnY=document.getElementById("calendar_dnY")
+    calendar_dnY.onclick=function(){ calendar.dnY();calendarChange()}//下一年 功能实现
+    var calendar_dnM=document.getElementById("calendar_dnM")
+    calendar_dnM.onclick=function(){ calendar.dnM();calendarChange()}//下一月 功能实现
+    var calendar_upY=document.getElementById("calendar_upY")
+    calendar_upY.onclick=function(){ calendar.upY();calendarChange()}//上一年 功能实现
+    var calendar_upM=document.getElementById("calendar_upM")
+    calendar_upM.onclick=function(){ calendar.upM();calendarChange()}//上一月 功能实现
+    var calendar_day=document.getElementById("calendar_body").getElementsByTagName("td");
+    
+	var str;
+	var ostr;
+	var newstr;
+	var strnewcan = new Array();	
+	var strnewlcan = new Array();	
+	var sum1=0,sum2=0,sum3=0,sum4=0;
+    		
+	function cc(year, month, day){
+		var arra=new Array();	 
+		//alert();      	       	
+		var oUrl="/member-Index-moneylog?year="+year+"&month="+month;
+		//alert(oUrl);
+		$.ajax({
+			url:oUrl,
+			type:"GET",
+			success:function(data){
+				var res=JSON.parse(data);
+				for(j=0;j<res.list.length;j++){
+				  sum1=sum1+parseFloat(res.list[j].rcapital);
+          sum3=sum3+parseFloat(res.list[j].rinterest);
+
+
+				  arra.push(res.list[j].payday);
+				  for(k=0;k<strcan.length;k++){
+					  if(res.list[j].payday==strcan[k]){
+						   var arrnew = new Array();
+						   arrnew = strcan[k].split("-");
+						   var D = parseInt(arrnew[2]);
+						   var Y = arrnew[0];
+						   var M = parseInt(arrnew[1]);
+						   var ostr=Y+"-"+M+"-"+D;   
+						   strnewcan.push(ostr);
+						   var oTxt=document.getElementById(ostr);
+
+						   $("#"+ostr).attr("moneydata",res.list[j].money);
+
+						   addClass.call(oTxt, 'newhot');
+					   }			    
+				  }
+				 } 
+				   $(".zxyh").html((Math.round((sum1+sum3)*100)/100)); 
+					 var rcapitalod=(Math.round(sum2*100)/100)+(Math.round(sum1*100)/100);
+           var rinterestod=(Math.round(sum3*100)/100)+(Math.round(sum4*100)/100);
+				   $(".rcapital").html((Math.round(rcapitalod*100)/100)); 
+           $(".rinterest").html((Math.round(rinterestod*100)/100)); 
+			 }
+		})
+	}	
+    		
+	function dd(year, month, day){
+		var arra=new Array();      	       	
+		var oUrl="/member-Index-moneyrlog?year="+year+"&month="+month;
+			$.ajax({
+				url:oUrl,
+				type:"GET",
+				success:function(data){
+					var res=JSON.parse(data);
+					for(j=0;j<res.alist.length;j++){
+				      sum2=sum2+parseFloat(res.alist[j].rcapital);	
+              sum4=sum4+parseFloat(res.alist[j].rinterest); 
+
+					  arra.push(res.alist[j].payday);
+					  for(k=0;k<strcan.length;k++){
+						  if(res.alist[j].payday==strcan[k]){
+							   var arrnewl = new Array();
+							   arrnewl = strcan[k].split("-");
+							   var D = parseInt(arrnewl[2]);
+							   var Y = arrnewl[0];
+							   var M = parseInt(arrnewl[1]);
+							   var ostrl=Y+"-"+M+"-"+D;   
+							   strnewlcan.push(ostrl);
+							   var oTxtl=document.getElementById(ostrl);	
+
+						       $("#"+ostrl).attr("moneydata",res.alist[j].money);	
+						       	  
+							   addClass.call(oTxtl, 'newonhot');
+						   }			    
+					  }
+					 } 
+					 
+				     $(".zxwh").html((Math.round((sum2+sum4)*100)/100)); 
+             var rcapitalod=(Math.round(sum2*100)/100)+(Math.round(sum1*100)/100);
+             var rinterestod=(Math.round(sum3*100)/100)+(Math.round(sum4*100)/100);
+             $(".rcapital").html((Math.round(rcapitalod*100)/100)); 
+             $(".rinterest").html((Math.round(rinterestod*100)/100)); 
+					    
+				 }
+			})
+		
+	}
+		 
+						
+		
+	for(var i in calendar_day){	    
+		var N=Number(calendar_day[i].innerText);
+		//var N=Number(getInnerText(calendar_day[i]));
+		
+		if(N){	
+
+			calendar_day[i].onmouseover=function(){
+
+                        var moneydata= $(this).attr('moneydata');
+                        var oTxt='您本日的回款金额为：<span class="coloro">'+moneydata+'</span>元';		
+						$('#recycle_detail').html(oTxt);
+						$('#recycle_detail').stop().show();
+
+				/*var stronbew= $(this).attr('title');
+				var arro = new Array();
+				arro = stronbew.split("-");
+							
+			  var oDate = arro[0]+"-"+arro[1]+"-"+arro[2];
+				var cone="newhot";
+				var ctwo="newonhot";
+			  var isClass=$.trim($("#"+oDate).attr("class"));
+				if( isClass.indexOf("newhot")>=0){
+				  //已还款				  
+				  var oUrlnew="/member-Index-todaymoneylog?year="+arro[0]+"&month="+arro[1]+"&day="+arro[2];
+				}
+				if( isClass.indexOf("newonhot")>=0){
+				  //未还款				  
+				  var oUrlnew="/member-Index-todaymoneyrlog?year="+arro[0]+"&month="+arro[1]+"&day="+arro[2];
+				}
+				$.ajax({
+					url:oUrlnew,
+					type:"GET",
+					success:function(data){
+						var res=JSON.parse(data);
+						//alert(res.list[0]);								
+						var oTxt='您本日的回款金额为：<span class="coloro">'+res.list[0].money+'</span>元';		
+						$('#recycle_detail').html(oTxt);
+						$('#recycle_detail').stop().show();
+						
+					}
+				})*/	
+			}
+			calendar_day[i].onmouseout=function(){
+				$('#recycle_detail').hide();
+			}
+			$('.nzx_recycle').mouseout(function(){
+				$('#recycle_detail').hide();			
+			})
+		}	
+	}
+		   
+	var strcan =new Array();	
+	for(var i in calendar_day){	    
+        var N=Number(calendar_day[i].innerText);
+		//var N=Number(getInnerText(calendar_day[i]));
+		//var num+=1;
+		if(N){				
+		   //alert(calendar_day[i].getAttribute('title'));//当月日历遍历		   
+		   var newstr=calendar_day[i].getAttribute('title');	   
+		   var arr = new Array();
+		   arr = newstr.split("-");	
+		   var D = arr[2] < 10 ? '0'+ arr[2] : arr[2];;
+		   var Y = arr[0];
+		   var M = arr[1] < 10 ? '0'+ arr[1] : arr[1];
+		   var str=Y+"-"+M+"-"+D;
+		   strcan.push(str); 
+			    
+		  }
+		  
+		  
+    }//当天日期 功能实现
+	
+
+
+	if(strcan.length){	   
+	  var arr = new Array();
+	  arr = strcan[0].split("-");
+        
+        //当前时间月份获取
+        var nowdl = new Date();      
+        var yearodl = nowdl.getFullYear();       //年
+        var monthodl = nowdl.getMonth() + 1;     //月
+
+      /*alert(monthodl+"ss"+arr[1]);
+
+      cc(arr[0], arr[1], arr[2]);
+      dd(arr[0], arr[1], arr[2]);*/
+     
+    if(arr[1]>monthodl && arr[0]>yearodl){
+      cc(arr[0], arr[1], arr[2]);
+    }else if(arr[1]<monthodl &&  arr[0]<yearodl){
+      dd(arr[0], arr[1], arr[2]);
+    }else{ 
+      cc(arr[0], arr[1], arr[2]);
+      dd(arr[0], arr[1], arr[2]);
+    }
+	}
+	
+	
+}
+//回款日历结束
+</script>
+
+<script>
+$(".pagelink a").live("click",function(e){
+	e.preventDefault();
+	var id = $(this).parent("div").attr("data");
+	var url = $(this).attr("href");
+	getData(url,function(d){
+		if(d.status==1){
+			$("#"+id).html(d.message);
+		}else{
+			Mix.msg("数据获取出错",'fail',1);
+		}
+	});
+});
+
+$("#df_member_oul .dfmlie").click(function(){
+	var index=$(this).index(),
+		url=$(this).attr("data");
+	var _this=this;
+	
+	    //alert(index+"ss"+url);
+		getData(url,function(d){
+			if(d.status==1){
+				$(_this).addClass("df_member_cfl_cur").siblings("li").removeClass("df_member_cfl_cur");
+				$("#df_member_consec .df_member_csf_box1:eq("+index+")").html(d.message).show().siblings('.df_member_csf_box1').hide();
+			}else{
+				Mix.msg("数据获取出错",'fail',1);	
+			}
+		});
+	
+})
+
+
+</script>
+
+<script type="text/javascript">
+	$(function() {
+	    $("#nzx_mc2_m1").mouseenter(function(){
+		  $(".nzx_hover1").show();
+		})
+	    $("#nzx_mc2_m1").mouseleave(function(){
+		  $(".nzx_hover1").hide();
+		})
+	    $("#nzx_mc2_m2").mouseenter(function(){
+		  $(".nzx_hover2").show();
+		})
+	    $("#nzx_mc2_m2").mouseleave(function(){
+		  $(".nzx_hover2").hide();
+		})
+	    $("#nzx_mc2_m3").mouseenter(function(){
+		  $(".nzx_hover3").show();
+		})
+	    $("#nzx_mc2_m3").mouseleave(function(){
+		  $(".nzx_hover3").hide();
+		})
+	    $("#nzx_mc2_m4").mouseenter(function(){
+		  $(".nzx_hover4").show();
+		})
+	    $("#nzx_mc2_m4").mouseleave(function(){
+		  $(".nzx_hover4").hide();
+		})
+		// 切换
+		
+	})
+</script>
+        </div><!--右边结束-->
+    </div><!--中部结束-->
+
+<!--mina_a_EDN-->
+<script type="text/javascript">
+$('.ajaxpagebar a').live("click",function(){
+	try{	
+		var geturl = $(this).attr('href');
+		var id = $(this).parent().attr('data');
+		getData(geturl,function(d){
+			$("div[tabid='"+id+"']").html(d.html);
+		});
+	}catch(e){};
+	return false;
+})
+</script>
+<style type="text/css">
+.container_12 .grid_12{width: 1000px; margin:0px}
+</style>
+
+
+<div class="l18footer">
+  <div class="l18footercc">
+    <div class="l18footercc_top clearfix ">
+      <div class="fl l18footercc_topline w120">
+        <div class="l18footercc_toplineicon l18footercc_toplineicon1"></div>
+        <h3>关于我们</h3>
+        <ul>
+          <li><a href=#>活动中心</a></li>
+          <li><a href=#>帮助中心</a></li>
+          <li><a href=#>联系我们</a></li>
+        </ul>
+      </div>
+      <div class="fl l18footercc_topline w150">
+        <div class="l18footercc_toplineicon l18footercc_toplineicon2"></div>
+        <h3>出借相关</h3>
+        <ul>
+          <li><a href=#>运营数据</a></li>
+          <li><a href=#>收费标准</a></li>
+          <li><a href=#>收益计算器</a></li>
+        </ul>      
+      </div>
+      <div class="fl l18footercc_topline w150">
+        <div class="l18footercc_toplineicon l18footercc_toplineicon3"></div>
+        <h3>安全保障</h3>
+        <ul>
+          <li><a href="javascript:;" >银行存管</a></li>
+          <li><a href=#>等保三级</a></li>
+          <li><a href=#>专业风控体系</a></li>
+        </ul>  
+      </div>
+      <div class="fl w440 l18macon">
+        <div class="l18maconc clearfix">
+          <div class="fl l18maim mr48">
+            <div class="l18maim1"><img src="../../static/grzl_files/weixin.png"></div>
+            <p>微信公众号</p>
+          </div>
+          <div class="fl l18maim mr48">
+            <div class="l18maim2"><img src="../../static/grzl_files/app(1).png"></div>
+            <p>客户端下载</p>
+          </div>
+
+          <div class="fl l18uploadc">
+            <a href=# class="l18an">Android</a>
+            <a href=# class="l18is">iOS</a>
+          </div>
+
+        </div>
+      </div>
+      <div class="fl l18footercc_contact w230">    
+        <ul>
+          <li>服务热线：<span>400-027-0101</span></li>
+          <li>工作时间：09:00-18:00</li>
+          <li>客服邮箱：kefu@whzxcf.com</li>
+          <li>在线客服QQ：4000270101</li>
+        </ul>  
+      </div>
+    </div>
+
+    <div class="l18footercc_cen clearfix">
+      <div class="l18footerccfl fl">
+        <p>湖北中兴财富金融信息服务股份有限公司鄂ICP备14017254号-2</p>
+        <p>地址：湖北省武汉市武昌区中南路99号保利广场19楼</p>
+        <ul class="l18footerccflimc">
+          <!-- <li><img src="/statics/home/images/18index/footim.png"></li> -->
+          <a class="mr10" href=# target="_blank"><img src="../../static/grzl_files/govIcon.gif" title="武汉网监电子标识" alt="武汉网监电子标识" height="42" border="0"></a>
+          <a class="mr10" href="#">
+          <img border="0" src="../../static/grzl_files/hy_83x30.png" height="32"> </a>
+          <a class="mr10" href=#>
+          <img src="../../static/grzl_files/btn_2.png" height="42"> </a>
+          <a href="#"><img border="0" src="../../static/grzl_files/360.png" height="35"></a>
+        </ul>
+      </div>
+      <div class="l18footerccfr fr">
+        <p>© 2014-2019 whzxcf, Inc. All rights reserved.</p>
+        <p>市场有风险 投资需谨慎</p>
+        <a href="#">鄂公网安备 42010602000654号</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="l18floaticonc">
+    <ul class="l18floaticon">
+      <li class="lic lic01">
+        <div class="l18floaticonim1"></div>
+        <div class="l18qqcon">
+          <p class="clearfix"><span class="mr5 w60 fl">交流①群</span><a class="fl" href="https://shang.qq.com/wpa/qunwpa?idkey=1a309e7481ad86a1ea58a000fd5e5e4c119bba56fd7cf258e48cf8996fcf5f9c">859758820</a></p>
+          <p class="clearfix"><span class="mr5 w60 fl">交流②群</span><a class="fl" href="https://shang.qq.com/wpa/qunwpa?idkey=6338a830b7e225abff2b0956ed5b0e12d3a135a2db803b8e9a5ec9ad9e44cce0">818239302</a></p>
+          <p class="clearfix"><span class="mr5 w60 fl">VIP群</span><a class="fl" href="https://jq.qq.com/?_wv=1027&amp;k=44erDx7">432677253</a></p>
+        </div>
+      </li>
+      <li class="lic">
+        <div class="l18floaticonim2"></div>
+        <div class="l18telcon">
+          <h3>400-027-0101</h3>
+          <p>09:00-18:00</p>
+        </div>
+      </li>
+      <li><a href="https://www.whzxcf.com/tool" class="l18floaticonim3 lia"></a></li>
+      <li><a href="https://www.whzxcf.com/member-index-index.shtml#l18header_top" class="l18floaticonim4 lia"></a></li>
+    </ul>
+
+</div>
+
+
+
+<script>
+
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?aea1a2616a42294fcf3478354876581a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>
+
+$(function(){
+  $('.lic01').click(function(){
+    window.location.href="http://crm2.qq.com/page/portalpage/wpa.php?uin=4000270101&amp;f=1&amp;ty=1&amp;aty=0&amp;a=&amp;from=6";
+  });
+
+  $(".l18floaticonim1").mouseenter(function(){
+    $('.l18qqcon').stop().animate({left:"-212"});
+  });
+  $(".l18floaticonim1").mouseleave(function(){
+    $('.l18qqcon').stop().animate({left:"50"});
+  });
+
+
+  $('.l18qqcon').mouseenter(function(){
+      $('.l18qqcon').stop().animate({left:"-212"});
+  }) 
+  $('.l18qqcon').mouseleave(function(){
+      $('.l18qqcon').stop().animate({left:"50"});
+  })
+
+
+
+  $(".l18floaticonim2").mouseenter(function(){
+    $(".l18telcon").stop().animate({left:"-173"});
+  });
+  $(".l18floaticonim2").mouseleave(function(){
+    $(".l18telcon").stop().animate({left:"50"});
+  });
+
+  $('.l18telcon').mouseenter(function(){
+      $('.l18telcon').stop().animate({left:"-173"});
+  }) 
+  $('.l18telcon').mouseleave(function(){
+      $('.l18telcon').stop().animate({left:"50"});
+  })
+
+
+
+})
+
+</script><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><button type="button" id="cboxPrevious"></button><button type="button" id="cboxNext"></button><button id="cboxSlideshow"></button><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div><button type="button" id="cboxClose"></button></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div></body></html>

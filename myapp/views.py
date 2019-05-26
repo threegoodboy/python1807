@@ -193,6 +193,16 @@ def user_borrow(request):
 def user_noticelist(request):
     return render(request,"noticelist.html")
 
+#业务介绍
+def business_introduction(request):
+    return render(request,"ywjs.html")
 
+#提现
+def withdraw_deposit(request):
+    return render(request,'tx.html')
+
+#关于我们
+def about_us(request):
+    return render(request,'ours.html')
 
 

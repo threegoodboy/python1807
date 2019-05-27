@@ -121,7 +121,9 @@ def user_register(request):
                             user.level='高'
                         else:
                             user.level='低'
+                        print('111111')
                         user.save()
+                        print('222222')
 
                         return redirect(reverse('myapp:login'))
 

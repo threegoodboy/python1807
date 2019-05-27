@@ -179,7 +179,9 @@
                                 <span>您当前选择的是"<em class="pay_title_em">银行卡(支付宝)充值</em>"的充值方式</span>
                             </div>
                             <!--/rc_stype-->
-                            <form action="https://cz.4399.com/?ac=payguide#" class="form1">
+                            <!--我要开始的部分-->
+                            <form action="{% url 'myapp:cz' %}"  method="POST" class="form1">
+                                {% csrf_token %}
                                 <!--rc_dv-->
                                 <div class="rc_dv">
                                     <div class="paygame_select_or" style="display: none;">
@@ -217,7 +219,7 @@
                                 <!--rc_dv-->
                                 <div class="rc_dv pay_user_info_or_q hide_or">
                                     <label class="label">充值您的帐号:</label>
-                                    <input name="pay_user_ext" value="" type="text" readonly="" class="rc_ipt">
+                                    <input name="pay_user_ext" value="" type="text" readonly="" class="rc_ipt" id="myid">
                                     <a href="javascript:void(0);" class="removebtn"></a>
                                     <span class="ml10 tip_word" tag_title="id_tishi"></span>
                                 </div>
@@ -226,16 +228,21 @@
                                 <!--rc_dv-->
 
                                 <!--/rc_dv-->
+
                                 <div class="rc_dv pay_user_info_or_ua">
                                     <label class="label">充值您的个人账号</label>
-                                    <input name="pay_user_repeat" value="" type="text" class="rc_ipt">
-                                    <span class="ml10 tip_word" tag_title="id_tishi2">*不存在此号</span>
+                                    <input name="pay_user_repeat" value="" type="text" class="rc_ipt" id='myid3'>
+                                    <span id="myid4" style="color:red;">{{ mynone }}</span>
+
+                                    <span id="myid6" style="color:red">{{ yizhi }}</span>
+                                    <span style="color:red" id="myid7" >{{ myphone }}</span>
+
                                 </div>
                                 <!--rc_dv-->
                                 <div class="rc_dv pay_user_info_or_ua">
-                                    <label class="label">充值您的个人账号</label>
-                                    <input name="pay_user_repeat" value="" type="text" class="rc_ipt">
-                                    <span class="ml10 tip_word" tag_title="id_tishi2">*两次输入帐号不一致</span>
+                                    <label class="label">再次确认充值账号</label>
+                                    <input name="pay_user_repeat2" value="" type="text" class="rc_ipt" id="myid2">
+                                    <span id="myid5" style="color:red"></span>
                                 </div>
                                 <!--/rc_dv-->
                                 <!--rc_dv-->
@@ -247,19 +254,16 @@
                                 <div class="rc_dv" tag_title="selpack_div">
                                     <label class="label">请选择充值金额:</label>
                                     <ul class="clearfix money_list youbi_list" tag_title="selpack">
-                                        <li><input type="radio" value="10" id="p_wxewm10" class="radio1"
-                                                   name="pay_money"><label for="p_wxewm10">100元</label></li>
-                                        <li><input type="radio" value="30" id="p_wxewm30" class="radio1"
-                                                   name="pay_money"><label for="p_wxewm30">300元</label></li>
+
                                         <li><input type="radio" value="50" id="p_wxewm50" class="radio1"
-                                                   name="pay_money"><label for="p_wxewm50">500元</label></li>
+                                                   name="pay_money"><label for="p_wxewm50">50元</label></li>
                                         <li><input type="radio" value="100" id="p_wxewm100" class="radio1"
                                                    checked="checked" name="pay_money"><label
-                                                for="p_wxewm100">1000元</label></li>
+                                                for="p_wxewm100">100元</label></li>
                                         <li><input type="radio" value="500" id="p_wxewm500" class="radio1"
-                                                   name="pay_money"><label for="p_wxewm500">5000元</label></li>
+                                                   name="pay_money"><label for="p_wxewm500">500元</label></li>
                                         <li class="other"><input type="radio" name="pay_money" value="0"><input
-                                                type="text" class="rt_type"> 元&nbsp;请输入(1-100000)之间的整数
+                                                type="text" class="rt_type" name="mymoney"> 元&nbsp;请输入(1-100000)之间的整数
                                         </li>
                                     </ul>
                                 </div>
@@ -519,9 +523,10 @@
                                          style="margin-left: 0px;">
                                 </div>
                                 <div class="btn_dv">
-                                    <input type="button" name="subbut" class="btn_recharge" value="">
+                                    <input type="submit"  onclick=" return gologin()" class="btn_recharge" value="">
                                 </div>
                             </form>
+                            <!--我要结束的部分-->
                             <!--游币 表单 开始-->
                             <div class="form2 hide_or" style="display: none;">
                                 <div class="rc_login hide_or" style="display: block;">
@@ -1284,6 +1289,48 @@
                                                                                                      src="../../static/cz_files/pic1.gif"></a>
     <!--<script src="http://pay.img4399.com/js/pay_right_repair.js" language="JavaScript"></script>-->
 </div>
+<script>
+    function gologin(){
+        var myid2=$('#myid2').val();
+        var myid3=$('#myid3').val();
+        var flag=true;
+        $('#myid4').html('');
+        $('#myid5').html('');
+        $('#myid7').html('');
+         if (myid3== '') {
+
+            var myid7=$('#myid7');
+            myid7.text('用户名不可为空')
+            flag=false;
+        }
+        else if (myid2 == '') {
+            var myid5=$('#myid5')
+             myid5.html('再次输入不可为空');
+             flag=false;
+        }
+
+        else if (myid3 != myid2){
+            if(myid3==''){
+
+                flag=false
+            }else if(myid2==''){
+                flag=false
+            }else{
+                var myid4=$('#myid4');
+               myid4.html('两次输入不一致')
+               flag=false
+            }
+
+        }else{
+            alert('投资成功');
+            flag=true;
+        }
+
+
+
+        return flag
+    }
+</script>
 
 </body>
 </html>

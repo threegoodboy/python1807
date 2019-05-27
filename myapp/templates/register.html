@@ -188,43 +188,34 @@
         var newpassword = $('input[name="newpassword"]').val();
         var code = $('input[name="code"]').val();
         var phone = $('input[name="phone"]').val();
+        $('#user_span').html('');
+        $('#password_span').html('');
+        $('#code_span').html('');
+        $('#newpassword_span').html('');
+        $('#good_span').html('');
+        $('#phone_span').html('');
+
         if (username == '') {
             var $span1 = $('#user_span');
             $span1.html('用户名不能为空');
             flag = false;
-        } else {
-            var $span1 = $('#user_span');
-            $span1.html('');
-            flag = true;
         }
-        if (password == '') {
+        else if (password == '') {
             var $span2 = $('#password_span');
             $span2.html('密码不能为空');
             flag = false;
-        } else {
-            var $span2 = $('#password_span');
-            $span2.html('');
-            flag = true;
         }
-        if (code == '') {
+        else if (code == '') {
             var $span4 = $('#code_span');
             $span4.html('验证码不能为空');
             flag = false;
-        } else {
-            var $span4 = $('#code_span');
-            $span4.html('');
-            flag = true;
         }
-        if (newpassword == '') {
+        else if (newpassword == '') {
             var $span3 = $('#newpassword_span');
             $span3.html('重输入密码不能为空');
             flag = false;
-        } else {
-            var $span3 = $('#newpassword_span');
-            $span3.html('');
-            flag = true;
         }
-        if (password != newpassword) {
+        else if (password != newpassword) {
             if(password=='' ){
                 var $span6 = $('#good_span');
                 $span6.html('');
@@ -239,18 +230,14 @@
                 flag = false;
             }
 
-        } else {
-            var $span6 = $('#good_span');
-            $span6.html('');
-            flag = true;
         }
-        if (phone == '') {
+        else if (phone == '') {
             var $span5 = $('#phone_span');
             $span5.html('手机号不能为空');
             flag = false;
-        } else {
-            var $span5 = $('#phone_span');
-            $span5.html('');
+        }
+        else {
+
             flag = true;
         }
         return flag

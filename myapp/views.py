@@ -1,4 +1,7 @@
 import sys
+
+import pymysql
+
 sys.path.append('.')
 import random
 from datetime import datetime
@@ -148,23 +151,78 @@ def user_msg(request):
             mynum=user.number
 
             money=user.use_money
-            if money == 0:
+            if money >= 0:
                 img="../../static/grzl_files/vip1.png"
-            if money == 10000:
+            if money >= 10000:
                 img="../../static/grzl_files/vip2.png"
-            if money == 20000:
+            if money >= 20000:
                 img="../../static/grzl_files/vip3.png"
-            elif money ==30000:
+            elif money >=30000:
                 url="../../static/grzl_files/vip3.png"
 
 
         return render(request,'grzl.html',locals())
 
+def have_pymysql():
+    conn=pymysql.connect(host='localhost',port=3306,user='root',password='z979320182',charset='utf8',db='myproject')
+    cursor=conn.cursor()
+    return cursor,conn
 
 #充值页面
+
 def user_cz(request):
     if request.method=='GET':
-        return render(request,'cz.html')
+        phone=request.session.get('phone')
+        none=request.session.get('buNone')
+        dif=request.session.get('buyizhi')
+        dict1={}
+        if phone:
+
+            del request.session['phone']
+            dict1['myphone']=phone
+        if none:
+            del request.session['buNone']
+            dict1['mynone']=none
+        if dif:
+            del request.session['buyizhi']
+            dict1['yizhi']=dif
+
+        return render(request,'cz.html',dict1)
+    if request.method=='POST':
+
+        username = request.session.get('username', None)
+        if username == None:
+            return redirect(reverse('myapp:login'))
+        users=Users.objects.filter(username=username)
+        user=users.first()
+        phone=request.POST.get('pay_user_repeat',None)
+        phone2 = request.POST.get('pay_user_repeat2',None)
+        if user.phone!=phone:
+            request.session['phone']='账号不存在'
+
+            return redirect(reverse('myapp:cz'))
+        if phone==None or phone2==None:
+            request.session['buNone']='用户名或重输入不能为空'
+            return redirect(reverse('myapp:cz'))
+        if phone !=phone2:
+            request.session['buyizhi']='两次输入不一致'
+            return redirect(reverse('myapp:cz'))
+
+        allmoney=0
+        money=request.POST.get("pay_money")
+        newmoney = request.POST.get("mymoney")
+        allmoney=money+newmoney
+
+        mymoney=int(allmoney)+user.invest_money
+
+        cursor,conn=have_pymysql()
+        sql='update users set invest_money="%s" where username= "%s"'%(mymoney,user.username)
+        cursor.execute(sql)
+        conn.commit()
+        conn.close()
+        cursor.close()
+
+        return redirect(reverse('myapp:msg'))
 
 
 #投资页面

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../../static/P2P/js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <h1 id="a">1</h1>
+    <button id="c">jjj</button>
+</body>
+<script>
+    var b =11
+
+    $("#c").click(function () {
+        $.ajax({
+                url: '',
+                type: 'post',
+                data: {'a': b},
+                success: function (data) {
+                    b = 0
+                    alert("aaaaaaaaaaaa")
+                    $('#a').html('<a>'+b+'</a>')
+                }
+            }
+        )
+    })
+    
+</script>
+</html>

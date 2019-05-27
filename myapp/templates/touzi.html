@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>touzi</title>
+<script>
+            function daojishi(num){
+                    var djs = document.getElementById("djs");
+                    djs.innerHTML = num;
+                    if(--num > 0){
+                        setTimeout("daojishi("+num+")",1000)
+                    }else{
+                        location.href="http://127.0.0.1:8000/newapp/detail/3/";
+                    }
+            }
+    </script>
+</head>
+    <body>
+        <h3>操作成功！</h3>
+        <p><span id="djs">5</span>秒后返回到主页<a href="http://www.baidu.com/"  onclick="fanhui();">返回</a></p>
+        <script>
+                daojishi(5);
+        </script>
+    </body>
+        <script>
+            function fanhui(){
+                window.history.back();
+            }
+       </script>
+</body>
+</html>

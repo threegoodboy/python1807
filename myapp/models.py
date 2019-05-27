@@ -5,12 +5,17 @@ from django.db import models
 class Users(models.Model):       #用户表
 
     username = models.CharField(max_length=20,verbose_name='用户名')    #用户名
-    password = models.CharField(max_length=30,verbose_name='用户密码')    #用户密码
+    password = models.CharField(max_length=100,verbose_name='用户密码')    #用户密码
     invcode = models.CharField(max_length=4,verbose_name='邀请码')        #邀请码
     phone = models.CharField(max_length=11,verbose_name='手机号')   #手机号
-    invest_money = models.IntegerField(default=0,verbose_name='投资资金')  #投资
+    invest_money = models.IntegerField(default=0,verbose_name='投资资金')  #已投
     loan_money = models.IntegerField(default=0,verbose_name='借款资金')     # 借款
     code = models.CharField(max_length=4,verbose_name='验证码')      #验证码
+    vip_level = models.CharField(max_length=30,default='青铜')
+    level = models.CharField(max_length=10,default="低")
+    number=models.CharField(max_length=30,default=0)    #用户积分
+    use_money = models.IntegerField(default=0)  # 用户已投资资金
+
     class Meta:
         db_table = 'users'
         verbose_name='用户模型'
@@ -27,8 +32,9 @@ class Investment(models.Model):
     make_time = models.DateTimeField(auto_now=True,verbose_name='项目开始时间')    #项目开始时间
     project_money=models.IntegerField('项目总额度')  #项目总额
     security_system=models.CharField(max_length=30,verbose_name='保障机构')  #保障机构
-    done=models.IntegerField(null=True,verbose_name='项目完成率')    #已完成占比
+    done=models.IntegerField(null=True,verbose_name='项目完成率')    #是否完成
     date_los=models.IntegerField(null=True,verbose_name='项目剩余天数')  #剩余日期
+    scale = models.IntegerField(null=True)
     # userid = models.IntegerField()
     user = models.ManyToManyField(Users,through='Relation')
     class Meta:
@@ -67,3 +73,11 @@ class Pledge(models.Model):
     class Meta:
         db_table='pledge'
 
+class Check_user(models.Model):
+    time_old = models.DateField(null=True)
+    this_score = models.IntegerField(null=True)
+    all_score = models.IntegerField(null=True)
+    user = models.OneToOneField(Users,on_delete=models.CASCADE,related_name='check_user')
+
+    class Meta:
+        db_table = 'check_user'

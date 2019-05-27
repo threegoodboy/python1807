@@ -197,16 +197,16 @@ $(document).ready(function() {
 
 <div class="l18header_cen">
   <div class="l18header_cen_c px1200 clearfix">
-    <div class="l18logo fl"><a href=#><img src="../../static/grzl_files/logo.jpg"></a></div>
+    <div class="l18logo fl"><a href={% url 'myapp:index' %}><img src="../../static/grzl_files/logo.jpg"></a></div>
     <div class="fr">
       <div class="clearfix">
           <div class="fl l18nav" id="l18nav">
 		    <ul class="clearfix">
 		   
 		      		      		        <li class="fl"> 
-		          <a href=# class="zm_cura">首            页</a>
+		          <a href={% url 'myapp:index' %} class="zm_cura">首            页</a>
 		        </li>		        <li class="fl"> 
-		          <a href=# class="">我要出借</a>
+		          <a href={% url 'myapp:invest' %} class="">我要投资</a>
 		        </li>		        <li class="fl"> 
 		          <a href=# class="">积分商城</a>
 		        </li>		        <li class="fl"> 
@@ -222,8 +222,8 @@ $(document).ready(function() {
 	        <div class="l18kuajieBtnc">
                 <a href=# class="l18myusercount">我的账户</a>
 		        <ul class="l18kuajiecc" style="overflow: hidden; display: none; height: 180px; padding-top: 0px; margin-top: 0px;">
-		          <li><a href=#>充       值</a></li>
-		          <li><a href=#>提       现</a></li>
+		          <li><a href={% url 'myapp:cz' %}>充       值</a></li>
+		          <li><a href={% url 'myapp:tx' %}>提       现</a></li>
 		          <li><a href=#>自动投标</a></li>
 		          <li><a href=#>徽商账户</a></li>
 		          <li><a href=#>我的卡劵</a></li>
@@ -1548,28 +1548,6 @@ $('.ajaxpagebar a').live("click",function(){
 </div>
 
 
-<div class="l18floaticonc">
-    <ul class="l18floaticon">
-      <li class="lic lic01">
-        <div class="l18floaticonim1"></div>
-        <div class="l18qqcon">
-          <p class="clearfix"><span class="mr5 w60 fl">交流①群</span><a class="fl" href="https://shang.qq.com/wpa/qunwpa?idkey=1a309e7481ad86a1ea58a000fd5e5e4c119bba56fd7cf258e48cf8996fcf5f9c">859758820</a></p>
-          <p class="clearfix"><span class="mr5 w60 fl">交流②群</span><a class="fl" href="https://shang.qq.com/wpa/qunwpa?idkey=6338a830b7e225abff2b0956ed5b0e12d3a135a2db803b8e9a5ec9ad9e44cce0">818239302</a></p>
-          <p class="clearfix"><span class="mr5 w60 fl">VIP群</span><a class="fl" href="https://jq.qq.com/?_wv=1027&amp;k=44erDx7">432677253</a></p>
-        </div>
-      </li>
-      <li class="lic">
-        <div class="l18floaticonim2"></div>
-        <div class="l18telcon">
-          <h3>400-027-0101</h3>
-          <p>09:00-18:00</p>
-        </div>
-      </li>
-      <li><a href="https://www.whzxcf.com/tool" class="l18floaticonim3 lia"></a></li>
-      <li><a href="https://www.whzxcf.com/member-index-index.shtml#l18header_top" class="l18floaticonim4 lia"></a></li>
-    </ul>
-
-</div>
 
 
 

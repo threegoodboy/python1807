@@ -155,14 +155,14 @@ def user_msg(request):
             mynum=user.number
 
             money=user.use_money
-            if money >= 3000:
+            if money >= 30000:
                 img="../../static/grzl_files/vip4.png"
             elif money >= 20000:
                 img="../../static/grzl_files/vip3.png"
             elif money >= 10000:
                 img="../../static/grzl_files/vip2.png"
             elif money >=0:
-                url="../../static/grzl_files/vip1.png"
+                img="../../static/grzl_files/vip1.png"
 
 
         return render(request,'grzl.html',locals())
@@ -248,8 +248,46 @@ def del_session(request):
 
 #提现页面
 def user_tx(request):
-    return render(request,'tx.html')
+    if request.method=='GET':
+        username=request.session.get('username',None)
+        if username==None:
+            return redirect(reverse('myapp:login'))
+        return render(request,'tx.html')
+    if request.method=='POST':
+        username=request.POST.get('realName')
+        print(username)
+        code=request.POST.get('banknum')
+        money=request.POST.get('money')
+        users=Users.objects.filter(username=username)
+        user=users.first()
+        dict1={}
+        if user:
+            havem=user.invest_money
+            icode=user.invcode
 
+            if icode==code:
+                print('11111111111111111')
+                if int(money)<=int(havem):
+                    print('22222222222')
+                    nmoney=int(havem)-int(money)
+                    cursor, conn = have_pymysql()
+                    sql = 'update users set invest_money="%s" where username= "%s"' % (nmoney, username)
+                    cursor.execute(sql)
+                    conn.commit()
+                    conn.close()
+                    cursor.close()
+                    return redirect(reverse('myapp:msg'))
+                else:
+                    print('33333333333')
+                    dict1['merror']='用户余额不足请充值'
+                    return render(request,'tx.html',dict1)
+            else:
+                dict1['codeerror']='银行卡不属于该用户'
+                return render(request,'tx.html',dict1)
+
+        else:
+            dict1['usererror']='该用户未绑定银行卡或用户不存在'
+            return render(request,'tx.html',dict1)
 
 def user_problem(request):
     return render(request,"problem.html")

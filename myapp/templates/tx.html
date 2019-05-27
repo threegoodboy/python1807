@@ -600,9 +600,9 @@
             </div>
             <ul class="nav nav-information" data-type="security">
                 <li class="first"><a href="#">信息披露</a></li>
-                <li><a href="{% url 'myapp:ours' %}">关于中兴</a></li>
+                <li><a href="#">关于中兴</a></li>
 
-                <li><a href="{% url 'myapp:ywjs' %}">业务介绍</a></li>
+                <li><a href="#">业务介绍</a></li>
 
             </ul>
             <div class="nav nav-live" data-type="live">
@@ -647,10 +647,9 @@
             <div class="account-list">
                 <div class="account-info">
                     <div class="member-info">
-                        <div><span class="name" id="username">{{ username }}</span><span
+                        <div><span class="name" id="username">{{ request.session.username }}</span><span
                                 class="member-level pop-tip member-level-0" id="member-level"
-                                title="&lt;a target=&#39;_blank&#39; href=&#39;/user/member/benefits&#39;&gt;了解更多权益&lt;/a&gt;"><img
-                                src="{{ img }}" height="22"></span></div>
+                                title="&lt;a target=&#39;_blank&#39; href=&#39;/user/member/benefits&#39;&gt;了解更多权益&lt;/a&gt;"></span></div>
                         <div class="security-level"><span id="security-level"><a href="#"></a></span></div>
                     </div>
                     <div class="badge-info">
@@ -762,18 +761,25 @@
 
             <!--end 我的账户左边菜单列表-->
             <input type="hidden" value="bankCard" id="userNavList"><!-- 左侧当前选中菜单 -->
+
             <div class="account-cont" id="contanier">
                 <div class="at-til"><span class="name">提现到银行卡</span></div>
                 <div class="bindcard-form" id="bindcardForm">
+                    <form action="{% url 'myapp:tx' %}" method="post">
+                        {% csrf_token %}
                     <div><label>真实姓名：</label> <input type="text" class="bindcard-input" name="realName" id="realName"
-                                                     value=""> <span class="bindcard-tip" data-tip="真实姓名必须与您的银行卡开户名一致">真实姓名必须与您的银行卡开户名一致</span>
+                                                     value=""> <span style="color:red">{{ usererror }}</span>
                     </div>
 
                     <div class="bk_cardnum"><label>银行卡号：</label> <input type="text" class="bindcard-input"
                                                                         name="banknum" id="banknum" maxlength="23"
-                                                                        value=""> <span class="bindcard-tip"
-                                                                                        data-tip="仅支持储蓄卡">仅支持储蓄卡</span>
+                                                                        value=""> <span style="color:red">{{ codeerror }}</span>
+                    <div class="bk_cardnum"><label>提现金额：</label> <input type="text" class="bindcard-input"
+                                                                        name="money" id="banknum" maxlength="23"
+                                                                        value=""><span style="color:red">{{ merror }}</span>
+
                     </div>
+                    </form>
                     <div><label>开户银行：</label> <select class="bindcard-input selected">
                         <option value="">请选择开户银行</option>
                         <option value="ABC">农业银行</option>
@@ -797,8 +803,10 @@
                             href="#">《资金管理服务协议》</a> </span>
                     </div>
                     <div class="bindcard-msg" id="submitMsg"></div>
-                    <button class="bind-btn" id="submitBtn">点击提现</button>
+                    <button type='submit' class="bind-btn" id="submitBtn">点击提现</button>
+
                 </div>
+
                 <dl class="bindcard-tips">
                     <dt>温馨提示</dt>
                     <dd> 1、银行卡的开户名必须与实名登记的姓名一致； <br> 2、为了您的资金安全，仅限绑定一张银行卡；仅支持储蓄卡，不可用信用卡；<br>

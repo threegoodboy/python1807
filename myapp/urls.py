@@ -17,5 +17,6 @@ urlpatterns = [
     path('mycode/', get_onecode, name='code'),    #手机验证码
     path('delses/',del_session,name='delses'),   #退出
     path('msg/',user_msg,name='msg'),    #个人信息
-    path('cz/',user_cz,name='cz')    #投资
+    path('cz/',user_cz,name='cz'),    #投资
+    path('tx/',user_tx,name='tx')    #提现
 ]

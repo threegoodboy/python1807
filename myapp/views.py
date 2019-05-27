@@ -97,11 +97,12 @@ def user_register(request):
         password = request.POST.get('password',None)
         newpassword=request.POST.get('newpassword')
         phone = request.POST.get('phone')
+        yh=request.POST.get('yh')
         code=request.POST.get('code')
         code2=get_code(str(phone))
         try:
             Users.objects.get(username=username)
-            request.session['error_message'] = '用户名已存在'
+
             msg={'usernameerror':'用户名已存在'}
             return render(request, 'register.html', locals())
 
@@ -117,13 +118,14 @@ def user_register(request):
                         user.password = make_password(password)
                         user.phone = phone
                         user.code = code
+                        user.invcode = yh
                         if not password.isdigit():
                             user.level='高'
                         else:
                             user.level='低'
-                        print('111111')
+                        print(123,'+++++++')
                         user.save()
-                        print('222222')
+                        print(1234,'++++++++++++')
 
                         return redirect(reverse('myapp:login'))
 
@@ -153,14 +155,14 @@ def user_msg(request):
             mynum=user.number
 
             money=user.use_money
-            if money >= 0:
-                img="../../static/grzl_files/vip1.png"
-            if money >= 10000:
-                img="../../static/grzl_files/vip2.png"
-            if money >= 20000:
+            if money >= 3000:
+                img="../../static/grzl_files/vip4.png"
+            elif money >= 20000:
                 img="../../static/grzl_files/vip3.png"
-            elif money >=30000:
-                url="../../static/grzl_files/vip3.png"
+            elif money >= 10000:
+                img="../../static/grzl_files/vip2.png"
+            elif money >=0:
+                url="../../static/grzl_files/vip1.png"
 
 
         return render(request,'grzl.html',locals())
@@ -243,6 +245,11 @@ def user_invest(request):
 def del_session(request):
     del request.session['username']
     return redirect(reverse('myapp:invest'))
+
+#提现页面
+def user_tx(request):
+    return render(request,'tx.html')
+
 
 def user_problem(request):
     return render(request,"problem.html")
